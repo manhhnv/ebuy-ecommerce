@@ -47,7 +47,7 @@ export type Query = {
 
 
 export type QueryProductArgs = {
-  id?: Maybe<Scalars['ID']>;
+  _id?: Maybe<Scalars['ID']>;
 };
 
 export type Mutation = {

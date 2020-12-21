@@ -6,12 +6,12 @@ import { Product } from './product.schema';
 export class ProductResolver {
     constructor(private productService: ProductService) {}
     @Query()
-    async product(@Args() id: any) {
-        return id;
+    product(@Args('_id') _id: string) {
+        return this.productService.findProductById(_id)
     }
 
     @Mutation()
-    async createProduct (@Args('input') input: CreateProductInput) {
+    createProduct (@Args('input') input: CreateProductInput) {
         return this.productService.createProduct(input)
     }
 }

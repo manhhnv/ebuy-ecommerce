@@ -22,7 +22,7 @@ type Product implements Node{
     updatedAt: Date
 }
 type Query {
-    product(id: ID): Product
+    product(_id: ID): Product
 }
 type Mutation {
     createProduct(input: CreateProductInput): Product
