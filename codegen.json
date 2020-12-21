@@ -1,0 +1,20 @@
+{
+    "overwrite": true,
+    "config": {
+        "strict": true
+    },
+    "generates": {
+        "src/generate-types.ts": {
+            "schema": "http://localhost:3000/graphql",
+            "plugins": [
+                {
+                    "add": {
+                        "content": "/* eslint-disable */"
+                    }
+                },
+                "typescript",
+                "typescript-compatibility"
+            ]
+        }
+    }
+}

@@ -1,0 +1,29 @@
+scalar Date
+interface Node {
+    _id: ID!
+    createdAt: Date
+    updatedAt: Date
+}
+input CreateProductInput {
+    name: String!
+    description: String!
+    slug: String!
+    inStock: Int!
+    active: Boolean
+}
+type Product implements Node{
+    _id: ID!
+    name: String!
+    description: String!
+    slug: String!
+    inStock: Int!
+    active: Boolean
+    createdAt: Date
+    updatedAt: Date
+}
+type Query {
+    product(id: ID): Product
+}
+type Mutation {
+    createProduct(input: CreateProductInput): Product
+}
