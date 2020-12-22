@@ -35,7 +35,6 @@ export type Asset = Node & {
 export type ProductVariant = Node & {
   __typename?: 'ProductVariant';
   _id: Scalars['ID'];
-  product: Product;
   productId: Scalars['ID'];
   inStock: Scalars['Int'];
   active?: Maybe<Scalars['Boolean']>;
@@ -45,6 +44,15 @@ export type ProductVariant = Node & {
   featureAsset?: Maybe<Asset>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type CreateProductVariantInput = {
+  productId: Scalars['ID'];
+  inStock: Scalars['Int'];
+  active?: Maybe<Scalars['Boolean']>;
+  sku: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Int'];
 };
 
 export type Query = {
@@ -67,6 +75,22 @@ export type QueryProductArgs = {
 
 export type QueryProductsArgs = {
   slug: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createProductVariant?: Maybe<Array<ProductVariant>>;
+  createProduct?: Maybe<Product>;
+};
+
+
+export type MutationCreateProductVariantArgs = {
+  input?: Maybe<CreateProductVariantInput>;
+};
+
+
+export type MutationCreateProductArgs = {
+  input: CreateProductInput;
 };
 
 
@@ -94,20 +118,11 @@ export type Product = Node & {
   active?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
+  variants?: Maybe<Array<Maybe<ProductVariant>>>;
 };
 
 export type ListProducts = {
   __typename?: 'ListProducts';
   items?: Maybe<Array<Product>>;
   totalItems: Scalars['Int'];
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  createProduct?: Maybe<Product>;
-};
-
-
-export type MutationCreateProductArgs = {
-  input: CreateProductInput;
 };

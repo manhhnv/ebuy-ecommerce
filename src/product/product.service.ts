@@ -18,7 +18,7 @@ export class ProductService {
             throw new InternalServerErrorException(e?.message || 'Error')
         }
     }
-    async findProductById(_id: string): Promise<Product | undefined> {
+    async findProductById(_id: Types.ObjectId | string): Promise<Product | undefined> {
         try {
             const product = await this.productModel.findById(_id);
             return product;

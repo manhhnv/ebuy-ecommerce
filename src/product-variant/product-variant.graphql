@@ -16,7 +16,6 @@ type Asset implements Node{
 }
 type ProductVariant implements Node {
     _id: ID!
-    product: Product!
     productId: ID!
     inStock: Int!
     active: Boolean
@@ -27,6 +26,18 @@ type ProductVariant implements Node {
     createdAt: Date
     updatedAt: Date
 }
+input CreateProductVariantInput {
+    productId: ID!
+    inStock: Int!
+    active: Boolean
+    sku: String!
+    name: String!
+    price: Int!
+}
 type Query {
     productVariant(id: ID!): String
+}
+
+type Mutation {
+    createProductVariant(input: CreateProductVariantInput): [ProductVariant!]
 }

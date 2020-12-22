@@ -20,6 +20,7 @@ type Product implements Node{
     active: Boolean
     createdAt: Date
     updatedAt: Date
+    variants: [ProductVariant]
 }
 type ListProducts {
     items: [Product!]
