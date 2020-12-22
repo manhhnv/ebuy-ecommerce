@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProductVariant, ProductVariantSchema } from './product-variant.schema';
 import { ProductVariantResolver } from './product-variant.resolver';
 import { ProductVariantService } from './product-variant.service';
-import { ProductModule } from '../product/product.module';
 
 @Module({
     imports: [
