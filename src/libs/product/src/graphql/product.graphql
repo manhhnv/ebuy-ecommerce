@@ -30,12 +30,15 @@ enum TypeAsset {
     IMAGE
     VIDEO
     BINARY
+    NONE
 }
 type Asset implements Node{
     _id: ID!
-    name: String!
+    name: String
     type: TypeAsset!
-    fileSize: Int!
+    variantId: ID
+    fileSize: Int
+    color: String
     width: Int
     height: Int
     preview: String

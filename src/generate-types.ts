@@ -50,15 +50,18 @@ export type ListProducts = {
 export enum TypeAsset {
   Image = 'IMAGE',
   Video = 'VIDEO',
-  Binary = 'BINARY'
+  Binary = 'BINARY',
+  None = 'NONE'
 }
 
 export type Asset = Node & {
   __typename?: 'Asset';
   _id: Scalars['ID'];
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   type: TypeAsset;
-  fileSize: Scalars['Int'];
+  variantId?: Maybe<Scalars['ID']>;
+  fileSize?: Maybe<Scalars['Int']>;
+  color?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Int']>;
   height?: Maybe<Scalars['Int']>;
   preview?: Maybe<Scalars['String']>;
@@ -70,7 +73,7 @@ export type ProductVariant = Node & {
   __typename?: 'ProductVariant';
   _id: Scalars['ID'];
   productId: Scalars['ID'];
-  product?: Maybe<Product>;
+  product: Product;
   inStock: Scalars['Int'];
   active?: Maybe<Scalars['Boolean']>;
   sku: Scalars['String'];

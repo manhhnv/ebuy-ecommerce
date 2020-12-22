@@ -6,12 +6,14 @@ import { Product, ProductSchema } from './schema/product.schema';
 import { ProductVariant, ProductVariantSchema } from './schema/product-variant.schema';
 import { ProductVariantService } from './service/product-variant.service';
 import { ProductVariantResolver } from './resolver/product-variant.resolver';
+import { Asset, AssetSchema } from './schema/asset.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
         {name: Product.name, schema: ProductSchema},
-        {name: ProductVariant.name, schema: ProductVariantSchema}
+        {name: ProductVariant.name, schema: ProductVariantSchema},
+        {name: Asset.name, schema: AssetSchema}
     ]),
   ],
   providers: [
