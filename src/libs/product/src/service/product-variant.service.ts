@@ -1,8 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { ProductVariant, ProductVariantDocument } from './product-variant.schema';
-import { CreateProductVariantInput } from '../generate-types';
+import { ProductVariant, ProductVariantDocument } from '../schema/product-variant.schema';
+import { CreateProductVariantInput } from '../../../../generate-types';
 
 @Injectable()
 export class ProductVariantService {

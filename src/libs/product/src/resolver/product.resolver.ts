@@ -1,8 +1,8 @@
 import { Resolver, Mutation, Query, Args, ResolveField, Parent } from '@nestjs/graphql';
-import { ProductService } from './product.service';
-import { CreateProductInput } from '../generate-types';
-import { Product } from './product.schema';
-import { ProductVariantService } from '../product-variant/product-variant.service';
+import { ProductService } from '../service/product.service';
+import { CreateProductInput } from '../../../../generate-types';
+import { Product } from '../schema/product.schema';
+import { ProductVariantService } from '../service/product-variant.service';
 @Resolver(() => Product)
 export class ProductResolver {
     constructor(

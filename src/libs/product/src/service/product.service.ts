@@ -1,8 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Product, ProductDocument } from './product.schema';
-import { CreateProductInput, ListProducts } from '../generate-types';
+import { Product, ProductDocument } from '../schema/product.schema';
+import { CreateProductInput, ListProducts } from '../../../../generate-types';
 @Injectable()
 export class ProductService {
     constructor(
