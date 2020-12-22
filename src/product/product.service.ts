@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Product, ProductDocument } from './product.schema';
-import { CreateProductInput } from '../generate-types';
+import { CreateProductInput, ListProducts } from '../generate-types';
 @Injectable()
 export class ProductService {
     constructor(
@@ -22,6 +22,18 @@ export class ProductService {
         try {
             const product = await this.productModel.findById(_id);
             return product;
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'Error')
+        }
+    }
+    async getAllProductBySlug (slug: string): Promise<ListProducts | undefined> {
+        try {
+            const products = await this.productModel.where('slug').equals(slug).exec();
+            return {
+                items: products,
+                totalItems: products.length
+            }
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'Error')

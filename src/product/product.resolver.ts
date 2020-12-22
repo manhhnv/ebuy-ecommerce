@@ -9,7 +9,10 @@ export class ProductResolver {
     product(@Args('_id') _id: string) {
         return this.productService.findProductById(_id)
     }
-
+    @Query()
+    products(@Args('slug') slug: string) {
+        return this.productService.getAllProductBySlug(slug)
+    }
     @Mutation()
     createProduct (@Args('input') input: CreateProductInput) {
         return this.productService.createProduct(input)

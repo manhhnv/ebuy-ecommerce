@@ -21,9 +21,14 @@ type Product implements Node{
     createdAt: Date
     updatedAt: Date
 }
+type ListProducts {
+    items: [Product!]
+    totalItems: Int!
+}
 type Query {
-    product(_id: ID): Product
+    product(_id: ID!): Product
+    products(slug: String!): ListProducts!
 }
 type Mutation {
-    createProduct(input: CreateProductInput): Product
+    createProduct(input: CreateProductInput!): Product
 }

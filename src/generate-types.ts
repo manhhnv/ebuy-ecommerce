@@ -40,14 +40,26 @@ export type Product = Node & {
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
+export type ListProducts = {
+  __typename?: 'ListProducts';
+  items?: Maybe<Array<Product>>;
+  totalItems: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
   product?: Maybe<Product>;
+  products: ListProducts;
 };
 
 
 export type QueryProductArgs = {
-  _id?: Maybe<Scalars['ID']>;
+  _id: Scalars['ID'];
+};
+
+
+export type QueryProductsArgs = {
+  slug: Scalars['String'];
 };
 
 export type Mutation = {
@@ -57,5 +69,5 @@ export type Mutation = {
 
 
 export type MutationCreateProductArgs = {
-  input?: Maybe<CreateProductInput>;
+  input: CreateProductInput;
 };
