@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ProductModule } from './product/product.module';
+import { ProductVariantModule } from './product-variant/product-variant.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { ProductModule } from './product/product.module';
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql']
     }),
-    ProductModule],
+    ProductModule,
+    ProductVariantModule],
   controllers: [AppController],
   providers: [AppService],
 })

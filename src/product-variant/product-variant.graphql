@@ -1,0 +1,32 @@
+enum TypeAsset {
+    IMAGE
+    VIDEO
+    BINARY
+}
+type Asset implements Node{
+    _id: ID!
+    name: String!
+    type: TypeAsset!
+    fileSize: Int!
+    width: Int
+    height: Int
+    preview: String
+    createdAt: Date
+    updatedAt: Date
+}
+type ProductVariant implements Node {
+    _id: ID!
+    product: Product!
+    productId: ID!
+    inStock: Int!
+    active: Boolean
+    sku: String!
+    name: String!
+    price: Int!
+    featureAsset: Asset
+    createdAt: Date
+    updatedAt: Date
+}
+type Query {
+    productVariant(id: ID!): String
+}

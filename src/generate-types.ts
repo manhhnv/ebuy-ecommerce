@@ -13,6 +13,62 @@ export type Scalars = {
   Date: any;
 };
 
+export enum TypeAsset {
+  Image = 'IMAGE',
+  Video = 'VIDEO',
+  Binary = 'BINARY'
+}
+
+export type Asset = Node & {
+  __typename?: 'Asset';
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  type: TypeAsset;
+  fileSize: Scalars['Int'];
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type ProductVariant = Node & {
+  __typename?: 'ProductVariant';
+  _id: Scalars['ID'];
+  product: Product;
+  productId: Scalars['ID'];
+  inStock: Scalars['Int'];
+  active?: Maybe<Scalars['Boolean']>;
+  sku: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Int'];
+  featureAsset?: Maybe<Asset>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  productVariant?: Maybe<Scalars['String']>;
+  product?: Maybe<Product>;
+  products: ListProducts;
+};
+
+
+export type QueryProductVariantArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryProductArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type QueryProductsArgs = {
+  slug: Scalars['String'];
+};
+
 
 export type Node = {
   _id: Scalars['ID'];
@@ -44,22 +100,6 @@ export type ListProducts = {
   __typename?: 'ListProducts';
   items?: Maybe<Array<Product>>;
   totalItems: Scalars['Int'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  product?: Maybe<Product>;
-  products: ListProducts;
-};
-
-
-export type QueryProductArgs = {
-  _id: Scalars['ID'];
-};
-
-
-export type QueryProductsArgs = {
-  slug: Scalars['String'];
 };
 
 export type Mutation = {
