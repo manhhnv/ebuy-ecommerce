@@ -70,6 +70,7 @@ export type ProductVariant = Node & {
   __typename?: 'ProductVariant';
   _id: Scalars['ID'];
   productId: Scalars['ID'];
+  product?: Maybe<Product>;
   inStock: Scalars['Int'];
   active?: Maybe<Scalars['Boolean']>;
   sku: Scalars['String'];
@@ -93,7 +94,7 @@ export type Query = {
   __typename?: 'Query';
   product?: Maybe<Product>;
   products: ListProducts;
-  productVariant?: Maybe<Scalars['String']>;
+  productVariant?: Maybe<ProductVariant>;
 };
 
 
@@ -108,7 +109,7 @@ export type QueryProductsArgs = {
 
 
 export type QueryProductVariantArgs = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
 };
 
 export type Mutation = {

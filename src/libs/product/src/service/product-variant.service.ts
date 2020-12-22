@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ProductVariant, ProductVariantDocument } from '../schema/product-variant.schema';
+import { Product } from '../schema/product.schema';
 import { CreateProductVariantInput } from '../../../../generate-types';
 
 @Injectable()
@@ -12,7 +13,9 @@ export class ProductVariantService {
     {}
     async getVariant(_id: Types.ObjectId): Promise<ProductVariant | undefined> {
         try {
-            const variant = await this.variantModel.findById(_id)
+            console.log(_id)
+            const variant = await this.variantModel.findById(_id).populate(`${Product.name}`);
+            console.log(variant)
             return variant
         }
         catch(e) {
@@ -22,8 +25,6 @@ export class ProductVariantService {
     async variantsByProductId(productId: Types.ObjectId | string) {
         try {
             const variants = await this.variantModel.find({productId: `${productId}`})
-            console.log(productId)
-            console.log("Variant", variants)
             return variants;
         }
         catch(e) {

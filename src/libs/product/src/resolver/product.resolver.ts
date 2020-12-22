@@ -15,7 +15,6 @@ export class ProductResolver {
     }
     @ResolveField()
     async variants(@Parent() product: Product) {
-        console.log(product)
         const { _id } = product;
         return await this.variantService.variantsByProductId(_id)
     }

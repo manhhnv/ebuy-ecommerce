@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Types, Document } from 'mongoose';
 import { Product } from './product.schema';
+import { Product as ProductType } from '../../../../generate-types';
 
 @ObjectType()
 @Schema()
