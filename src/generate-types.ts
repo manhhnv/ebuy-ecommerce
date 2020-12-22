@@ -98,6 +98,7 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
+  me: User;
 };
 
 
@@ -115,10 +116,17 @@ export type QueryProductVariantArgs = {
   _id: Scalars['ID'];
 };
 
+
+export type QueryMeArgs = {
+  token: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
+  register: RegisterUserAccountResult;
+  login: NativeAuthenticationResult;
 };
 
 
@@ -130,3 +138,99 @@ export type MutationCreateProductArgs = {
 export type MutationCreateProductVariantArgs = {
   input?: Maybe<CreateProductVariantInput>;
 };
+
+
+export type MutationRegisterArgs = {
+  input?: Maybe<CreateUserInput>;
+};
+
+
+export type MutationLoginArgs = {
+  input?: Maybe<LoginInput>;
+};
+
+export enum ErrorCode {
+  UnknownError = 'UNKNOWN_ERROR',
+  NativeAuthStrategyError = 'NATIVE_AUTH_STRATEGY_ERROR',
+  InvalidCredentialsError = 'INVALID_CREDENTIALS_ERROR',
+  OrderStateTransitionError = 'ORDER_STATE_TRANSITION_ERROR',
+  EmailAddressConflictError = 'EMAIL_ADDRESS_CONFLICT_ERROR',
+  OrderModificationError = 'ORDER_MODIFICATION_ERROR',
+  OrderLimitError = 'ORDER_LIMIT_ERROR',
+  NegativeQuantityError = 'NEGATIVE_QUANTITY_ERROR',
+  InsufficientStockError = 'INSUFFICIENT_STOCK_ERROR',
+  IneligibleShippingMethodError = 'INELIGIBLE_SHIPPING_METHOD_ERROR',
+  OrderPaymentStateError = 'ORDER_PAYMENT_STATE_ERROR',
+  PaymentFailedError = 'PAYMENT_FAILED_ERROR',
+  PaymentDeclinedError = 'PAYMENT_DECLINED_ERROR',
+  CouponCodeInvalidError = 'COUPON_CODE_INVALID_ERROR',
+  CouponCodeExpiredError = 'COUPON_CODE_EXPIRED_ERROR',
+  CouponCodeLimitError = 'COUPON_CODE_LIMIT_ERROR',
+  AlreadyLoggedInError = 'ALREADY_LOGGED_IN_ERROR',
+  MissingPasswordError = 'MISSING_PASSWORD_ERROR',
+  PasswordAlreadySetError = 'PASSWORD_ALREADY_SET_ERROR',
+  VerificationTokenInvalidError = 'VERIFICATION_TOKEN_INVALID_ERROR',
+  VerificationTokenExpiredError = 'VERIFICATION_TOKEN_EXPIRED_ERROR',
+  IdentifierChangeTokenInvalidError = 'IDENTIFIER_CHANGE_TOKEN_INVALID_ERROR',
+  IdentifierChangeTokenExpiredError = 'IDENTIFIER_CHANGE_TOKEN_EXPIRED_ERROR',
+  PasswordResetTokenInvalidError = 'PASSWORD_RESET_TOKEN_INVALID_ERROR',
+  PasswordResetTokenExpiredError = 'PASSWORD_RESET_TOKEN_EXPIRED_ERROR',
+  NotVerifiedError = 'NOT_VERIFIED_ERROR',
+  NotMatchRegex = 'NOT_MATCH_REGEX',
+  UsernameConflictError = 'USERNAME_CONFLICT_ERROR',
+  WrongFormatFields = 'WRONG_FORMAT_FIELDS'
+}
+
+export type User = Node & {
+  __typename?: 'User';
+  _id: Scalars['ID'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  active: Scalars['Boolean'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type CreateUserInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type LoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  rememberMe?: Maybe<Scalars['Boolean']>;
+};
+
+export type UserWithToken = {
+  __typename?: 'UserWithToken';
+  user: User;
+  token: Scalars['String'];
+};
+
+export type InvalidCredentialsError = {
+  __typename?: 'InvalidCredentialsError';
+  errorCode: ErrorCode;
+  message?: Maybe<Scalars['String']>;
+  authenticationError?: Maybe<Scalars['String']>;
+};
+
+export type Success = {
+  __typename?: 'Success';
+  success: Scalars['Boolean'];
+};
+
+export type RegexNotMatchError = {
+  __typename?: 'RegexNotMatchError';
+  errorCode: ErrorCode;
+  message?: Maybe<Scalars['String']>;
+};
+
+export type NativeAuthenticationResult = UserWithToken | InvalidCredentialsError;
+
+export type RegisterUserAccountResult = Success | RegexNotMatchError;

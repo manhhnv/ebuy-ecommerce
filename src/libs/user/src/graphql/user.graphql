@@ -1,0 +1,79 @@
+enum ErrorCode {
+    UNKNOWN_ERROR
+    NATIVE_AUTH_STRATEGY_ERROR
+    INVALID_CREDENTIALS_ERROR
+    ORDER_STATE_TRANSITION_ERROR
+    EMAIL_ADDRESS_CONFLICT_ERROR
+    ORDER_MODIFICATION_ERROR
+    ORDER_LIMIT_ERROR
+    NEGATIVE_QUANTITY_ERROR
+    INSUFFICIENT_STOCK_ERROR
+    INELIGIBLE_SHIPPING_METHOD_ERROR
+    ORDER_PAYMENT_STATE_ERROR
+    PAYMENT_FAILED_ERROR
+    PAYMENT_DECLINED_ERROR
+    COUPON_CODE_INVALID_ERROR
+    COUPON_CODE_EXPIRED_ERROR
+    COUPON_CODE_LIMIT_ERROR
+    ALREADY_LOGGED_IN_ERROR
+    MISSING_PASSWORD_ERROR
+    PASSWORD_ALREADY_SET_ERROR
+    VERIFICATION_TOKEN_INVALID_ERROR
+    VERIFICATION_TOKEN_EXPIRED_ERROR
+    IDENTIFIER_CHANGE_TOKEN_INVALID_ERROR
+    IDENTIFIER_CHANGE_TOKEN_EXPIRED_ERROR
+    PASSWORD_RESET_TOKEN_INVALID_ERROR
+    PASSWORD_RESET_TOKEN_EXPIRED_ERROR
+    NOT_VERIFIED_ERROR
+    NOT_MATCH_REGEX
+    USERNAME_CONFLICT_ERROR
+    WRONG_FORMAT_FIELDS
+}
+
+type User implements Node {
+    _id: ID!
+    firstName: String!
+    lastName: String!
+    username: String!
+    email: String!
+    active: Boolean!
+    createdAt: Date
+    updatedAt: Date
+}
+input CreateUserInput {
+    firstName: String!
+    lastName: String!
+    username: String!
+    email: String!
+    password: String!
+}
+input LoginInput {
+    email: String!
+    password: String!
+    rememberMe: Boolean
+}
+type UserWithToken {
+    user: User!
+    token: String!
+}
+type InvalidCredentialsError {
+    errorCode: ErrorCode!
+    message: String
+    authenticationError: String
+}
+type Success {
+    success: Boolean!
+}
+type RegexNotMatchError {
+    errorCode: ErrorCode!
+    message: String
+}
+union NativeAuthenticationResult = UserWithToken | InvalidCredentialsError
+union RegisterUserAccountResult = Success | RegexNotMatchError
+type Query {
+    me(token: String!): User!
+}
+type Mutation {
+    register(input: CreateUserInput): RegisterUserAccountResult!
+    login(input: LoginInput): NativeAuthenticationResult!
+}
