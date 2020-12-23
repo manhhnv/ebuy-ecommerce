@@ -11,6 +11,8 @@ export type Scalars = {
   Int: number;
   Float: number;
   Date: any;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
 };
 
 
@@ -148,6 +150,7 @@ export type MutationRegisterArgs = {
 export type MutationLoginArgs = {
   input?: Maybe<LoginInput>;
 };
+
 
 export enum ErrorCode {
   UnknownError = 'UNKNOWN_ERROR',

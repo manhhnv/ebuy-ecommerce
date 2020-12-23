@@ -1,3 +1,4 @@
+scalar JSON
 enum ErrorCode {
     UNKNOWN_ERROR
     NATIVE_AUTH_STRATEGY_ERROR
