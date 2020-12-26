@@ -17,7 +17,9 @@ import { TokenAuthGuard } from './guard/token-auth.guard';
         MongooseModule.forFeature([
             {name: Token.name, schema: TokenSchema}
         ]),
-        PassportModule,
+        PassportModule.register({
+            session: true
+        }),
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: { expiresIn: "30days"},

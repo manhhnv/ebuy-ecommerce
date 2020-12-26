@@ -1,7 +1,7 @@
-import { Resolver, Mutation, Query, Args, ResolveField, Context, GraphQLExecutionContext} from '@nestjs/graphql';
+import { Resolver, Mutation, Query, Args, ResolveField, Context,} from '@nestjs/graphql';
 import { UserService } from '../service/user.service';
 import { CreateUserInput, LoginInput, User } from 'src/generate-types';
-import { UseGuards, Request, Req} from '@nestjs/common';
+import { UseGuards, Request, Req, Session} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/libs/auth/src/service/jwt-auth.guard';
 import { TokenAuthGuard } from 'src/libs/auth/src/guard/token-auth.guard';
 // import { Ctx } from 'type-graphql';
@@ -41,7 +41,8 @@ export class UserResolver {
 
     //     // this.userService.profile()
     // }
-    async me(@Context('user') user: User) {
+    async me(@Context('user') user: User, @Session() session) {
+        console.log("ABC", session)
         // console.log("User", user)
         // return this.userService.profile("5fe73ee3313bf24102e23138")
         return user;

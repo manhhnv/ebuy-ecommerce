@@ -15,7 +15,8 @@ import { ConfigModule } from '@nestjs/config';
       resolvers: { JSON: GraphQLJSON },
       context: ({req}) => {
         return {
-          headers: req.headers
+          headers: req.headers,
+          session: req.session
         }
       }
     }),

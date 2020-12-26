@@ -9,7 +9,7 @@ export class TokenAuthGuard implements CanActivate {
     constructor(private authService: AuthService){}
     async canActivate(context: ExecutionContext) {
         const ctx = GqlExecutionContext.create(context).getContext();
-        // console.log("CTX", ctx.session)
+        console.log("CTX", ctx.session)
         // console.log(process.env.DATABASE_NAME)
         if (!ctx.headers.authorization) {
             return false;
