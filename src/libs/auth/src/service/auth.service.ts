@@ -20,8 +20,9 @@ export class AuthService {
     
 
     private generateToken(user: User | any): string {
+        console.log(process.env)
         const payload = { _id: user._id }
-        return this.jwtService.sign(payload, {secret: 'secretKey'})
+        return this.jwtService.sign(payload, {secret: process.env.JWT_PRIVATE_KEY})
     }
     async validateUser(input: LoginInput, user: any): Promise<NativeAuthenticationResult> {
 

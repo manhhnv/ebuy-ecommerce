@@ -9,6 +9,8 @@ export class TokenAuthGuard implements CanActivate {
     constructor(private authService: AuthService){}
     async canActivate(context: ExecutionContext) {
         const ctx = GqlExecutionContext.create(context).getContext();
+        // console.log("CTX", ctx.session)
+        // console.log(process.env.DATABASE_NAME)
         if (!ctx.headers.authorization) {
             return false;
         }
@@ -22,7 +24,7 @@ export class TokenAuthGuard implements CanActivate {
         }
         const token = auth.split(' ')[1];
         try {
-            const res: any = await jwt.verify(token, 'secretKey')
+            const res: any = await jwt.verify(token, process.env.JWT_PRIVATE_KEY)
             const test  = await this.authService.findUserById("abc")
             console.log("Test", test)
             console.log("RES", res)
