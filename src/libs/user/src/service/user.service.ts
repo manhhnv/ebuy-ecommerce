@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, BadRequestException, Scope, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../schema/user.schema';
@@ -10,11 +10,13 @@ import {
     NativeAuthenticationResult
 } from 'src/generate-types';
 import { AuthService } from 'src/libs/auth/src/service/auth.service';
-@Injectable()
+import { CONTEXT } from '@nestjs/graphql';
+@Injectable({scope: Scope.REQUEST})
 export class UserService {
     constructor(
         @InjectModel(User.name) private userModel: Model<UserDocument>,
-        private authService: AuthService
+        private authService: AuthService,
+        @Inject(CONTEXT) private context
     ) { }
     async createUserAccount(input: CreateUserInput): Promise<RegisterUserAccountResult> {
         try {
@@ -67,5 +69,10 @@ export class UserService {
                 message: 'Not found user'
             }
         }
+    }
+
+    async profile(_id: string) {
+        return this.authService.findUserById(_id)
+        // console.log(this.context)
     }
 }

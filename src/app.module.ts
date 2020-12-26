@@ -11,7 +11,12 @@ import GraphQLJSON from 'graphql-type-json';
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
-      resolvers: { JSON: GraphQLJSON }
+      resolvers: { JSON: GraphQLJSON },
+      context: ({req}) => {
+        return {
+          headers: req.headers
+        }
+      }
     }),
     ProductModule,
     UserModule

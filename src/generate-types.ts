@@ -100,7 +100,7 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
-  me: User;
+  me?: Maybe<User>;
 };
 
 
@@ -116,11 +116,6 @@ export type QueryProductsArgs = {
 
 export type QueryProductVariantArgs = {
   _id: Scalars['ID'];
-};
-
-
-export type QueryMeArgs = {
-  token: Scalars['String'];
 };
 
 export type Mutation = {

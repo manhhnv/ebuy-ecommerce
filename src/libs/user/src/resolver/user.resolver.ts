@@ -1,8 +1,12 @@
-import { Resolver, Mutation, Query, Args, ResolveField} from '@nestjs/graphql';
+import { Resolver, Mutation, Query, Args, ResolveField, Context, GraphQLExecutionContext} from '@nestjs/graphql';
 import { UserService } from '../service/user.service';
-import { CreateUserInput, LoginInput } from 'src/generate-types';
-import { UseGuards, Request } from '@nestjs/common';
+import { CreateUserInput, LoginInput, User } from 'src/generate-types';
+import { UseGuards, Request, Req} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/libs/auth/src/service/jwt-auth.guard';
+import { TokenAuthGuard } from 'src/libs/auth/src/guard/token-auth.guard';
+// import { Ctx } from 'type-graphql';
+// import { Context } from 'vm';
+import { CtxUser } from 'src/utils/user.decorator';
 
 @Resolver('NativeAuthenticationResult')
 export class UserResolver {
@@ -26,7 +30,22 @@ export class UserResolver {
 
     // @UseGuards(JwtAuthGuard)
     // @Query()
-    // me(@Request)
+    // me(@Ctx() ctx: Context) {
+    //     return ctx;
+    // }
+    @UseGuards(TokenAuthGuard)
+    @Query()
+    // async me(): Promise<any> {
+    //     console.log(req)
+    //     // console.log(context.switchToHttp())
+
+    //     // this.userService.profile()
+    // }
+    async me(@Context('user') user: User) {
+        // console.log("User", user)
+        // return this.userService.profile("5fe73ee3313bf24102e23138")
+        return user;
+    }
 }
 @Resolver('RegisterUserAccountResult')
 export class RegisterResolver {

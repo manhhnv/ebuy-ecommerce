@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { HttpStatus, Injectable, InternalServerErrorException, HttpException } from '@nestjs/common';
 import {
     LoginInput, NativeAuthenticationResult, ErrorCode,
     CreateUserInput, RegisterUserAccountResult, User
@@ -21,7 +21,7 @@ export class AuthService {
 
     private generateToken(user: User | any): string {
         const payload = { _id: user._id }
-        return this.jwtService.sign(payload)
+        return this.jwtService.sign(payload, {secret: 'secretKey'})
     }
     async validateUser(input: LoginInput, user: any): Promise<NativeAuthenticationResult> {
 
@@ -58,9 +58,19 @@ export class AuthService {
         }
     }
     async findUserById(_id: string): Promise<any> {
-        const user = await mongoose.connection.db.collection('users', (err, collection) => {
-            return collection.findOne({_id: _id})
+        console.log("running here")
+        const test = await this.tokenModel.findOne()
+        // console.log(test)
+        return test
+        // return user;
+    }
+    async checkExprideToken(userId: string, tokenId: string) {
+        const instanceOfTokenModel = await this.tokenModel.findOne({
+            userId: userId,
+            tokenId: tokenId
         })
-        return user;
+        if (!instanceOfTokenModel) {
+            throw new HttpException('You are not logged in', HttpStatus.UNAUTHORIZED)
+        }
     }
 }

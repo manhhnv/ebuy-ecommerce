@@ -72,7 +72,7 @@ type RegexNotMatchError {
 union NativeAuthenticationResult = UserWithToken | InvalidCredentialsError
 union RegisterUserAccountResult = Success | RegexNotMatchError
 type Query {
-    me(token: String!): User!
+    me: User
 }
 type Mutation {
     register(input: CreateUserInput): RegisterUserAccountResult!
