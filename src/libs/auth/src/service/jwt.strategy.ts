@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { jwtConstants } from '../../constants';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private authService: AuthService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -14,6 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         });
     }
     async validate(payload: any) {
-        return {profile: payload.profile}
+        const {_id} = await payload._id;
+        return this.authService.findUserById(_id)
     }
 }

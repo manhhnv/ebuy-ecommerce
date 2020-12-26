@@ -1,6 +1,8 @@
 import { Resolver, Mutation, Query, Args, ResolveField} from '@nestjs/graphql';
 import { UserService } from '../service/user.service';
 import { CreateUserInput, LoginInput } from 'src/generate-types';
+import { UseGuards, Request } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/libs/auth/src/service/jwt-auth.guard';
 
 @Resolver('NativeAuthenticationResult')
 export class UserResolver {
@@ -21,6 +23,10 @@ export class UserResolver {
         }
         return 'InvalidCredentialsError'
     }
+
+    // @UseGuards(JwtAuthGuard)
+    // @Query()
+    // me(@Request)
 }
 @Resolver('RegisterUserAccountResult')
 export class RegisterResolver {
