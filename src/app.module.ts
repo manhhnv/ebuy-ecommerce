@@ -13,10 +13,13 @@ import { ConfigModule } from '@nestjs/config';
     GraphQLModule.forRoot({
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
       resolvers: { JSON: GraphQLJSON },
-      context: ({req}) => {
+      context: ({req, res}) => {
+        console.log("RESPONSE", res)
         return {
           headers: req.headers,
-          session: req.session
+          session: req.session,
+          req: req,
+          res: res
         }
       }
     }),

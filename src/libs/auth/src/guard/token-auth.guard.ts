@@ -1,15 +1,38 @@
 import {
     CanActivate, Injectable, ExecutionContext,
-    HttpException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
+    HttpException, HttpStatus,
+    ArgumentsHost
+ } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import * as jwt from 'jsonwebtoken';
 import { AuthService } from '../service/auth.service';
+import { Request, Response } from 'express';
+import { GraphQLResolveInfo } from 'graphql';
 @Injectable()
 export class TokenAuthGuard implements CanActivate {
     constructor(private authService: AuthService){}
     async canActivate(context: ExecutionContext) {
-        const ctx = GqlExecutionContext.create(context).getContext();
-        console.log("CTX", ctx.session)
+
+        const graphQlContext = GqlExecutionContext.create(context as ExecutionContext)
+        const restContext = GqlExecutionContext.create(context as ExecutionContext)
+        const info = graphQlContext.getInfo();
+        let req: Request
+        let res: Response
+        let ctx;
+        if (info) {
+            ctx = graphQlContext.getContext()
+            req = ctx.req
+            res = ctx.res
+        }
+        else {
+            req = context.switchToHttp().getRequest()
+            res = context.switchToHttp().getResponse()
+        }
+        console.log("REQUEST", req)
+        console.log("RESPONSE", res)
+        // const ctx = GqlExecutionContext.create(context).getContext();
+        // console.log("CTX", ctx.session)
+        // console.log("CTX", ctx.session)
         // console.log(process.env.DATABASE_NAME)
         if (!ctx.headers.authorization) {
             return false;
