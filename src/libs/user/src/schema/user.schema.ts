@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Field, ObjectType} from '@nestjs/graphql';
-import { IsEmail, MinLength, Matches } from 'class-validator';
+import { IsEmail, MinLength, Matches, IsPhoneNumber } from 'class-validator';
 
 @ObjectType()
 @Schema()
@@ -30,9 +30,26 @@ export class User {
     email: string
 
     @Field(() => String)
+    @IsPhoneNumber('VN')
+    @Prop({type: String, required: true})
+    phoneNumber: string
+    
+    @Field(() => String)
+    @Prop({type: String, required: false, default: null})
+    avatarURL: string
+
+    @Field(() => String)
     @MinLength(8)
     @Prop({type: String, required: true, minlength: 8})
     password: string
+
+    @Field(() => String)
+    @Prop({type: String, default: "VN", required: true})
+    countryCode: string
+
+    @Field(() => String)
+    @Prop({type: String, default: "VND", required: true})
+    currency: string
 
     @Field(() => Boolean)
     @Prop({type: Boolean, default: true})

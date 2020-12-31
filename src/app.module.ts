@@ -20,12 +20,12 @@ import { ConfigModule } from '@nestjs/config';
           httpOnly: true,
           secure: true
         }
-        console.log("test", test)
-        console.log("Sess", req.session.id)
-        const cookie = req.session.cookie
-        delete cookie._expires
-        console.log("Cookie", cookie)
-        console.log("something", req.cookies['connect.sid'])
+        // console.log("test", test)
+        // console.log("Sess", req.session.id)
+        // const cookie = req.session.cookie
+        // delete cookie._expires
+        // console.log("Cookie", cookie)
+        // console.log("something", req.cookies['connect.sid'])
         return {
           headers: req.headers,
           session: req.session,

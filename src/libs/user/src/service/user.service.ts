@@ -1,4 +1,7 @@
-import { Injectable, InternalServerErrorException, BadRequestException, Scope, Inject } from '@nestjs/common';
+import { 
+    Injectable, InternalServerErrorException,
+    HttpException, Scope, Inject, HttpStatus
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../schema/user.schema';
@@ -72,7 +75,12 @@ export class UserService {
     }
 
     async profile(_id: string) {
-        return this.authService.findUserById(_id)
-        // console.log(this.context)
+        const user = await this.userModel.findById(_id)
+        if (!user) {
+            throw new HttpException('Can not find user', HttpStatus.UNAUTHORIZED)
+        }
+        else {
+            return user;
+        }
     }
 }

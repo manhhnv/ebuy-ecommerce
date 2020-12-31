@@ -22,15 +22,14 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         maxAge: 60000,
-        sameSite: true
       },
       store: new MongoStore({
         url: 'mongodb://127.0.0.1:27017/ebuy'
       }),
     })
   )
-  // app.use(passport.initialize())
-  // app.use(passport.session())
+  app.use(passport.initialize())
+  app.use(passport.session())
   await app.listen(process.env.PORT);
   console.log(`Success: Graphql running at http://0.0.0.0:${process.env.PORT}/graphql`)
 }

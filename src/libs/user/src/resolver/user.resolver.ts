@@ -4,8 +4,6 @@ import { CreateUserInput, LoginInput, User } from 'src/generate-types';
 import { UseGuards, Request, Req, Session} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/libs/auth/src/service/jwt-auth.guard';
 import { TokenAuthGuard } from 'src/libs/auth/src/guard/token-auth.guard';
-// import { Ctx } from 'type-graphql';
-// import { Context } from 'vm';
 import { CtxUser } from 'src/utils/user.decorator';
 
 @Resolver('NativeAuthenticationResult')
@@ -28,24 +26,11 @@ export class UserResolver {
         return 'InvalidCredentialsError'
     }
 
-    // @UseGuards(JwtAuthGuard)
-    // @Query()
-    // me(@Ctx() ctx: Context) {
-    //     return ctx;
-    // }
     @UseGuards(TokenAuthGuard)
     @Query()
-    // async me(): Promise<any> {
-    //     console.log(req)
-    //     // console.log(context.switchToHttp())
-
-    //     // this.userService.profile()
-    // }
-    async me(@Context('user') user: User,@Request() request: any) {
-        console.log("ABC", request)
-        // console.log("User", user)
-        // return this.userService.profile("5fe73ee3313bf24102e23138")
-        return user;
+    async me(@Context('user') user: User) {
+        const { _id } = user;
+        return this.userService.profile(_id);
     }
 }
 @Resolver('RegisterUserAccountResult')

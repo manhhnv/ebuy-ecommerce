@@ -100,7 +100,7 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
-  me?: Maybe<User>;
+  me: User;
 };
 
 
@@ -186,16 +186,22 @@ export type User = Node & {
   lastName: Scalars['String'];
   username: Scalars['String'];
   email: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  avatarURL?: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
+  countryCode?: Maybe<Scalars['String']>;
+  currency?: Maybe<Scalars['String']>;
 };
 
 export type CreateUserInput = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  avatarURL?: Maybe<Scalars['String']>;
   username: Scalars['String'];
   email: Scalars['String'];
+  phoneNumber?: Maybe<Scalars['String']>;
   password: Scalars['String'];
 };
 
