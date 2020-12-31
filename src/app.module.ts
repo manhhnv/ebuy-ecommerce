@@ -13,8 +13,19 @@ import { ConfigModule } from '@nestjs/config';
     GraphQLModule.forRoot({
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
       resolvers: { JSON: GraphQLJSON },
-      context: ({req, res}) => {
-        console.log("RESPONSE", res)
+      context: ({ req, res }) => {
+        const test = {
+          path: '/',
+          originalMaxAge: 60000,
+          httpOnly: true,
+          secure: true
+        }
+        console.log("test", test)
+        console.log("Sess", req.session.id)
+        const cookie = req.session.cookie
+        delete cookie._expires
+        console.log("Cookie", cookie)
+        console.log("something", req.cookies['connect.sid'])
         return {
           headers: req.headers,
           session: req.session,
@@ -32,4 +43,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

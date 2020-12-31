@@ -41,8 +41,8 @@ export class UserResolver {
 
     //     // this.userService.profile()
     // }
-    async me(@Context('user') user: User, @Session() session) {
-        console.log("ABC", session)
+    async me(@Context('user') user: User,@Request() request: any) {
+        console.log("ABC", request)
         // console.log("User", user)
         // return this.userService.profile("5fe73ee3313bf24102e23138")
         return user;

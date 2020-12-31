@@ -19,21 +19,28 @@ export class TokenAuthGuard implements CanActivate {
         let req: Request
         let res: Response
         let ctx;
+        // console.log(req.session.id)
         if (info) {
             ctx = graphQlContext.getContext()
             req = ctx.req
             res = ctx.res
+            console.log("INFO", ctx.session.id)
+        }
+        // else {
+        //     req = context.switchToHttp().getRequest()
+        //     res = context.switchToHttp().getResponse()
+        // }
+        if (req.session) {
+            console.log("SessionId", req.session.id)
+            // const cookie = await req.res.cookie('token', req.sessionID)
+            // ctx.sessionId = req.sessionID
+            // console.log("ASASA", req.session.cookie)
+            // req.signedCookies
         }
         else {
-            req = context.switchToHttp().getRequest()
-            res = context.switchToHttp().getResponse()
+            console.log("Session not exists")
         }
-        console.log("REQUEST", req)
-        console.log("RESPONSE", res)
-        // const ctx = GqlExecutionContext.create(context).getContext();
-        // console.log("CTX", ctx.session)
-        // console.log("CTX", ctx.session)
-        // console.log(process.env.DATABASE_NAME)
+        // console.log("session", req.session.regenerate(() => {}))
         if (!ctx.headers.authorization) {
             return false;
         }
@@ -42,15 +49,12 @@ export class TokenAuthGuard implements CanActivate {
     }
     async validateToken(auth: string) {
         if (auth.split(' ')[0] !== 'Bearer') {
-            // console.log("HERE asas")
             throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
         }
         const token = auth.split(' ')[1];
         try {
             const res: any = await jwt.verify(token, process.env.JWT_PRIVATE_KEY)
             const test  = await this.authService.findUserById("abc")
-            console.log("Test", test)
-            console.log("RES", res)
             return res
         }
         catch(e) {
