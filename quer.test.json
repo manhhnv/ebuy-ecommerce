@@ -1,0 +1,4 @@
+{
+    "query": "mutation upload($file:String)",
+    "0": ["variables.file"]
+}

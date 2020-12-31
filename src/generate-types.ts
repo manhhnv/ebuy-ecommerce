@@ -124,6 +124,7 @@ export type Mutation = {
   createProductVariant?: Maybe<Array<ProductVariant>>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
+  upload?: Maybe<Scalars['JSON']>;
 };
 
 
@@ -144,6 +145,11 @@ export type MutationRegisterArgs = {
 
 export type MutationLoginArgs = {
   input?: Maybe<LoginInput>;
+};
+
+
+export type MutationUploadArgs = {
+  file?: Maybe<Scalars['String']>;
 };
 
 
@@ -201,7 +207,7 @@ export type CreateUserInput = {
   avatarURL?: Maybe<Scalars['String']>;
   username: Scalars['String'];
   email: Scalars['String'];
-  phoneNumber?: Maybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
   password: Scalars['String'];
 };
 

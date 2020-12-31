@@ -1,10 +1,14 @@
-import { Resolver, Mutation, Query, Args, ResolveField, Context,} from '@nestjs/graphql';
+import { 
+    Resolver, Mutation, Query, Args,
+    ResolveField, Context,
+} from '@nestjs/graphql';
 import { UserService } from '../service/user.service';
 import { CreateUserInput, LoginInput, User } from 'src/generate-types';
-import { UseGuards, Request, Req, Session} from '@nestjs/common';
+import { UseGuards, Request, Req, Session, UseInterceptors, UploadedFile} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/libs/auth/src/service/jwt-auth.guard';
 import { TokenAuthGuard } from 'src/libs/auth/src/guard/token-auth.guard';
 import { CtxUser } from 'src/utils/user.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Resolver('NativeAuthenticationResult')
 export class UserResolver {
@@ -46,5 +50,11 @@ export class RegisterResolver {
             return 'Success'
         }
         return 'RegexNotMatchError'
+    }
+
+    @Mutation()
+    @UseInterceptors(FileInterceptor('file'))
+    upload(@UploadedFile() file) {
+        console.log(file)
     }
 }

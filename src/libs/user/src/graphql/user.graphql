@@ -51,7 +51,7 @@ input CreateUserInput {
     avatarURL: String
     username: String!
     email: String!
-    phoneNumber: String
+    phoneNumber: String!
     password: String!
 }
 input LoginInput {
@@ -83,4 +83,5 @@ type Query {
 type Mutation {
     register(input: CreateUserInput): RegisterUserAccountResult!
     login(input: LoginInput): NativeAuthenticationResult!
+    upload(file: String): JSON
 }
