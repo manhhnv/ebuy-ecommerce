@@ -1,1 +1,1 @@
-export * from './src/auth.module';
+export {AuthModule} from './src/auth.module';

@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ProductModule } from 'src/libs/product';
-import { UserModule } from 'src/libs/user/index';
+import { UserModule } from 'src/libs/user';
 import GraphQLJSON from 'graphql-type-json';
 import { ConfigModule } from '@nestjs/config';
 // import { GraphQLUpload } from 'graphql-upload';
-import { UploadModule } from 'src/libs/upload/index';
+import { UploadModule } from 'src/libs/upload';
 const { GraphQLUpload } = require('graphql-upload');
 
 @Module({
