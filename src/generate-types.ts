@@ -102,6 +102,7 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
+  activeOrder?: Maybe<Order>;
   me: User;
 };
 
@@ -126,6 +127,7 @@ export type Mutation = {
   createProductVariant?: Maybe<Array<ProductVariant>>;
   uploadFile?: Maybe<Scalars['Boolean']>;
   addItemToOrder?: Maybe<Order>;
+  removeItemFromOrder?: Maybe<Order>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
@@ -150,6 +152,11 @@ export type MutationUploadFileArgs = {
 export type MutationAddItemToOrderArgs = {
   variantId: Scalars['ID'];
   quantity: Scalars['Int'];
+};
+
+
+export type MutationRemoveItemFromOrderArgs = {
+  orderLineId: Scalars['ID'];
 };
 
 

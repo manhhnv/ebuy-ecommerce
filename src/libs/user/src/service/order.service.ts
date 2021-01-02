@@ -45,7 +45,8 @@ export class OrderService {
                 const updateOrder = await order.updateOne({
                     totalQuantity: order.totalQuantity + adjustQuantity,
                     subTotal: order.subTotal + adjustQuantity * variant.price,
-                    total: order.total + adjustQuantity * variant.price
+                    total: order.total + adjustQuantity * variant.price,
+                    updatedAt: new Date()
                 })
             }
         }
@@ -129,6 +130,27 @@ export class OrderService {
         return await this.orderModel.findOne({
             userId: userId
         })
+    }
+    async removeOrderLine(userId: string, orderLineId: string) {
+        try {
+            const orderLine = await this.orderLineModel.findById(orderLineId);
+            const order = await this.orderModel.findOne({
+                userId: userId
+            })
+            await order.updateOne({
+                totalQuantity: order.totalQuantity - orderLine.quantity,
+                total: order.total - orderLine.total,
+                subTotal: order.subTotal - orderLine.total,
+                updatedAt: new Date()
+            })
+            await orderLine.remove();
+            return this.orderModel.findOne({
+                userId: userId
+            })
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'AN ERROR OCCURRED IN PROCESS')
+        }
     }
     async orderLinesByOrderId(orderId: Types.ObjectId) {
         const lines = await this.orderLineModel.find({

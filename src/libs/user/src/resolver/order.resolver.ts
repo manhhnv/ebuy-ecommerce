@@ -32,6 +32,13 @@ export class OrderResolver {
         const {_id} = user
         return this.orderService.getActiveOrder(_id);
     }
+    
+    @UseGuards(TokenAuthGuard)
+    @Mutation()
+    async removeItemFromOrder(@Context('user') user: User, @Args('orderLineId') orderLineId: string) {
+        const {_id} = user;
+        return this.orderService.removeOrderLine(_id, orderLineId);
+    }
 
     @ResolveField()
     async lines(@Parent() order: Order) {
