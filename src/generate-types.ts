@@ -102,7 +102,6 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
-  addItemToOrder?: Maybe<Order>;
   me: User;
 };
 
@@ -121,17 +120,12 @@ export type QueryProductVariantArgs = {
   _id: Scalars['ID'];
 };
 
-
-export type QueryAddItemToOrderArgs = {
-  variantId: Scalars['ID'];
-  quantity: Scalars['Int'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
   uploadFile?: Maybe<Scalars['Boolean']>;
+  addItemToOrder?: Maybe<Order>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
@@ -150,6 +144,12 @@ export type MutationCreateProductVariantArgs = {
 
 export type MutationUploadFileArgs = {
   file: Scalars['Upload'];
+};
+
+
+export type MutationAddItemToOrderArgs = {
+  variantId: Scalars['ID'];
+  quantity: Scalars['Int'];
 };
 
 
@@ -197,13 +197,8 @@ export type Order = Node & {
   user: User;
   lines?: Maybe<Array<Maybe<OrderLine>>>;
   state: Scalars['String'];
-  shippingAddress?: Maybe<Scalars['String']>;
   totalQuantity?: Maybe<Scalars['Int']>;
   subTotal?: Maybe<Scalars['Int']>;
-  counponCodes?: Maybe<Scalars['String']>;
-  discounts?: Maybe<Scalars['Int']>;
-  payment?: Maybe<Scalars['String']>;
-  shipping?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;

@@ -8,6 +8,9 @@ export class Order {
     @Prop({type: Boolean, required: true, default: true})
     status: boolean
 
+    @Prop({type: String, required: true})
+    userId: string
+
     @Prop({type: String, required: true, default: 'Adding Item'})
     state: string
 

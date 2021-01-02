@@ -18,18 +18,18 @@ type Order implements Node {
     user: User!
     lines: [OrderLine]
     state: String!
-    shippingAddress: String
+    # shippingAddress: String
     totalQuantity: Int
     subTotal: Int
-    counponCodes: String
-    discounts: Int
-    payment: String
-    shipping: String
+    # counponCodes: String
+    # discounts: Int
+    # payment: String
+    # shipping: String
     total: Int
     createdAt: Date
     updatedAt: Date
 }
 
-type Query {
+type Mutation {
     addItemToOrder(variantId: ID!, quantity: Int!): Order
 }

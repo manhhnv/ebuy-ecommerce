@@ -14,6 +14,7 @@ import {
 } from 'src/generate-types';
 import { AuthService } from 'src/libs/auth/src/service/auth.service';
 import { CONTEXT } from '@nestjs/graphql';
+import { User as UserGraphQL } from 'src/generate-types';
 @Injectable({scope: Scope.REQUEST})
 export class UserService {
     constructor(
@@ -74,7 +75,7 @@ export class UserService {
         }
     }
 
-    async profile(_id: string) {
+    async profile(_id: string): Promise<UserGraphQL | undefined> {
         const user = await this.userModel.findById(_id)
         if (!user) {
             throw new HttpException('Can not find user', HttpStatus.UNAUTHORIZED)

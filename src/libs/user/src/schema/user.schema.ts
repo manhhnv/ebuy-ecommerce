@@ -7,7 +7,7 @@ import { IsEmail, MinLength, Matches, IsPhoneNumber } from 'class-validator';
 @Schema()
 export class User {
     @Field(() => String)
-    _id: Types.ObjectId | any
+    _id: Types.ObjectId | string
 
     @Field(() => String)
     @MinLength(8)

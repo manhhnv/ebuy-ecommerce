@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { AuthService } from './service/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './service/local.strategy';
@@ -11,7 +11,7 @@ import { JwtAuthGuard } from './service/jwt-auth.guard';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TokenSchema, Token } from './schema/token.schema';
 import { TokenAuthGuard } from './guard/token-auth.guard';
-
+@Global()
 @Module({
     imports: [
         MongooseModule.forFeature([

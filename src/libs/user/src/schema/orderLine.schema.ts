@@ -8,11 +8,14 @@ export class OrderLine {
     @Prop({type: String, required: true})
     productVariantId: string
 
+    @Prop({type: Types.ObjectId || String, required: true})
+    orderId: string
+
     @Prop({type: Number, required: true})
     quantity: Number
 
     @Prop({type: Number, required: true})
-    total: Number
+    total: number
     
     @Prop({type: Date, required: true, default: Date.now()})
     createdAt: Date
