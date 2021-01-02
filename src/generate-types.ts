@@ -13,6 +13,8 @@ export type Scalars = {
   Date: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 
@@ -122,6 +124,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
+  uploadFile?: Maybe<Scalars['Boolean']>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
@@ -135,6 +138,11 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateProductVariantArgs = {
   input?: Maybe<CreateProductVariantInput>;
+};
+
+
+export type MutationUploadFileArgs = {
+  file?: Maybe<Scalars['Upload']>;
 };
 
 
@@ -244,3 +252,4 @@ export type RegexNotMatchError = {
 export type NativeAuthenticationResult = UserWithToken | InvalidCredentialsError;
 
 export type RegisterUserAccountResult = Success | RegexNotMatchError;
+

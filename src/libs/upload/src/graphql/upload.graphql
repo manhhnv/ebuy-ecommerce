@@ -1,0 +1,9 @@
+scalar Upload
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+type Mutation {
+  uploadFile(file: Upload!): Boolean
+}

@@ -7,12 +7,16 @@ import { ProductModule } from 'src/libs/product';
 import { UserModule } from 'src/libs/user/index';
 import GraphQLJSON from 'graphql-type-json';
 import { ConfigModule } from '@nestjs/config';
+// import { GraphQLUpload } from 'graphql-upload';
+import { UploadModule } from 'src/libs/upload/index';
+const { GraphQLUpload } = require('graphql-upload');
+
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
-      resolvers: { JSON: GraphQLJSON },
+      resolvers: [{ JSON: GraphQLJSON }, {Upload: GraphQLUpload}],
       context: ({ req, res }) => {
         const test = {
           path: '/',
@@ -20,12 +24,6 @@ import { ConfigModule } from '@nestjs/config';
           httpOnly: true,
           secure: true
         }
-        // console.log("test", test)
-        // console.log("Sess", req.session.id)
-        // const cookie = req.session.cookie
-        // delete cookie._expires
-        // console.log("Cookie", cookie)
-        // console.log("something", req.cookies['connect.sid'])
         return {
           headers: req.headers,
           session: req.session,
@@ -38,7 +36,8 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env'
     }),
     ProductModule,
-    UserModule
+    UserModule,
+    UploadModule
   ],
   controllers: [AppController],
   providers: [AppService],
