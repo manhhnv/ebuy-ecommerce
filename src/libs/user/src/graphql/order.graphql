@@ -26,8 +26,14 @@ type Order implements Node {
     # payment: String
     # shipping: String
     total: Int
+    countryCode: String
+    currency: String
     createdAt: Date
     updatedAt: Date
+}
+
+type Query {
+    activeOrder: Order
 }
 
 type Mutation {

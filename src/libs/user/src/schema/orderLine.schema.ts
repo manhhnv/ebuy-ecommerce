@@ -12,7 +12,7 @@ export class OrderLine {
     orderId: Types.ObjectId
 
     @Prop({type: Number, required: true})
-    quantity: Number
+    quantity: number
 
     @Prop({type: Number, required: true})
     total: number

@@ -8,7 +8,6 @@ import { User, UserDocument } from '../schema/user.schema';
 import { Model } from 'mongoose';
 import { ProductVariantService } from 'src/libs/product/src/service/product-variant.service';
 import { Types } from 'mongoose';
-import { OrderedVariant } from '../../types';
 @Injectable()
 export class OrderService {
     constructor(
@@ -18,17 +17,37 @@ export class OrderService {
         private variantService: ProductVariantService
     ) { }
     
-    async adjustItem(orderLineId: string, variantId: string, adjustQuantity: number) {
+    async adjustItem(orderId: string, orderLineId: string, variantId: string, adjustQuantity: number) {
         try {
             const variant = await this.variantService.getVariant(Types.ObjectId(variantId))
             if (!variant) {
                 throw new HttpException('Product variant not found', HttpStatus.NOT_FOUND)
             }
+            if (variant.inStock <= 0) {
+                throw new HttpException('Sold Out', HttpStatus.BAD_REQUEST)
+            }
+            const order = await this.orderModel.findById(Types.ObjectId(orderId))
             const orderLine = await this.orderLineModel.findById(Types.ObjectId(orderLineId))
+            if (!order) {
+                throw new InternalServerErrorException('Add item before adjust cart')
+            }
             if (!orderLine) {
                 throw new HttpException('This item is not in the cart', HttpStatus.BAD_REQUEST)
             }
-            // const modified = 
+            if (orderLine.quantity + adjustQuantity <= 0) {
+                // Remove from cart...
+            }
+            else {
+                const updateOrderLine = await orderLine.updateOne({
+                    quantity: orderLine.quantity + adjustQuantity,
+                    total: (orderLine.quantity + adjustQuantity) * variant.price
+                })
+                const updateOrder = await order.updateOne({
+                    totalQuantity: order.totalQuantity + adjustQuantity,
+                    subTotal: order.subTotal + adjustQuantity * variant.price,
+                    total: order.total + adjustQuantity * variant.price
+                })
+            }
         }
         catch(e) {
             throw new InternalServerErrorException(e.message || 'AN ERROR OCCURRED IN PROCESS')
@@ -36,6 +55,9 @@ export class OrderService {
     }
     async addItemToOrder(userId: string, variantId: string, quantity: number): Promise<Order | any> {
         try {
+            if (quantity <= 0) {
+                throw new HttpException('Order quantity must be greater 0', HttpStatus.BAD_REQUEST)
+            }
             let currentOrder = await this.orderModel.findOne({
                 userId: userId,
                 status: true,
@@ -49,7 +71,6 @@ export class OrderService {
                 throw new HttpException('Sold Out', HttpStatus.BAD_REQUEST)
             }
             //Initital orderline [] and may be chaneged if current order already exists
-            let items = [];
             if (currentOrder === null) {
                 const currentUser = await this.userModel.findById(Types.ObjectId(userId))
                 if (!currentUser) {
@@ -64,42 +85,27 @@ export class OrderService {
                     quantity: quantity,
                     total: quantity * productVariant.price
                 });
-                console.log(newOrderLine)
                 await newOrderLine.save()
                 newOrder.totalQuantity += quantity
                 newOrder.subTotal += newOrderLine.total
                 newOrder.total += newOrderLine.total
-                console.log(newOrder)
                 await newOrder.save()
                 return newOrder
             }
             else {
                 
-                const lines = await this.orderLineModel.find({
-                    orderId: currentOrder._id
+                const lines = await this.orderLineModel.findOne({
+                    orderId: Types.ObjectId(currentOrder._id),
+                    productVariant: Types.ObjectId(variantId)
                 })
-                console.log(currentOrder._id)
-                // console.log(lines)
-                await this.orderLineModel.find({
-                    orderId: currentOrder._id
-                })
-                .populate('productVariant')
-                .exec((err, lines) => {
-                    if (err) {
-                        throw new HttpException(err, HttpStatus.BAD_REQUEST)
-                    }
-                    const { name, sku, price, active, inStock }: any = lines[0].productVariant
-                    console.log(name)
-                })
-                const orderLine = lines.find(item => item.productVariant == Types.ObjectId(variantId) && item.orderId == currentOrder._id)
-                if (!orderLine) {
-                    const newOrderLine = new this.orderLineModel()
-                    newOrderLine.productVariant = Types.ObjectId(variantId);
-                    newOrderLine.orderId = currentOrder._id;
-                    newOrderLine.quantity = quantity;
-                    newOrderLine.total = quantity * productVariant.price;
+                if (!lines) {
+                    const newOrderLine = new this.orderLineModel({
+                        productVariant: Types.ObjectId(variantId),
+                        orderId: currentOrder._id,
+                        quantity: quantity,
+                        total: quantity * productVariant.price
+                    })
                     const newOrderLineResult = await newOrderLine.save();
-                    const mergedOrderLine = {...newOrderLineResult, ...productVariant}
 
                     /**Add order line to order */
                     await currentOrder.updateOne({
@@ -107,29 +113,22 @@ export class OrderService {
                         subTotal: currentOrder.subTotal + newOrderLineResult.total,
                         total: currentOrder.total + newOrderLineResult.total
                     })
-                    const orderDidUpdate = await this.orderModel.findById(currentOrder._id)
-                    // return this.orderModel.findById(currentOrder._id)
                 }
+                else {
+                    await this.adjustItem(currentOrder._id, lines._id, variantId, quantity)
+                }
+                const orderDidUpdate = await this.orderModel.findById(currentOrder._id)
+                return orderDidUpdate;
             }
-            // else {
-            //     console.log(currentOrder._id)
-            //     const orderLine = await this.orderLineModel.findOne({
-            //         productVariantId: variantId,
-            //         orderId: currentOrder._id
-            //     })
-            //     if (!orderLine) {
-            //         const newOrderLine = new this.orderLineModel();
-            //         newOrderLine.productVariantId = variantId
-            //         newOrderLine.orderId = currentOrder.id
-            //         newOrderLine.quantity = quantity
-            //         newOrderLine.total = quantity * productVariant.price
-            //         const newOrderLineResult = await newOrderLine.save()
-            //     }
-            // }
         }
         catch(e) {
             throw new InternalServerErrorException(e.message || 'AN ERROR OCCURRED IN PROCESS')
         }
+    }
+    async getActiveOrder(userId: string) {
+        return await this.orderModel.findOne({
+            userId: userId
+        })
     }
     async orderLinesByOrderId(orderId: Types.ObjectId) {
         const lines = await this.orderLineModel.find({

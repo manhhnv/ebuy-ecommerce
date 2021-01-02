@@ -25,6 +25,14 @@ export class OrderResolver {
             const { _id } = user
             return this.orderService.addItemToOrder(_id, variantId, quantity)
         }
+    
+    @UseGuards(TokenAuthGuard)
+    @Query()
+    activeOrder(@Context('user') user: User) {
+        const {_id} = user
+        return this.orderService.getActiveOrder(_id);
+    }
+
     @ResolveField()
     async lines(@Parent() order: Order) {
         return await this.orderService.orderLinesByOrderId(order._id)

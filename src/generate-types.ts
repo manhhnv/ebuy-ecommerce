@@ -195,6 +195,8 @@ export type Order = Node & {
   totalQuantity?: Maybe<Scalars['Int']>;
   subTotal?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
+  countryCode?: Maybe<Scalars['String']>;
+  currency?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
