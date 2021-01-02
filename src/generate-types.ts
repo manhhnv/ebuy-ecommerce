@@ -11,10 +11,10 @@ export type Scalars = {
   Int: number;
   Float: number;
   Date: any;
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
 };
 
 
@@ -102,6 +102,7 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
+  addItemToOrder?: Maybe<Order>;
   me: User;
 };
 
@@ -118,6 +119,12 @@ export type QueryProductsArgs = {
 
 export type QueryProductVariantArgs = {
   _id: Scalars['ID'];
+};
+
+
+export type QueryAddItemToOrderArgs = {
+  variantId: Scalars['ID'];
+  quantity: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -142,7 +149,7 @@ export type MutationCreateProductVariantArgs = {
 
 
 export type MutationUploadFileArgs = {
-  file?: Maybe<Scalars['Upload']>;
+  file: Scalars['Upload'];
 };
 
 
@@ -158,6 +165,48 @@ export type MutationLoginArgs = {
 
 export type MutationUploadArgs = {
   file?: Maybe<Scalars['String']>;
+};
+
+
+export type File = {
+  __typename?: 'File';
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  encoding: Scalars['String'];
+};
+
+export type OrderLine = Node & {
+  __typename?: 'OrderLine';
+  _id: Scalars['ID'];
+  productVariantId: Scalars['ID'];
+  sku: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Int'];
+  featureAsset?: Maybe<Asset>;
+  quantity?: Maybe<Scalars['Int']>;
+  discount?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type Order = Node & {
+  __typename?: 'Order';
+  _id: Scalars['ID'];
+  status?: Maybe<Scalars['Boolean']>;
+  user: User;
+  lines?: Maybe<Array<Maybe<OrderLine>>>;
+  state: Scalars['String'];
+  shippingAddress?: Maybe<Scalars['String']>;
+  totalQuantity?: Maybe<Scalars['Int']>;
+  subTotal?: Maybe<Scalars['Int']>;
+  counponCodes?: Maybe<Scalars['String']>;
+  discounts?: Maybe<Scalars['Int']>;
+  payment?: Maybe<Scalars['String']>;
+  shipping?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
 };
 
 
@@ -252,4 +301,3 @@ export type RegexNotMatchError = {
 export type NativeAuthenticationResult = UserWithToken | InvalidCredentialsError;
 
 export type RegisterUserAccountResult = Success | RegexNotMatchError;
-

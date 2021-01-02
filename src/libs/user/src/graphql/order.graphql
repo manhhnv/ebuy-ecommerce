@@ -1,0 +1,35 @@
+type OrderLine implements Node {
+    _id: ID!
+    productVariantId: ID!
+    sku: String!
+    name: String!
+    price: Int!
+    featureAsset: Asset
+    quantity: Int
+    discount: Int
+    total: Int
+    createdAt: Date
+    updatedAt: Date
+}
+
+type Order implements Node {
+    _id: ID!
+    status: Boolean
+    user: User!
+    lines: [OrderLine]
+    state: String!
+    shippingAddress: String
+    totalQuantity: Int
+    subTotal: Int
+    counponCodes: String
+    discounts: Int
+    payment: String
+    shipping: String
+    total: Int
+    createdAt: Date
+    updatedAt: Date
+}
+
+type Query {
+    addItemToOrder(variantId: ID!, quantity: Int!): Order
+}
