@@ -23,6 +23,12 @@ export class Order {
     @Prop({type: Number, required: true, default: 0})
     total: number
 
+    @Prop({type: String, required: true, default: 'VN'})
+    countryCode: string
+
+    @Prop({type: String, required: true, default: 'VND'})
+    currency: string
+
     @Prop({type: Date, required: true, default: Date.now()})
     createdAt: Date
 

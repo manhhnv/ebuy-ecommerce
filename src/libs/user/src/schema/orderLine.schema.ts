@@ -5,11 +5,11 @@ import { Document, Types } from 'mongoose';
 export class OrderLine {
     _id: Types.ObjectId;
 
-    @Prop({type: String, required: true})
-    productVariantId: string
+    @Prop({type: Types.ObjectId, required: true, ref: 'ProductVariant'})
+    productVariant: Types.ObjectId
 
-    @Prop({type: Types.ObjectId || String, required: true})
-    orderId: string
+    @Prop({type: Types.ObjectId, required: true, ref: 'Order'})
+    orderId: Types.ObjectId
 
     @Prop({type: Number, required: true})
     quantity: Number

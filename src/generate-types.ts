@@ -178,13 +178,8 @@ export type File = {
 export type OrderLine = Node & {
   __typename?: 'OrderLine';
   _id: Scalars['ID'];
-  productVariantId: Scalars['ID'];
-  sku: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['Int'];
-  featureAsset?: Maybe<Asset>;
+  productVariant?: Maybe<ProductVariant>;
   quantity?: Maybe<Scalars['Int']>;
-  discount?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
@@ -194,7 +189,7 @@ export type Order = Node & {
   __typename?: 'Order';
   _id: Scalars['ID'];
   status?: Maybe<Scalars['Boolean']>;
-  user: User;
+  user?: Maybe<User>;
   lines?: Maybe<Array<Maybe<OrderLine>>>;
   state: Scalars['String'];
   totalQuantity?: Maybe<Scalars['Int']>;

@@ -1,12 +1,12 @@
 type OrderLine implements Node {
     _id: ID!
-    productVariantId: ID!
-    sku: String!
-    name: String!
-    price: Int!
-    featureAsset: Asset
+    productVariant: ProductVariant 
+    # sku: String!
+    # name: String!
+    # price: Int!
+    # featureAsset: Asset
     quantity: Int
-    discount: Int
+    # discount: Int
     total: Int
     createdAt: Date
     updatedAt: Date
@@ -15,7 +15,7 @@ type OrderLine implements Node {
 type Order implements Node {
     _id: ID!
     status: Boolean
-    user: User!
+    user: User
     lines: [OrderLine]
     state: String!
     # shippingAddress: String
