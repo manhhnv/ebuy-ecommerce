@@ -40,6 +40,20 @@ export class OrderResolver {
         return this.orderService.removeOrderLine(_id, orderLineId);
     }
 
+    @UseGuards(TokenAuthGuard)
+    @Mutation()
+    incrementOrderItem(@Context('user')user: User ,@Args('orderLineId')orderLineId: string) {
+        const {_id} = user;
+        return this.orderService.incrementOrderItem(_id, orderLineId)
+    }
+
+    @UseGuards(TokenAuthGuard)
+    @Mutation()
+    decreaseOrderItem(@Context('user') user: User, @Args('orderLineId')orderLineId: string) {
+        const {_id} = user;
+        return this.orderService.decreaseOrderItem(_id, orderLineId)
+    }
+    
     @ResolveField()
     async lines(@Parent() order: Order) {
         return await this.orderService.orderLinesByOrderId(order._id)

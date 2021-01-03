@@ -128,6 +128,8 @@ export type Mutation = {
   uploadFile?: Maybe<Scalars['Boolean']>;
   addItemToOrder?: Maybe<Order>;
   removeItemFromOrder?: Maybe<Order>;
+  incrementOrderItem?: Maybe<Order>;
+  decreaseOrderItem?: Maybe<Order>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
@@ -156,6 +158,16 @@ export type MutationAddItemToOrderArgs = {
 
 
 export type MutationRemoveItemFromOrderArgs = {
+  orderLineId: Scalars['ID'];
+};
+
+
+export type MutationIncrementOrderItemArgs = {
+  orderLineId: Scalars['ID'];
+};
+
+
+export type MutationDecreaseOrderItemArgs = {
   orderLineId: Scalars['ID'];
 };
 

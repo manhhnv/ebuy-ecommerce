@@ -91,7 +91,7 @@ export class OrderService {
                 newOrder.subTotal += newOrderLine.total
                 newOrder.total += newOrderLine.total
                 await newOrder.save()
-                return newOrder
+                return this.getActiveOrder(userId);
             }
             else {
                 
@@ -118,8 +118,7 @@ export class OrderService {
                 else {
                     await this.adjustItem(currentOrder._id, lines._id, variantId, quantity)
                 }
-                const orderDidUpdate = await this.orderModel.findById(currentOrder._id)
-                return orderDidUpdate;
+                return this.getActiveOrder(userId);
             }
         }
         catch(e) {
@@ -144,9 +143,67 @@ export class OrderService {
                 updatedAt: new Date()
             })
             await orderLine.remove();
-            return this.orderModel.findOne({
+            return this.getActiveOrder(userId)
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'AN ERROR OCCURRED IN PROCESS')
+        }
+    }
+    async incrementOrderItem(userId: string, orderLineId: string) {
+        try {
+            const order = await this.orderModel.findOne({
                 userId: userId
             })
+            const orderLine = await this.orderLineModel.findOne({
+                orderId: order._id,
+                _id: orderLineId
+            })
+            const price = (orderLine.total/orderLine.quantity)
+            await orderLine.updateOne({
+                quantity: orderLine.quantity + 1,
+                total: orderLine.total + price,
+                updatedAt: new Date()
+            })
+            await order.updateOne({
+                totalQuantity: order.totalQuantity + 1,
+                total: order.total + price,
+                subTotal: order.subTotal + price,
+                updatedAt: new Date()
+            })
+            return this.getActiveOrder(userId)
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'AN ERROR OCCURRED IN PROCESS')
+        }
+    }
+    async decreaseOrderItem(userId: string, orderLineId: string) {
+        try {
+            const order = await this.orderModel.findOne({
+                userId: userId
+            })
+            const orderLine = await this.orderLineModel.findOne({
+                orderId: order._id,
+                _id: orderLineId
+            })
+            const price = (orderLine.total/orderLine.quantity)
+            const modifiedQuantity = orderLine.quantity - 1;
+            if (modifiedQuantity <= 0) {
+                return this.removeOrderLine(userId, orderLineId)
+            }
+            else {
+                await orderLine.updateOne({
+                    quantity: modifiedQuantity,
+                    total: modifiedQuantity * price,
+                    updatedAt: new Date()
+                })
+                await order.updateOne({
+                    totalQuantity: order.totalQuantity - 1,
+                    total: order.total - price,
+                    subTotal: order.subTotal - price,
+                    updatedAt: new Date()
+                })
+                return this.getActiveOrder(userId)
+            }
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'AN ERROR OCCURRED IN PROCESS')

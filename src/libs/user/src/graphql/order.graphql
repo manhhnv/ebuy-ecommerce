@@ -39,4 +39,6 @@ type Query {
 type Mutation {
     addItemToOrder(variantId: ID!, quantity: Int!): Order
     removeItemFromOrder(orderLineId: ID!): Order
+    incrementOrderItem(orderLineId: ID!): Order
+    decreaseOrderItem(orderLineId: ID!): Order
 }
