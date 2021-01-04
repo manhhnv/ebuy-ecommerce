@@ -41,4 +41,8 @@ type Mutation {
     removeItemFromOrder(orderLineId: ID!): Order
     incrementOrderItem(orderLineId: ID!): Order
     decreaseOrderItem(orderLineId: ID!): Order
+    setShippingAddressForOrder(
+        "Shipping address ID"
+        addressId: ID!
+    ): Order
 }

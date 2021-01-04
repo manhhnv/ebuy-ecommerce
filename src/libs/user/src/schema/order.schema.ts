@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 @Schema()
@@ -28,7 +28,25 @@ export class Order {
 
     @Prop({type: String, required: true, default: 'VND'})
     currency: string
-
+    
+    // @Prop(raw({
+    //     _id: {type: Types.ObjectId || String},
+    //     countryCode: {type: String},
+    //     city: {type: String},
+    //     state: {type: String},
+    //     streetLine: {type: String},
+    //     zipCode: {type: String},
+    //     other: {type: String},
+    //     phoneNumber: {type: String},
+    //     firstName: {type: String},
+    //     lastName: {type: String},
+    //     defaultAddress: {type: Boolean},
+    //     createdAt: {type: Date},
+    //     updatedAt: {type: Date}
+    // }))
+    @Prop({type: Types.ObjectId, ref: 'ShippingAddress', default: null})
+    shippingAddress: string
+    
     @Prop({type: Date, required: true, default: Date.now()})
     createdAt: Date
 

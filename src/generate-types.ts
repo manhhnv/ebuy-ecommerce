@@ -142,6 +142,7 @@ export type Mutation = {
   removeItemFromOrder?: Maybe<Order>;
   incrementOrderItem?: Maybe<Order>;
   decreaseOrderItem?: Maybe<Order>;
+  setShippingAddressForOrder?: Maybe<Order>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
@@ -202,6 +203,11 @@ export type MutationIncrementOrderItemArgs = {
 
 export type MutationDecreaseOrderItemArgs = {
   orderLineId: Scalars['ID'];
+};
+
+
+export type MutationSetShippingAddressForOrderArgs = {
+  addressId: Scalars['ID'];
 };
 
 

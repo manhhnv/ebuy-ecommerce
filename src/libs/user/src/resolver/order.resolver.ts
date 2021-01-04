@@ -7,11 +7,15 @@ import { OrderService } from '../service/order.service';
 import { TokenAuthGuard } from 'src/libs/auth/src/guard/token-auth.guard';
 import { User } from 'src/generate-types';
 import { Order } from '../schema/order.schema';
+import { OrderLine } from '../schema/orderLine.schema';
+import { ShippingAddress } from 'src/libs/shipping-address/src/schema/shipping-address.schema';
+import { ShippingAddressService } from 'src/libs/shipping-address/src/service/shipping-address.service';
 
 @Resolver(() => Order)
 export class OrderResolver {
     constructor(
-        private orderService: OrderService
+        private orderService: OrderService,
+        private shippingAddressService: ShippingAddressService
     ) {}
 
     @UseGuards(TokenAuthGuard)
@@ -54,8 +58,19 @@ export class OrderResolver {
         return this.orderService.decreaseOrderItem(_id, orderLineId)
     }
     
-    @ResolveField()
+    @UseGuards(TokenAuthGuard)
+    @Mutation()
+    setShippingAddressForOrder(@Context('user') user: User, @Args('addressId') addressId: string) {
+        const {_id} = user;
+        return this.orderService.setShippingAddressForOrder(_id, addressId)
+    }
+
+    @ResolveField('lines', returns => [OrderLine])
     async lines(@Parent() order: Order) {
         return await this.orderService.orderLinesByOrderId(order._id)
+    }
+    @ResolveField('shippingAddress', returns => ShippingAddress)
+    async shippingAddress(@Parent() order: Order) {
+        return await this.shippingAddressService.getShippingAddressDetail(order.userId, order.shippingAddress)
     }
 }

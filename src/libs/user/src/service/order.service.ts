@@ -8,13 +8,16 @@ import { User, UserDocument } from '../schema/user.schema';
 import { Model } from 'mongoose';
 import { ProductVariantService } from 'src/libs/product/src/service/product-variant.service';
 import { Types } from 'mongoose';
+import { ShippingAddressService } from 'src/libs/shipping-address/src/service/shipping-address.service';
+import { ADDING_ITEM } from '../../constants';
 @Injectable()
 export class OrderService {
     constructor(
         @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
         @InjectModel(OrderLine.name) private orderLineModel: Model<OrderLineDocument>,
         @InjectModel(User.name) private userModel: Model<UserDocument>,
-        private variantService: ProductVariantService
+        private variantService: ProductVariantService,
+        private shippingAddressService: ShippingAddressService,
     ) { }
     
     async adjustItem(orderId: string, orderLineId: string, variantId: string, adjustQuantity: number) {
@@ -62,7 +65,7 @@ export class OrderService {
             let currentOrder = await this.orderModel.findOne({
                 userId: userId,
                 status: true,
-                state: 'Adding Item'
+                state: ADDING_ITEM
             })
             const productVariant = await this.variantService.getVariant(Types.ObjectId(variantId));
             if (!productVariant) {
@@ -215,5 +218,29 @@ export class OrderService {
         })
         .populate('productVariant')
         return lines
+    }
+    async setShippingAddressForOrder(userId: string, addressId: string): Promise<Order | undefined> {
+        try {
+            const checkAddress = await this.shippingAddressService.getShippingAddressDetail(userId, addressId)
+            if (!checkAddress) {
+                throw new HttpException('Can not find address', HttpStatus.BAD_REQUEST)
+            }
+            else {
+                const orderUpdated = await this.orderModel.findOneAndUpdate(
+                    {
+                        userId: userId,
+                        state: ADDING_ITEM
+                    },
+                    {
+                        shippingAddress: addressId
+                    },
+                    {new: true}
+                )
+                return orderUpdated
+            }
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
     }
 }
