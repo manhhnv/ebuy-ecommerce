@@ -5,6 +5,9 @@ import { Document, Types } from 'mongoose';
 export class ShippingAddress {
     _id: Types.ObjectId
 
+    @Prop({type: Types.ObjectId, ref: 'User'})
+    user: Types.ObjectId
+
     @Prop({type: String, required: true, default: 'VN'})
     countryCode: string
 
@@ -38,6 +41,11 @@ export class ShippingAddress {
     @Prop({type: Boolean, default: false})
     defaultAddress: boolean
 
-    @Prop()
+    @Prop({type: Date, required: true, default: Date.now()})
+    createdAt: Date
 
+    @Prop({type: Date, required: true, default: Date.now()})
+    updatedAt: Date
 }
+export const ShippingAddressSchema = SchemaFactory.createForClass(ShippingAddress)
+export type ShippingAddressDocument = ShippingAddress & Document

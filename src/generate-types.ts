@@ -102,6 +102,9 @@ export type Query = {
   product?: Maybe<Product>;
   products: ListProducts;
   productVariant?: Maybe<ProductVariant>;
+  eligibleShippingAddress?: Maybe<ListAddress>;
+  getShippingAddressDetail?: Maybe<ShippingAddress>;
+  getDefaultShippingAddress?: Maybe<ShippingAddress>;
   activeOrder?: Maybe<Order>;
   me: User;
 };
@@ -121,10 +124,18 @@ export type QueryProductVariantArgs = {
   _id: Scalars['ID'];
 };
 
+
+export type QueryGetShippingAddressDetailArgs = {
+  addressId: Scalars['ID'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
+  addShippingAddress?: Maybe<ListAddress>;
+  removeShippingAddress?: Maybe<ListAddress>;
+  updateShippingAddress?: Maybe<ListAddress>;
   uploadFile?: Maybe<Scalars['Boolean']>;
   addItemToOrder?: Maybe<Order>;
   removeItemFromOrder?: Maybe<Order>;
@@ -143,6 +154,21 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateProductVariantArgs = {
   input?: Maybe<CreateProductVariantInput>;
+};
+
+
+export type MutationAddShippingAddressArgs = {
+  input: ShippingAddressArgs;
+};
+
+
+export type MutationRemoveShippingAddressArgs = {
+  addressId: Scalars['ID'];
+};
+
+
+export type MutationUpdateShippingAddressArgs = {
+  updateArgs: ShippingAddressArgs;
 };
 
 
@@ -186,6 +212,49 @@ export type MutationUploadArgs = {
   file?: Maybe<Scalars['String']>;
 };
 
+/** Shipping Address Type - By default, location in Viet Nam */
+export type ShippingAddress = Node & {
+  __typename?: 'ShippingAddress';
+  _id: Scalars['ID'];
+  /** By default is VN */
+  countryCode: Scalars['String'];
+  province?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  state: Scalars['String'];
+  streetLine: Scalars['String'];
+  zipCode?: Maybe<Scalars['String']>;
+  /** Other is description text may be home number, location nearly,...v...v */
+  other?: Maybe<Scalars['String']>;
+  /** Recipient's phone - this is required field */
+  phoneNumber: Scalars['String'];
+  /** Recipient's name - this is required field */
+  firstName: Scalars['String'];
+  /** Recipient's name - this is not required field */
+  lastName?: Maybe<Scalars['String']>;
+  defaultAddress?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type ShippingAddressArgs = {
+  province: Scalars['String'];
+  city: Scalars['String'];
+  state: Scalars['String'];
+  streetLine: Scalars['String'];
+  zipCode?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  defaultAddress?: Maybe<Scalars['Boolean']>;
+};
+
+export type ListAddress = {
+  __typename?: 'ListAddress';
+  items?: Maybe<Array<Maybe<ShippingAddress>>>;
+  totalItems?: Maybe<Scalars['Int']>;
+};
+
 
 export type File = {
   __typename?: 'File';
@@ -211,6 +280,7 @@ export type Order = Node & {
   user?: Maybe<User>;
   lines?: Maybe<Array<Maybe<OrderLine>>>;
   state: Scalars['String'];
+  shippingAddress?: Maybe<ShippingAddress>;
   totalQuantity?: Maybe<Scalars['Int']>;
   subTotal?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
