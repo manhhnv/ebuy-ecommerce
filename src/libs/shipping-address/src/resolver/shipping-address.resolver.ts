@@ -20,9 +20,24 @@ export class ShippingAddressResolver {
     }
     
     @UseGuards(TokenAuthGuard)
+    @Mutation()
+    removeShippingAddress(@Context('user') user: User, @Args('id') id: string) {
+        const { _id } = user;
+        return this.shippingAddressService.removeShippingAddress(_id, id)
+    }
+
+    @UseGuards(TokenAuthGuard)
     @Query()
     eligibleShippingAddress(@Context('user') user: User) {
         const { _id } = user;
         return this.shippingAddressService.listAShippingAddress(_id)
     }
+
+    @UseGuards(TokenAuthGuard)
+    @Mutation()
+    setAsDefaultAddress(@Context('user') user: User, @Args('id') id: string) {
+        const { _id } = user;
+        return this.shippingAddressService.setAsDefaultAddress(_id, id)
+    }
+    
 }

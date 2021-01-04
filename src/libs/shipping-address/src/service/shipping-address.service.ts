@@ -38,4 +38,45 @@ export class ShippingAddressService {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
         }
     }
+
+    async removeShippingAddress(userId: string, addressId: string): Promise<ListAddress | undefined> {
+        try {
+            await this.shippingAddressModel.findOneAndDelete({
+                _id: Types.ObjectId(addressId),
+                user: Types.ObjectId(userId)
+            })
+            return this.listAShippingAddress(userId)
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
+
+    async setAsDefaultAddress(userId: string, addressId: string): Promise<ListAddress | undefined> {
+        try {
+            const shippingAddress = await this.shippingAddressModel.findOne({
+                user: Types.ObjectId(userId),
+                _id: Types.ObjectId(addressId)
+            })
+            if (!shippingAddress) {
+                throw new HttpException('Can not find shipping address', HttpStatus.BAD_REQUEST)
+            }
+            await this.shippingAddressModel.update(
+                {
+                    user: Types.ObjectId(userId),
+                    defaultAddress: true
+                },
+                {
+                    defaultAddress: false
+                }
+            )
+            await shippingAddress.updateOne({
+                defaultAddress: true
+            })
+            return this.listAShippingAddress(userId)
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
 }

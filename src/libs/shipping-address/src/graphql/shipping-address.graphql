@@ -50,9 +50,10 @@ type Mutation {
     addShippingAddress(input: ShippingAddressArgs!): ListAddress
     removeShippingAddress(
         "shipping address id"
-        addressId: ID!
+        id: ID!
     ): ListAddress
     updateShippingAddress(updateArgs: ShippingAddressArgs!): ListAddress
+    setAsDefaultAddress(id: ID!): ListAddress
 }
 type Query {
     eligibleShippingAddress: ListAddress
