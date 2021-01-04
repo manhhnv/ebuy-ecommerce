@@ -40,4 +40,10 @@ export class ShippingAddressResolver {
         return this.shippingAddressService.setAsDefaultAddress(_id, id)
     }
     
+    @UseGuards(TokenAuthGuard)
+    @Query()
+    getShippingAddressDetail(@Context('user') user: User, @Args('id')id: string) {
+        const { _id } = user;
+        return this.shippingAddressService.getShippingAddressDetail(_id, id)
+    }
 }

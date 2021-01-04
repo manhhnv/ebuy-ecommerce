@@ -59,7 +59,7 @@ type Query {
     eligibleShippingAddress: ListAddress
     getShippingAddressDetail(
         "shipping address id"
-        addressId: ID!
+        id: ID!
     ): ShippingAddress
     getDefaultShippingAddress: ShippingAddress
 }
