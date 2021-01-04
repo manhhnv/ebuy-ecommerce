@@ -5,7 +5,11 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { ShippingAddress, ShippingAddressDocument } from '../schema/shipping-address.schema';
 import { Types, Model } from 'mongoose';
-import { ShippingAddressArgs, ListAddress, ShippingAddress as ShippingAddressGraphQL} from 'src/generate-types';
+import {
+    ShippingAddressArgs, ListAddress,
+    ShippingAddress as ShippingAddressGraphQL,
+    UpdateShippingAddressInput
+} from 'src/generate-types';
 @Injectable()
 export class ShippingAddressService {
     constructor(
@@ -96,6 +100,22 @@ export class ShippingAddressService {
                 user: Types.ObjectId(userId),
                 defaultAddress: true
             })
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
+    async updateShippingAddress(userId: string, addressId: string, updateInfo: UpdateShippingAddressInput): Promise<ListAddress | undefined> {
+        try {
+            const shippingAddress = await this.shippingAddressModel
+                .findOneAndUpdate(
+                    {
+                        user: Types.ObjectId(userId),
+                        _id: Types.ObjectId(addressId)
+                    },
+                    updateInfo
+                )
+            return await this.listAShippingAddress(userId)
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')

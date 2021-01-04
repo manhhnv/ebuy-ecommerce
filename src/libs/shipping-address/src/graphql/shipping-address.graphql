@@ -42,6 +42,17 @@ input ShippingAddressArgs {
     lastName: String
     defaultAddress: Boolean
 }
+input UpdateShippingAddressInput {
+    province: String!
+    city: String!
+    state: String!
+    streetLine: String!
+    zipCode: String
+    other: String
+    phoneNumber: String!
+    firstName: String!
+    lastName: String
+}
 type ListAddress {
     items: [ShippingAddress]
     totalItems: Int
@@ -52,7 +63,11 @@ type Mutation {
         "shipping address id"
         id: ID!
     ): ListAddress
-    updateShippingAddress(updateArgs: ShippingAddressArgs!): ListAddress
+    updateShippingAddress(
+        "Shipping address id"
+        id: ID!,
+        "Shipping address information"
+        input: UpdateShippingAddressInput!): ListAddress
     setAsDefaultAddress(id: ID!): ListAddress
 }
 type Query {

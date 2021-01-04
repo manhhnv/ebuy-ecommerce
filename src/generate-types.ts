@@ -126,7 +126,7 @@ export type QueryProductVariantArgs = {
 
 
 export type QueryGetShippingAddressDetailArgs = {
-  addressId: Scalars['ID'];
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
@@ -136,6 +136,7 @@ export type Mutation = {
   addShippingAddress?: Maybe<ListAddress>;
   removeShippingAddress?: Maybe<ListAddress>;
   updateShippingAddress?: Maybe<ListAddress>;
+  setAsDefaultAddress?: Maybe<ListAddress>;
   uploadFile?: Maybe<Scalars['Boolean']>;
   addItemToOrder?: Maybe<Order>;
   removeItemFromOrder?: Maybe<Order>;
@@ -163,12 +164,18 @@ export type MutationAddShippingAddressArgs = {
 
 
 export type MutationRemoveShippingAddressArgs = {
-  addressId: Scalars['ID'];
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateShippingAddressArgs = {
-  updateArgs: ShippingAddressArgs;
+  id: Scalars['ID'];
+  input: UpdateShippingAddressInput;
+};
+
+
+export type MutationSetAsDefaultAddressArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -247,6 +254,18 @@ export type ShippingAddressArgs = {
   firstName: Scalars['String'];
   lastName?: Maybe<Scalars['String']>;
   defaultAddress?: Maybe<Scalars['Boolean']>;
+};
+
+export type UpdateShippingAddressInput = {
+  province: Scalars['String'];
+  city: Scalars['String'];
+  state: Scalars['String'];
+  streetLine: Scalars['String'];
+  zipCode?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
 };
 
 export type ListAddress = {

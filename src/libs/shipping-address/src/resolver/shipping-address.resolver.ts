@@ -5,7 +5,7 @@ import {
 import { ShippingAddress } from '../schema/shipping-address.schema';
 import { UseGuards } from '@nestjs/common';
 import { TokenAuthGuard } from 'src/libs/auth/src/guard/token-auth.guard';
-import { User, ShippingAddressArgs } from 'src/generate-types';
+import { User, ShippingAddressArgs, UpdateShippingAddressInput } from 'src/generate-types';
 import { ShippingAddressService } from '../service/shipping-address.service';
 @Resolver(() => ShippingAddress)
 export class ShippingAddressResolver {
@@ -52,5 +52,16 @@ export class ShippingAddressResolver {
     getDefaultShippingAddress(@Context('user') user: User) {
         const {_id} = user
         return this.shippingAddressService.getDefaultAddress(_id)
+    }
+
+    @UseGuards(TokenAuthGuard)
+    @Mutation()
+    updateShippingAddress(
+        @Context('user') user: User,
+        @Args('id') id: string,
+        @Args('input') input: UpdateShippingAddressInput,
+        ) {
+        const { _id } = user;
+        return this.shippingAddressService.updateShippingAddress(_id, id, input)
     }
 }
