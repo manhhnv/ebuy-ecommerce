@@ -90,4 +90,15 @@ export class ShippingAddressService {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
         }
     }
+    async getDefaultAddress(userId: string): Promise<ShippingAddressGraphQL | undefined> {
+        try {
+            return this.shippingAddressModel.findOne({
+                user: Types.ObjectId(userId),
+                defaultAddress: true
+            })
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
 }
