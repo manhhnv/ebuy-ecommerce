@@ -18,7 +18,7 @@ type Order implements Node {
     user: User
     lines: [OrderLine]
     state: String!
-    # shippingAddress: String
+    shippingAddress: ShippingAddress
     totalQuantity: Int
     subTotal: Int
     # counponCodes: String

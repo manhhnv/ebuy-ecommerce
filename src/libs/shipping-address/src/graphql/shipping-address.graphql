@@ -1,0 +1,64 @@
+"Shipping Address Type - By default, location in Viet Nam"
+type ShippingAddress implements Node {
+    _id: ID!
+    """
+    By default is VN
+    """
+    countryCode: String!
+    province: String
+    city: String
+    state: String!
+    streetLine: String!
+    zipCode: String
+    """
+    Other is description text may be home number, location nearly,...v...v
+    """
+    other: String
+    """
+    Recipient's phone - this is required field
+    """
+    phoneNumber: String!
+    """
+    Recipient's name - this is required field
+    """
+    firstName: String!
+    """
+    Recipient's name - this is not required field
+    """
+    lastName: String
+    defaultAddress: Boolean
+    createdAt: Date
+    updatedAt: Date
+}
+input ShippingAddressArgs {
+    province: String!
+    city: String!
+    state: String!
+    streetLine: String!
+    zipCode: String
+    other: String
+    phoneNumber: String!
+    firstName: String!
+    lastName: String
+    defaultAddress: Boolean
+}
+type ListAddress {
+    items: [ShippingAddress]
+    totalItems: Int
+}
+type Mutation {
+    addShippingAddress(input: ShippingAddressArgs!): ListAddress
+    removeShippingAddress(
+        "shipping address id"
+        addressId: ID!
+    ): ListAddress
+    updateShippingAddress(updateArgs: ShippingAddressArgs!): ListAddress
+}
+type Query {
+    eligibleShippingAddress: ListAddress
+    getShippingAddressDetail(
+        "shipping address id"
+        addressId: ID!
+    ): ShippingAddress
+    getDefaultShippingAddress: ShippingAddress
+}

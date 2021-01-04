@@ -9,6 +9,7 @@ import GraphQLJSON from 'graphql-type-json';
 import { ConfigModule } from '@nestjs/config';
 import { UploadModule } from 'src/libs/upload';
 import { OrderModule } from 'src/libs/user';
+import { ShippingAddressModule } from 'src/libs/shipping-address';
 const { GraphQLUpload } = require('graphql-upload');
 
 @Module({
@@ -39,6 +40,7 @@ const { GraphQLUpload } = require('graphql-upload');
     UserModule,
     UploadModule,
     OrderModule,
+    ShippingAddressModule
   ],
   controllers: [AppController],
   providers: [AppService],
