@@ -31,6 +31,6 @@ async function bootstrap() {
   app.use(passport.initialize())
   app.use(passport.session())
   await app.listen(process.env.PORT);
-  console.log(`Success: Graphql running at http://0.0.0.0:${process.env.PORT}/graphql`)
+  console.log( '\n' + 'Success: 🚀 GraphQL running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/graphql` + '\u001b[0m')
 }
 bootstrap();

@@ -18,6 +18,7 @@ type Product implements Node{
     slug: String!
     inStock: Int!
     active: Boolean
+    sale: ProductSale
     createdAt: Date
     updatedAt: Date
     variants: [ProductVariant]
