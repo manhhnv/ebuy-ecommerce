@@ -163,6 +163,7 @@ export type MutationCreateProductVariantArgs = {
 
 export type MutationSetProductPromotionArgs = {
   id: Scalars['ID'];
+  config: ProductSaleConfig;
 };
 
 
@@ -236,9 +237,14 @@ export type ProductSale = Node & {
   __typename?: 'ProductSale';
   _id: Scalars['ID'];
   discount: Scalars['Int'];
-  percentage: Scalars['Float'];
+  percentage: Scalars['Int'];
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type ProductSaleConfig = {
+  discount: Scalars['Int'];
+  percentage: Scalars['Float'];
 };
 
 /** Shipping Address Type - By default, location in Viet Nam */

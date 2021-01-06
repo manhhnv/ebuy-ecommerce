@@ -1,11 +1,14 @@
 type ProductSale implements Node {
     _id: ID!
     discount: Int!
-    percentage: Float!
+    percentage: Int!
     createdAt: Date
     updatedAt: Date
 }
-
+input ProductSaleConfig {
+    discount: Int!
+    percentage: Int!
+}
 type Mutation {
-    setProductPromotion(id: ID!): Product!
+    setProductPromotion(id: ID!, config: ProductSaleConfig!): Product!
 }
