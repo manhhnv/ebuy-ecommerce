@@ -16,6 +16,7 @@ const { GraphQLUpload } = require('graphql-upload');
   imports: [
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
+      debug: true,
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
       resolvers: [{ JSON: GraphQLJSON }, {Upload: GraphQLUpload}],
       context: ({ req, res }) => {

@@ -3,17 +3,33 @@ import { ProductService } from '../service/product.service';
 import { CreateProductInput } from '../../../../generate-types';
 import { Product } from '../schema/product.schema';
 import { ProductVariantService } from '../service/product-variant.service';
+import { ProductPromotionService } from '../service/product-promotion.service';
+import { ProductSaleConfig } from 'src/generate-types';
+import { ProductVariant } from '../schema/product-variant.schema';
+import { ProductPromotion } from '../schema/product-promotion.schema';
 @Resolver(() => Product)
 export class ProductResolver {
     constructor(
         private productService: ProductService,
-        private variantService: ProductVariantService
+        private variantService: ProductVariantService,
+        private promotionService: ProductPromotionService
         ) {}
     @Query()
     product(@Args('_id') _id: string) {
         return this.productService.findProductById(_id)
     }
-    @ResolveField()
+    
+    @Mutation()
+    setProductPromotion(@Args('id') id: string, @Args('config') config: ProductSaleConfig) {
+        return this.promotionService.addPromotionForProduct(id, config)
+    }
+
+    @ResolveField('sale', returns => ProductPromotion)
+    async sale(@Parent() product: Product) {
+        return await this.promotionService.promotionDetail(product._id)
+    }
+
+    @ResolveField('variants', returns => [ProductVariant])
     async variants(@Parent() product: Product) {
         const { _id } = product;
         return await this.variantService.variantsByProductId(_id)

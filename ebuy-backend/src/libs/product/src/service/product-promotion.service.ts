@@ -35,4 +35,19 @@ export class ProductPromotionService {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
         }
     }
+    async promotionDetail(productId: Types.ObjectId): Promise<ProductPromotion | undefined> {
+        try {
+            const promotion = await this.productPromotionModel.findOne({
+                product: productId
+            })
+            console.log(productId)
+            if (!promotion) {
+                throw new HttpException('Promotion not found', HttpStatus.BAD_REQUEST)
+            }
+            return promotion;
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing requesr')
+        }
+    }
 }

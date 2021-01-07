@@ -7,20 +7,23 @@ import { ProductVariant, ProductVariantSchema } from './schema/product-variant.s
 import { ProductVariantService } from './service/product-variant.service';
 import { ProductVariantResolver } from './resolver/product-variant.resolver';
 import { Asset, AssetSchema } from './schema/asset.schema';
-
+import { ProductPromotion, ProductPromotionSchema } from './schema/product-promotion.schema';
+import { ProductPromotionService } from './service/product-promotion.service';
 @Global()
 @Module({
   imports: [
     MongooseModule.forFeature([
         {name: Product.name, schema: ProductSchema},
         {name: ProductVariant.name, schema: ProductVariantSchema},
-        {name: Asset.name, schema: AssetSchema}
+        {name: Asset.name, schema: AssetSchema},
+        {name: ProductPromotion.name, schema: ProductPromotionSchema}
     ]),
   ],
   providers: [
       ProductResolver, ProductService,
-      ProductVariantResolver, ProductVariantService
+      ProductVariantResolver, ProductVariantService,
+      ProductPromotionService,
     ],
-  exports: [ProductService, ProductVariantService]
+  exports: [ProductService, ProductVariantService, ProductPromotionService]
 })
 export class ProductModule {}
