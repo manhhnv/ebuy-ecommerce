@@ -23,31 +23,63 @@ export class ProductPromotionService {
             if (!product) {
                 throw new HttpException('Product not found', HttpStatus.BAD_REQUEST)
             }
-            const promotion = new this.productPromotionModel({
-                product: Types.ObjectId(productId),
-                discount: config.discount,
-                percentage: config.percentage
+            const checkPromotion = await this.productPromotionModel.findOne({
+                product: Types.ObjectId(productId)
             })
-            await promotion.save()
-            return product
+            if (!checkPromotion) {
+                const promotion = new this.productPromotionModel({
+                    product: Types.ObjectId(productId),
+                    discount: config.discount,
+                    percentage: config.percentage
+                })
+                await promotion.save()
+                return product
+            }
+            throw new HttpException('ERROR: There is only one promotion per product', HttpStatus.BAD_REQUEST)
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
         }
     }
     async promotionDetail(productId: Types.ObjectId): Promise<ProductPromotion | undefined> {
-        try {
+        try {   
             const promotion = await this.productPromotionModel.findOne({
                 product: productId
             })
-            console.log(productId)
-            if (!promotion) {
-                throw new HttpException('Promotion not found', HttpStatus.BAD_REQUEST)
-            }
             return promotion;
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing requesr')
+        }
+    }
+    async remove(productId: string): Promise<Product | undefined> {
+        try {
+            await this.productPromotionModel.findOneAndDelete({
+                product: Types.ObjectId(productId)
+            })
+            const product = await this.productService.findProductById(productId)
+            return product
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
+    async update(productId: string, config: ProductSaleConfig): Promise<Product | undefined> {
+        try {
+            const promotion = await this.productPromotionModel.findOne({
+                product: Types.ObjectId(productId)
+            })
+            if (!promotion) {
+                throw new HttpException('Promotion not exist on this product', HttpStatus.BAD_REQUEST)
+            }
+            await promotion.updateOne({
+                discount: config.discount,
+                percentage: config.percentage
+            })
+            return this.productService.findProductById(productId)
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
         }
     }
 }

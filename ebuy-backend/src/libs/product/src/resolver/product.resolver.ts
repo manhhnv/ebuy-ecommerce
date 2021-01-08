@@ -20,8 +20,18 @@ export class ProductResolver {
     }
     
     @Mutation()
-    setProductPromotion(@Args('id') id: string, @Args('config') config: ProductSaleConfig) {
-        return this.promotionService.addPromotionForProduct(id, config)
+    setProductPromotion(@Args('_id') _id: string, @Args('config') config: ProductSaleConfig) {
+        return this.promotionService.addPromotionForProduct(_id, config)
+    }
+
+    @Mutation()
+    removeProductPromotion(@Args('_id') _id: string) {
+        return this.promotionService.remove(_id)
+    }
+
+    @Mutation()
+    updateProductPromotion(@Args('_id') _id: string, @Args('config') config: ProductSaleConfig) {
+        return this.promotionService.update(_id, config)
     }
 
     @ResolveField('sale', returns => ProductPromotion)

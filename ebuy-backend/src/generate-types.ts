@@ -135,6 +135,8 @@ export type Mutation = {
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
   setProductPromotion: Product;
+  removeProductPromotion: Product;
+  updateProductPromotion: Product;
   addShippingAddress?: Maybe<ListAddress>;
   removeShippingAddress?: Maybe<ListAddress>;
   updateShippingAddress?: Maybe<ListAddress>;
@@ -162,7 +164,18 @@ export type MutationCreateProductVariantArgs = {
 
 
 export type MutationSetProductPromotionArgs = {
-  id: Scalars['ID'];
+  _id: Scalars['ID'];
+  config: ProductSaleConfig;
+};
+
+
+export type MutationRemoveProductPromotionArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type MutationUpdateProductPromotionArgs = {
+  _id: Scalars['ID'];
   config: ProductSaleConfig;
 };
 
@@ -244,7 +257,7 @@ export type ProductSale = Node & {
 
 export type ProductSaleConfig = {
   discount: Scalars['Int'];
-  percentage: Scalars['Float'];
+  percentage: Scalars['Int'];
 };
 
 /** Shipping Address Type - By default, location in Viet Nam */

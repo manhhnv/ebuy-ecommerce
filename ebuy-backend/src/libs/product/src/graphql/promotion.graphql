@@ -10,5 +10,15 @@ input ProductSaleConfig {
     percentage: Int!
 }
 type Mutation {
-    setProductPromotion(id: ID!, config: ProductSaleConfig!): Product!
+    setProductPromotion(_id: ID!, config: ProductSaleConfig!): Product!
+    removeProductPromotion(
+        "Product ID"
+        _id: ID!
+        ): Product!
+    updateProductPromotion(
+        "Product ID"
+        _id: ID!,
+        "Config promotion"
+        config: ProductSaleConfig!
+        ): Product!
 }
