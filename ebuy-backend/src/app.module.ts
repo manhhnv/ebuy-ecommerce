@@ -11,7 +11,6 @@ import { UploadModule } from 'src/libs/upload';
 import { OrderModule } from 'src/libs/user';
 import { ShippingAddressModule } from 'src/libs/shipping-address';
 const { GraphQLUpload } = require('graphql-upload');
-
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
@@ -20,12 +19,6 @@ const { GraphQLUpload } = require('graphql-upload');
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
       resolvers: [{ JSON: GraphQLJSON }, {Upload: GraphQLUpload}],
       context: ({ req, res }) => {
-        const test = {
-          path: '/',
-          originalMaxAge: 60000,
-          httpOnly: true,
-          secure: true
-        }
         return {
           headers: req.headers,
           session: req.session,
@@ -41,7 +34,7 @@ const { GraphQLUpload } = require('graphql-upload');
     UserModule,
     UploadModule,
     OrderModule,
-    ShippingAddressModule
+    ShippingAddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],

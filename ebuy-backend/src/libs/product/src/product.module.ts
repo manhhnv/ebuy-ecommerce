@@ -9,6 +9,10 @@ import { ProductVariantResolver } from './resolver/product-variant.resolver';
 import { Asset, AssetSchema } from './schema/asset.schema';
 import { ProductPromotion, ProductPromotionSchema } from './schema/product-promotion.schema';
 import { ProductPromotionService } from './service/product-promotion.service';
+import { Collection, CollectionSchema } from './schema/collection.schema';
+import { SubCollection, SubCollectionSchema } from './schema/sub-collection.schema';
+import { CollectionService } from './service/collection.service';
+import { CollectionResolver } from './resolver/collection.resolver';
 @Global()
 @Module({
   imports: [
@@ -16,14 +20,20 @@ import { ProductPromotionService } from './service/product-promotion.service';
         {name: Product.name, schema: ProductSchema},
         {name: ProductVariant.name, schema: ProductVariantSchema},
         {name: Asset.name, schema: AssetSchema},
-        {name: ProductPromotion.name, schema: ProductPromotionSchema}
+        {name: ProductPromotion.name, schema: ProductPromotionSchema},
+        {name: Collection.name, schema: CollectionSchema},
+        {name: SubCollection.name, schema: SubCollectionSchema}
     ]),
   ],
   providers: [
       ProductResolver, ProductService,
       ProductVariantResolver, ProductVariantService,
-      ProductPromotionService,
+      ProductPromotionService, CollectionService,
+      CollectionResolver,
     ],
-  exports: [ProductService, ProductVariantService, ProductPromotionService]
+  exports: [
+    ProductService, ProductVariantService,
+    ProductPromotionService, CollectionService
+  ]
 })
 export class ProductModule {}

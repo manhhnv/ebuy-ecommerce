@@ -77,6 +77,7 @@ export type Mutation = {
 
 export type MutationCreateCollectionArgs = {
   name: Scalars['String'];
+  active: Scalars['Boolean'];
   subCollections?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 

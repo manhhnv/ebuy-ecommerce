@@ -30,7 +30,7 @@ type ListCollection {
     totalCollections: Int
 }
 type Mutation {
-    createCollection(name: String!, subCollections: [String]): ListCollection
+    createCollection(name: String!, active: Boolean!, subCollections: [String]): ListCollection
     removeCollection(_id: ID!): ListCollection
     updateCollection(name: String!, active: Boolean!): ListCollection
     addSubCollection(

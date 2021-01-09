@@ -1,1 +1,0 @@
-export { CollectionModule } from './src/collection.module';

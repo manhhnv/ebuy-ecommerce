@@ -11,9 +11,6 @@ export class Collection extends DocumentNode{
     @Prop({type: Number, default: 0})
     totalSubCollection: number
 
-    @Prop({type: [String], default: []})
-    subCollections: string[]
-
     @Prop({type: Boolean, required: true, default: true})
     active: boolean
 
