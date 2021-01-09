@@ -17,6 +17,15 @@ export type Scalars = {
   JSON: any;
 };
 
+export type SubCollection = Node & {
+  __typename?: 'SubCollection';
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  active: Scalars['Boolean'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
 export type Collection = Node & {
   __typename?: 'Collection';
   _id: Scalars['ID'];
@@ -24,9 +33,9 @@ export type Collection = Node & {
   /** Each collection can have zero or more subcollection. By default, is 0 */
   totalSubCollection: Scalars['Int'];
   /** Array of sub-collections */
-  subCollections?: Maybe<Array<Maybe<Scalars['String']>>>;
+  subCollections?: Maybe<Array<Maybe<SubCollection>>>;
   /** Collection active or de-active */
-  active?: Maybe<Scalars['Boolean']>;
+  active: Scalars['Boolean'];
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
@@ -42,6 +51,9 @@ export type Mutation = {
   createCollection?: Maybe<ListCollection>;
   removeCollection?: Maybe<ListCollection>;
   updateCollection?: Maybe<ListCollection>;
+  addSubCollection?: Maybe<ListCollection>;
+  removeSubCollection?: Maybe<ListCollection>;
+  updateSubCollection?: Maybe<ListCollection>;
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
   setProductPromotion: Product;
@@ -75,6 +87,25 @@ export type MutationRemoveCollectionArgs = {
 
 
 export type MutationUpdateCollectionArgs = {
+  name: Scalars['String'];
+  active: Scalars['Boolean'];
+};
+
+
+export type MutationAddSubCollectionArgs = {
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  active: Scalars['Boolean'];
+};
+
+
+export type MutationRemoveSubCollectionArgs = {
+  collectionId: Scalars['ID'];
+  subCollectionId: Scalars['ID'];
+};
+
+
+export type MutationUpdateSubCollectionArgs = {
   name: Scalars['String'];
   active: Scalars['Boolean'];
 };

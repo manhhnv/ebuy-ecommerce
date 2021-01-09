@@ -1,3 +1,11 @@
+type SubCollection implements Node {
+    _id: ID!
+    name: String!
+    active: Boolean!
+    createdAt: Date
+    updatedAt: Date
+}
+
 type Collection implements Node {
     _id: ID!
     name: String!
@@ -8,11 +16,11 @@ type Collection implements Node {
     """
     Array of sub-collections
     """
-    subCollections: [String]
+    subCollections: [SubCollection]
     """
     Collection active or de-active
     """
-    active: Boolean
+    active: Boolean!
     createdAt: Date
     updatedAt: Date
 
@@ -25,6 +33,15 @@ type Mutation {
     createCollection(name: String!, subCollections: [String]): ListCollection
     removeCollection(_id: ID!): ListCollection
     updateCollection(name: String!, active: Boolean!): ListCollection
+    addSubCollection(
+        "Collection ID"
+        _id: ID!,
+        "Sub-Collection name"
+        name: String!,
+        active: Boolean!
+    ): ListCollection
+    removeSubCollection(collectionId: ID!, subCollectionId: ID!): ListCollection
+    updateSubCollection(name: String!, active: Boolean!): ListCollection
 }
 type Query {
     getCollections: ListCollection
