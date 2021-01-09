@@ -4,25 +4,29 @@ module.exports = {
       name: 'Men Fashion',
       totalSubCollection: 0,
       subCollections: [],
-      active: true
+      active: true,
+      defaultCollection: true
     }
     const collectionTwo = {
       name: 'Women Fashion',
       totalSubCollection: 0,
       subCollections: [],
-      active: true
+      active: true,
+      defaultCollection: true
     }
     const collectionThree = {
       name: 'Popular Fashion',
       totalSubCollection: 0,
       subCollections: [],
-      active: true
+      active: true,
+      defaultCollection: true
     }
     const collectionFour = {
       name: 'New Product',
       totalSubCollection: 0,
       subCollections: [],
-      active: true
+      active: true,
+      defaultCollection: true
     }
     return db.collection('collections').insertMany([collectionOne, collectionTwo, collectionThree, collectionFour])
     // TODO write your migration here.

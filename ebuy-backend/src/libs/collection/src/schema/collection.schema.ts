@@ -17,6 +17,9 @@ export class Collection extends DocumentNode{
     @Prop({type: Boolean, required: true, default: true})
     active: boolean
 
+    @Prop({type: Boolean, required: true, default: false})
+    defaultCollection: boolean
+
 }
 export type CollectionDocument = Collection & Document
 export const CollectionSchema = SchemaFactory.createForClass(Collection)
