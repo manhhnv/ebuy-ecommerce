@@ -1,0 +1,31 @@
+type Collection implements Node {
+    _id: ID!
+    name: String!
+    """
+    Each collection can have zero or more subcollection. By default, is 0
+    """
+    totalSubCollection: Int!
+    """
+    Array of sub-collections
+    """
+    subCollections: [String]
+    """
+    Collection active or de-active
+    """
+    active: Boolean
+    createdAt: Date
+    updatedAt: Date
+
+}
+type ListCollection {
+    collections: [Collection]
+    totalCollections: Int
+}
+type Mutation {
+    createCollection(name: String!, subCollections: [String]): ListCollection
+    removeCollection(_id: ID!): ListCollection
+    updateCollection(name: String!, active: Boolean!): ListCollection
+}
+type Query {
+    getCollections: ListCollection
+}

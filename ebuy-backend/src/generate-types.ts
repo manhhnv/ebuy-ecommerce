@@ -17,121 +17,31 @@ export type Scalars = {
   JSON: any;
 };
 
-
-export type Node = {
+export type Collection = Node & {
+  __typename?: 'Collection';
   _id: Scalars['ID'];
+  name: Scalars['String'];
+  /** Each collection can have zero or more subcollection. By default, is 0 */
+  totalSubCollection: Scalars['Int'];
+  /** Array of sub-collections */
+  subCollections?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Collection active or de-active */
+  active?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
-export type CreateProductInput = {
-  name: Scalars['String'];
-  description: Scalars['String'];
-  slug: Scalars['String'];
-  inStock: Scalars['Int'];
-  active?: Maybe<Scalars['Boolean']>;
-};
-
-export type Product = Node & {
-  __typename?: 'Product';
-  _id: Scalars['ID'];
-  name: Scalars['String'];
-  description: Scalars['String'];
-  slug: Scalars['String'];
-  inStock: Scalars['Int'];
-  active?: Maybe<Scalars['Boolean']>;
-  sale?: Maybe<ProductSale>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-  variants?: Maybe<Array<Maybe<ProductVariant>>>;
-};
-
-export type ListProducts = {
-  __typename?: 'ListProducts';
-  items?: Maybe<Array<Product>>;
-  totalItems: Scalars['Int'];
-};
-
-export enum TypeAsset {
-  Image = 'IMAGE',
-  Video = 'VIDEO',
-  Binary = 'BINARY',
-  None = 'NONE'
-}
-
-export type Asset = Node & {
-  __typename?: 'Asset';
-  _id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  type: TypeAsset;
-  variantId?: Maybe<Scalars['ID']>;
-  fileSize?: Maybe<Scalars['Int']>;
-  color?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-};
-
-export type ProductVariant = Node & {
-  __typename?: 'ProductVariant';
-  _id: Scalars['ID'];
-  productId: Scalars['ID'];
-  product: Product;
-  inStock: Scalars['Int'];
-  active?: Maybe<Scalars['Boolean']>;
-  sku: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['Int'];
-  featureAsset?: Maybe<Asset>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-};
-
-export type CreateProductVariantInput = {
-  productId: Scalars['ID'];
-  inStock: Scalars['Int'];
-  active?: Maybe<Scalars['Boolean']>;
-  sku: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['Int'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  product?: Maybe<Product>;
-  products: ListProducts;
-  productVariant?: Maybe<ProductVariant>;
-  eligibleShippingAddress?: Maybe<ListAddress>;
-  getShippingAddressDetail?: Maybe<ShippingAddress>;
-  getDefaultShippingAddress?: Maybe<ShippingAddress>;
-  activeOrder?: Maybe<Order>;
-  me: User;
-};
-
-
-export type QueryProductArgs = {
-  _id: Scalars['ID'];
-};
-
-
-export type QueryProductsArgs = {
-  slug: Scalars['String'];
-};
-
-
-export type QueryProductVariantArgs = {
-  _id: Scalars['ID'];
-};
-
-
-export type QueryGetShippingAddressDetailArgs = {
-  id: Scalars['ID'];
+export type ListCollection = {
+  __typename?: 'ListCollection';
+  collections?: Maybe<Array<Maybe<Collection>>>;
+  totalCollections?: Maybe<Scalars['Int']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCollection?: Maybe<ListCollection>;
+  removeCollection?: Maybe<ListCollection>;
+  updateCollection?: Maybe<ListCollection>;
   createProduct?: Maybe<Product>;
   createProductVariant?: Maybe<Array<ProductVariant>>;
   setProductPromotion: Product;
@@ -150,6 +60,23 @@ export type Mutation = {
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
+};
+
+
+export type MutationCreateCollectionArgs = {
+  name: Scalars['String'];
+  subCollections?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+export type MutationRemoveCollectionArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type MutationUpdateCollectionArgs = {
+  name: Scalars['String'];
+  active: Scalars['Boolean'];
 };
 
 
@@ -244,6 +171,120 @@ export type MutationLoginArgs = {
 
 export type MutationUploadArgs = {
   file?: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getCollections?: Maybe<ListCollection>;
+  product?: Maybe<Product>;
+  products: ListProducts;
+  productVariant?: Maybe<ProductVariant>;
+  eligibleShippingAddress?: Maybe<ListAddress>;
+  getShippingAddressDetail?: Maybe<ShippingAddress>;
+  getDefaultShippingAddress?: Maybe<ShippingAddress>;
+  activeOrder?: Maybe<Order>;
+  me: User;
+};
+
+
+export type QueryProductArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type QueryProductsArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryProductVariantArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type QueryGetShippingAddressDetailArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type Node = {
+  _id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type CreateProductInput = {
+  name: Scalars['String'];
+  description: Scalars['String'];
+  slug: Scalars['String'];
+  inStock: Scalars['Int'];
+  active?: Maybe<Scalars['Boolean']>;
+};
+
+export type Product = Node & {
+  __typename?: 'Product';
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+  slug: Scalars['String'];
+  inStock: Scalars['Int'];
+  active?: Maybe<Scalars['Boolean']>;
+  sale?: Maybe<ProductSale>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  variants?: Maybe<Array<Maybe<ProductVariant>>>;
+};
+
+export type ListProducts = {
+  __typename?: 'ListProducts';
+  items?: Maybe<Array<Product>>;
+  totalItems: Scalars['Int'];
+};
+
+export enum TypeAsset {
+  Image = 'IMAGE',
+  Video = 'VIDEO',
+  Binary = 'BINARY',
+  None = 'NONE'
+}
+
+export type Asset = Node & {
+  __typename?: 'Asset';
+  _id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  type: TypeAsset;
+  variantId?: Maybe<Scalars['ID']>;
+  fileSize?: Maybe<Scalars['Int']>;
+  color?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type ProductVariant = Node & {
+  __typename?: 'ProductVariant';
+  _id: Scalars['ID'];
+  productId: Scalars['ID'];
+  product: Product;
+  inStock: Scalars['Int'];
+  active?: Maybe<Scalars['Boolean']>;
+  sku: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Int'];
+  featureAsset?: Maybe<Asset>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type CreateProductVariantInput = {
+  productId: Scalars['ID'];
+  inStock: Scalars['Int'];
+  active?: Maybe<Scalars['Boolean']>;
+  sku: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Int'];
 };
 
 export type ProductSale = Node & {
