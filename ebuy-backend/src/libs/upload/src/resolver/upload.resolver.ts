@@ -14,7 +14,7 @@ export class UploadResolver {
         filename
     }: Upload): Promise<boolean> {
         console.log(filename)
-        return true
+        // return true
         return new Promise(async (resolve, reject) => 
             createReadStream()
                 .pipe(createWriteStream(__dirname + `./uploads/${filename}`))

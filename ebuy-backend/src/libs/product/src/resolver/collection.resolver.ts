@@ -25,6 +25,20 @@ export class CollectionResolver {
             return this.collectionService.createCollection(name, active, subCollections)
     }
 
+    @Mutation()
+    removeCollection(@Args('_id') _id: string) {
+        return this.collectionService.removeCollection(_id)
+    }
+    
+    @Mutation()
+    updateCollection(
+        @Args('_id') _id: string,
+        @Args('name') name: string,
+        @Args('active') active: boolean
+        ) {
+            return this.collectionService.updateCollection(_id, name, active)
+        }
+
     @ResolveField('subCollections', returns => [SubCollection])
     subCollections (@Parent() collection: Collection) {
         const {_id} = collection

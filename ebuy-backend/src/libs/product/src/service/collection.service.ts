@@ -61,11 +61,51 @@ export class CollectionService {
             throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
         }
     }
+
+    async removeCollection(id: string): Promise<ListCollection> {
+        try {
+            await this.collectionModel.remove({
+                _id: Types.ObjectId(id)
+            })
+            await this.subCollectionModel.remove({
+                collect: Types.ObjectId(id)
+            })
+            return this.getCollections()
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
+
+    async updateCollection(id: string, name: string, active: boolean): Promise<ListCollection> {
+        try {
+            const collection = await this.collectionModel.findById(Types.ObjectId(id))
+            if (!collection) {
+                throw new HttpException('Collection not found', HttpStatus.BAD_REQUEST)
+            }
+            else {
+                await collection.update({
+                    name: name,
+                    active: active,
+                    updatedAt: new Date()
+                })
+            }
+            return this.getCollections()
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
+    
     async subCollections(collectionId: Types.ObjectId) {
-        const subs = await this.subCollectionModel.find({
-            collect: collectionId
-        })
-        console.log(subs)
-        return subs
+        try {
+            const subs = await this.subCollectionModel.find({
+                collect: collectionId
+            })
+            return subs
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
     }
 }

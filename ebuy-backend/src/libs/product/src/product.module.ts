@@ -13,6 +13,8 @@ import { Collection, CollectionSchema } from './schema/collection.schema';
 import { SubCollection, SubCollectionSchema } from './schema/sub-collection.schema';
 import { CollectionService } from './service/collection.service';
 import { CollectionResolver } from './resolver/collection.resolver';
+import { ProductController } from './controller/product.controller';
+import { MulterModule } from '@nestjs/platform-express';
 @Global()
 @Module({
   imports: [
@@ -24,6 +26,17 @@ import { CollectionResolver } from './resolver/collection.resolver';
         {name: Collection.name, schema: CollectionSchema},
         {name: SubCollection.name, schema: SubCollectionSchema}
     ]),
+    MulterModule.register({
+      dest: './uploads',
+      // storage: {
+      //   destinaton: function(req, file, cb) {
+      //     cb(null, './uploads/')
+      //   },
+      //   filename: function(req, file, cb) {
+      //     cb(null, new Date().toISOString() + file.originalname)
+      //   }
+      // }
+    })
   ],
   providers: [
       ProductResolver, ProductService,
@@ -31,6 +44,7 @@ import { CollectionResolver } from './resolver/collection.resolver';
       ProductPromotionService, CollectionService,
       CollectionResolver,
     ],
+  controllers: [ProductController],
   exports: [
     ProductService, ProductVariantService,
     ProductPromotionService, CollectionService

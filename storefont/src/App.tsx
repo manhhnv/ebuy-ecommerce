@@ -1,12 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+const img = require('e176fccb13d06ad0f93c94f2959d68bf')
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={img} className="App-logo" alt="logo" typeof="png" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
