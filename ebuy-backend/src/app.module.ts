@@ -12,6 +12,7 @@ import { OrderModule } from 'src/libs/user';
 import { ShippingAddressModule } from 'src/libs/shipping-address';
 import { Upload } from 'src/utils/scalar/upload.scalar';
 import { SlideModule } from 'src/libs/slider';
+import { CouponModule } from 'src/libs/coupon';
 const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
@@ -43,6 +44,7 @@ const { GraphQLUpload } = require('graphql-upload');
     OrderModule,
     ShippingAddressModule,
     SlideModule,
+    CouponModule,
   ],
   controllers: [AppController],
   providers: [AppService],

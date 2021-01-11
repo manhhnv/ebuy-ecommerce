@@ -1,0 +1,34 @@
+type Coupon implements Node {
+    _id: ID!
+    code: String!
+    percentage: Int!
+    maxDiscount: Int!
+    startDate: Date
+    endDate: Date
+    maxNumber: Int!
+    condition: Int!
+    createdAt: Date
+    updatedAt: Date
+}
+
+input CouponConfig {
+    code: String!
+    percentage: Int!
+    maxDiscount: Int!
+    startDate: Date
+    endDate: Date
+    maxNumber: Int!
+    condition: Int!
+}
+type ListCoupon {
+    items: [Coupon]
+    totalItems: Int!
+}
+type Query {
+    allCoupon: ListCoupon
+}
+type Mutation {
+    createCoupon(config: CouponConfig!): ListCoupon
+    updateCoupon(config: CouponConfig!): ListCoupon
+    removeCoupon: ListCoupon
+}
