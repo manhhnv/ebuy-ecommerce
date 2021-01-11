@@ -27,15 +27,7 @@ import { MulterModule } from '@nestjs/platform-express';
         {name: SubCollection.name, schema: SubCollectionSchema}
     ]),
     MulterModule.register({
-      dest: './uploads',
-      // storage: {
-      //   destinaton: function(req, file, cb) {
-      //     cb(null, './uploads/')
-      //   },
-      //   filename: function(req, file, cb) {
-      //     cb(null, new Date().toISOString() + file.originalname)
-      //   }
-      // }
+      dest: './uploads/image/variant',
     })
   ],
   providers: [

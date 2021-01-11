@@ -10,13 +10,19 @@ import { ConfigModule } from '@nestjs/config';
 import { UploadModule } from 'src/libs/upload';
 import { OrderModule } from 'src/libs/user';
 import { ShippingAddressModule } from 'src/libs/shipping-address';
+import { Upload } from 'src/utils/scalar/upload.scalar';
 const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
+    Upload,
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
       debug: true,
       typePaths: ['src/libs/**/src/graphql/*.graphql'],
+      uploads: {
+        maxFieldSize: 10000000,
+        maxFiles: 5
+      },
       resolvers: [{ JSON: GraphQLJSON }, {Upload: GraphQLUpload}],
       context: ({ req, res }) => {
         return {

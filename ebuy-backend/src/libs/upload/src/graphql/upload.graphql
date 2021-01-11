@@ -5,5 +5,5 @@ type File {
   encoding: String!
 }
 type Mutation {
-  uploadFile(file: Upload!): Boolean
+  uploadFile(file: Upload): Boolean
 }

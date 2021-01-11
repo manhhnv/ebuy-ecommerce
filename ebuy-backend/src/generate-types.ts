@@ -11,7 +11,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   Date: any;
-  /** The `Upload` scalar type represents a file upload. */
+  /** Upload custom scalar type */
   Upload: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
@@ -88,6 +88,7 @@ export type MutationRemoveCollectionArgs = {
 
 
 export type MutationUpdateCollectionArgs = {
+  _id: Scalars['ID'];
   name: Scalars['String'];
   active: Scalars['Boolean'];
 };
@@ -161,7 +162,7 @@ export type MutationSetAsDefaultAddressArgs = {
 
 
 export type MutationUploadFileArgs = {
-  file: Scalars['Upload'];
+  file?: Maybe<Scalars['Upload']>;
 };
 
 

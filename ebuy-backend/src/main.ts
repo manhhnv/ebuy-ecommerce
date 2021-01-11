@@ -7,6 +7,7 @@ import cookieSession = require('cookie-session');
 import * as mongoose from 'mongoose';
 import * as passport from 'passport';
 import * as bodyParser from 'body-parser';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 const MongoStore = require('connect-mongo')(session);
 async function bootstrap() {
@@ -30,6 +31,10 @@ async function bootstrap() {
   )
   app.use(passport.initialize())
   app.use(passport.session())
+  // app.use(graphqlUploadExpress({
+  //   maxFieldSize: 100000,
+  //   maxFiles: 5
+  // }))
   await app.listen(process.env.PORT);
   console.log( '\n' + 'Success: 🚀 GraphQL running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/graphql` + '\u001b[0m')
 }
