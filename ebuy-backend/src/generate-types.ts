@@ -17,37 +17,76 @@ export type Scalars = {
   JSON: any;
 };
 
-export type SubCollection = Node & {
-  __typename?: 'SubCollection';
+export type Coupon = Node & {
+  __typename?: 'Coupon';
   _id: Scalars['ID'];
-  name: Scalars['String'];
-  active: Scalars['Boolean'];
+  code: Scalars['String'];
+  percentage: Scalars['Int'];
+  maxDiscount: Scalars['Int'];
+  startDate?: Maybe<Scalars['Date']>;
+  endDate?: Maybe<Scalars['Date']>;
+  maxNumber: Scalars['Int'];
+  orderCondition: Scalars['Int'];
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
-export type Collection = Node & {
-  __typename?: 'Collection';
-  _id: Scalars['ID'];
-  name: Scalars['String'];
-  /** Each collection can have zero or more subcollection. By default, is 0 */
-  totalSubCollection: Scalars['Int'];
-  /** Array of sub-collections */
-  subCollections?: Maybe<Array<Maybe<SubCollection>>>;
-  /** Collection active or de-active */
-  active: Scalars['Boolean'];
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
+export type CouponConfig = {
+  code: Scalars['String'];
+  percentage: Scalars['Int'];
+  maxDiscount: Scalars['Int'];
+  startDate?: Maybe<Scalars['Date']>;
+  endDate?: Maybe<Scalars['Date']>;
+  maxNumber: Scalars['Int'];
+  condition: Scalars['Int'];
 };
 
-export type ListCollection = {
-  __typename?: 'ListCollection';
-  collections?: Maybe<Array<Maybe<Collection>>>;
-  totalCollections?: Maybe<Scalars['Int']>;
+export type ListCoupon = {
+  __typename?: 'ListCoupon';
+  items?: Maybe<Array<Maybe<Coupon>>>;
+  totalItems: Scalars['Int'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  allCoupon?: Maybe<ListCoupon>;
+  getCollections?: Maybe<ListCollection>;
+  product?: Maybe<Product>;
+  products: ListProducts;
+  productVariant?: Maybe<ProductVariant>;
+  eligibleShippingAddress?: Maybe<ListAddress>;
+  getShippingAddressDetail?: Maybe<ShippingAddress>;
+  getDefaultShippingAddress?: Maybe<ShippingAddress>;
+  getSliders?: Maybe<Array<Slider>>;
+  activeOrder?: Maybe<Order>;
+  me: User;
+};
+
+
+export type QueryProductArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type QueryProductsArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryProductVariantArgs = {
+  _id: Scalars['ID'];
+};
+
+
+export type QueryGetShippingAddressDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCoupon?: Maybe<ListCoupon>;
+  updateCoupon?: Maybe<ListCoupon>;
+  removeCoupon?: Maybe<ListCoupon>;
   createCollection?: Maybe<ListCollection>;
   removeCollection?: Maybe<ListCollection>;
   updateCollection?: Maybe<ListCollection>;
@@ -74,6 +113,16 @@ export type Mutation = {
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
+};
+
+
+export type MutationCreateCouponArgs = {
+  config: CouponConfig;
+};
+
+
+export type MutationUpdateCouponArgs = {
+  config: CouponConfig;
 };
 
 
@@ -219,38 +268,33 @@ export type MutationUploadArgs = {
   file?: Maybe<Scalars['String']>;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  getCollections?: Maybe<ListCollection>;
-  product?: Maybe<Product>;
-  products: ListProducts;
-  productVariant?: Maybe<ProductVariant>;
-  eligibleShippingAddress?: Maybe<ListAddress>;
-  getShippingAddressDetail?: Maybe<ShippingAddress>;
-  getDefaultShippingAddress?: Maybe<ShippingAddress>;
-  getSliders?: Maybe<Array<Slider>>;
-  activeOrder?: Maybe<Order>;
-  me: User;
-};
-
-
-export type QueryProductArgs = {
+export type SubCollection = Node & {
+  __typename?: 'SubCollection';
   _id: Scalars['ID'];
+  name: Scalars['String'];
+  active: Scalars['Boolean'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
 };
 
-
-export type QueryProductsArgs = {
-  slug: Scalars['String'];
-};
-
-
-export type QueryProductVariantArgs = {
+export type Collection = Node & {
+  __typename?: 'Collection';
   _id: Scalars['ID'];
+  name: Scalars['String'];
+  /** Each collection can have zero or more subcollection. By default, is 0 */
+  totalSubCollection: Scalars['Int'];
+  /** Array of sub-collections */
+  subCollections?: Maybe<Array<Maybe<SubCollection>>>;
+  /** Collection active or de-active */
+  active: Scalars['Boolean'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
 };
 
-
-export type QueryGetShippingAddressDetailArgs = {
-  id: Scalars['ID'];
+export type ListCollection = {
+  __typename?: 'ListCollection';
+  collections?: Maybe<Array<Maybe<Collection>>>;
+  totalCollections?: Maybe<Scalars['Int']>;
 };
 
 

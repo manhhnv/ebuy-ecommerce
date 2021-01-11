@@ -6,7 +6,7 @@ type Coupon implements Node {
     startDate: Date
     endDate: Date
     maxNumber: Int!
-    condition: Int!
+    orderCondition: Int!
     createdAt: Date
     updatedAt: Date
 }
