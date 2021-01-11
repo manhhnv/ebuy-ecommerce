@@ -1,0 +1,24 @@
+type Slider implements Node {
+    _id: ID!
+    title: String!
+    subTitle: String
+    url: String!
+    width: Int
+    height: Int
+    typeAsset: TypeAsset!
+    createdAt: Date
+    updatedAt: Date
+}
+input SliderInput {
+    title: String!
+    subTitle: String
+    width: Int
+    height: Int
+    typeAsset: TypeAsset!
+}
+type Mutation {
+    createSlider(input: SliderInput!): [Slider!]
+}
+type Query {
+    getSliders: [Slider!]
+}
