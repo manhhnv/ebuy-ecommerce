@@ -6,13 +6,13 @@ import { TypeAsset } from 'src/generate-types';
 @Schema()
 export class Slider extends DocumentNode{
     
-    @Prop({type: String, required: true, default: null})
+    @Prop({type: String, required: true, default: ''})
     title: string
 
-    @Prop({type: String, required: true, default: null})
+    @Prop({type: String, required: true, default: ''})
     subTitle: string
 
-    @Prop({type: String, required: true, default: null})
+    @Prop({type: String, default: ''})
     url: string
 
     @Prop({type: Number, required: true, default: 0})

@@ -2,7 +2,7 @@ type Slider implements Node {
     _id: ID!
     title: String!
     subTitle: String
-    url: String!
+    url: String
     width: Int
     height: Int
     typeAsset: TypeAsset!
@@ -16,8 +16,15 @@ input SliderInput {
     height: Int
     typeAsset: TypeAsset!
 }
+input SliderUpdate {
+    title: String!
+    subTitle: String
+    width: Int
+    height: Int
+}
 type Mutation {
     createSlider(input: SliderInput!): [Slider!]
+    updateSlider(_id: ID!, update: SliderUpdate): [Slider!]
 }
 type Query {
     getSliders: [Slider!]

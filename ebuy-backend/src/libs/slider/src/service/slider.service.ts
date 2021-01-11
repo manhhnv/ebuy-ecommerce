@@ -5,7 +5,7 @@ import {
 import { Slider, SliderDocument } from '../schema/slider.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { SliderInput } from 'src/generate-types';
+import { SliderInput, SliderUpdate } from 'src/generate-types';
 
 @Injectable()
 export class SliderService {
@@ -14,7 +14,7 @@ export class SliderService {
     )
     {}
 
-    async getSliders() {
+    async getSliders(): Promise<Slider[] | undefined> {
         try {
             const sliders = await this.sliderModel.find()
             return sliders
@@ -24,10 +24,11 @@ export class SliderService {
         }
     }
 
-    async createSlider(sliderInput: SliderInput) {
+    async createSlider(sliderInput: SliderInput): Promise<Slider[] | undefined> {
         try {
             const slider = new this.sliderModel(sliderInput)
             await slider.save()
+            return this.getSliders()
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
@@ -49,6 +50,20 @@ export class SliderService {
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
+    async updateSlider(sliderId: string, updateFields: SliderUpdate): Promise<Slider[] | undefined> {
+        try {
+            await this.sliderModel.updateOne(
+                {
+                    _id: Types.ObjectId(sliderId)
+                },
+                updateFields
+            )
+            return await this.getSliders()
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
         }
     }
 }

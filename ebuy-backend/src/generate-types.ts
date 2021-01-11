@@ -64,6 +64,7 @@ export type Mutation = {
   updateShippingAddress?: Maybe<ListAddress>;
   setAsDefaultAddress?: Maybe<ListAddress>;
   createSlider?: Maybe<Array<Slider>>;
+  updateSlider?: Maybe<Array<Slider>>;
   uploadFile?: Maybe<Scalars['Boolean']>;
   addItemToOrder?: Maybe<Order>;
   removeItemFromOrder?: Maybe<Order>;
@@ -164,6 +165,12 @@ export type MutationSetAsDefaultAddressArgs = {
 
 export type MutationCreateSliderArgs = {
   input: SliderInput;
+};
+
+
+export type MutationUpdateSliderArgs = {
+  _id: Scalars['ID'];
+  update?: Maybe<SliderUpdate>;
 };
 
 
@@ -394,7 +401,7 @@ export type Slider = Node & {
   _id: Scalars['ID'];
   title: Scalars['String'];
   subTitle?: Maybe<Scalars['String']>;
-  url: Scalars['String'];
+  url?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Int']>;
   height?: Maybe<Scalars['Int']>;
   typeAsset: TypeAsset;
@@ -408,6 +415,13 @@ export type SliderInput = {
   width?: Maybe<Scalars['Int']>;
   height?: Maybe<Scalars['Int']>;
   typeAsset: TypeAsset;
+};
+
+export type SliderUpdate = {
+  title: Scalars['String'];
+  subTitle?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
 };
 
 
