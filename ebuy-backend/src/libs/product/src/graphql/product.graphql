@@ -33,19 +33,6 @@ enum TypeAsset {
     BINARY
     NONE
 }
-type Asset implements Node{
-    _id: ID!
-    name: String
-    type: TypeAsset!
-    variantId: ID
-    fileSize: Int
-    color: String
-    width: Int
-    height: Int
-    preview: String
-    createdAt: Date
-    updatedAt: Date
-}
 type ProductVariant implements Node {
     _id: ID!
     productId: ID!
@@ -55,7 +42,11 @@ type ProductVariant implements Node {
     sku: String!
     name: String!
     price: Int!
-    featureAsset: Asset
+    type: TypeAsset!
+    color: String
+    width: Float
+    height: Float
+    preview: String
     createdAt: Date
     updatedAt: Date
 }
@@ -66,6 +57,10 @@ input CreateProductVariantInput {
     sku: String!
     name: String!
     price: Int!
+    color: String
+    width: Float
+    height: Float,
+    type: TypeAsset!
 }
 type Query {
     product(_id: ID!): Product

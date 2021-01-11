@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ProductVariant, ProductVariantDocument } from '../schema/product-variant.schema';
@@ -41,6 +41,25 @@ export class ProductVariantService {
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'Error')
+        }
+    }
+    async uploadVariantImage(_id: string, previewURL: string) {
+        const variant = await this.variantModel.findById(_id)
+        if (!variant) {
+            throw new HttpException('Product variant not found', HttpStatus.BAD_REQUEST)
+        }
+        else {
+            return await this.variantModel.findByIdAndUpdate(
+                {
+                    _id: Types.ObjectId(_id)
+                },
+                {
+                    preview: previewURL
+                },
+                {
+                    new: true
+                }
+            )
         }
     }
 }

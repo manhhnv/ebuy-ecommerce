@@ -281,21 +281,6 @@ export enum TypeAsset {
   None = 'NONE'
 }
 
-export type Asset = Node & {
-  __typename?: 'Asset';
-  _id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  type: TypeAsset;
-  variantId?: Maybe<Scalars['ID']>;
-  fileSize?: Maybe<Scalars['Int']>;
-  color?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-};
-
 export type ProductVariant = Node & {
   __typename?: 'ProductVariant';
   _id: Scalars['ID'];
@@ -306,7 +291,11 @@ export type ProductVariant = Node & {
   sku: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['Int'];
-  featureAsset?: Maybe<Asset>;
+  type: TypeAsset;
+  color?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
+  preview?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
@@ -318,6 +307,9 @@ export type CreateProductVariantInput = {
   sku: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['Int'];
+  color?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']>;
 };
 
 export type ProductSale = Node & {

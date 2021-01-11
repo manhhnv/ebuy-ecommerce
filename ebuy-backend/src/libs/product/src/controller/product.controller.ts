@@ -8,9 +8,10 @@ import { diskStorage } from 'multer';
 import { imageFileFilter } from 'src/utils/validation';
 import { editFileName } from 'src/utils/validation';
 import { Request } from 'express';
-
+import { ProductVariantService } from '../service/product-variant.service';
 @Controller('product')
 export class ProductController {
+    constructor(private variantService: ProductVariantService) {}
     @Post('upload')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
@@ -19,14 +20,12 @@ export class ProductController {
         }),
         fileFilter: imageFileFilter,
     }))
-    uploadFile(@UploadedFile() file, @Req() request: Request) {
-        // console.log(request.body)
-        // console.log(file)
-        const response = {
-            originalname: file.originalname,
-            filename: file.filename,
-        };
-        return response;
+    async uploadProductImage(@UploadedFile() file, @Req() request: Request) {
+        const {_id} = request.body
+        console.log(file)
+        const previewURL = `${process.env.HOST}:${process.env.PORT}/product/preview/${file.filename}`
+        const response = await this.variantService.uploadVariantImage(_id, previewURL)
+        return response
     }
     @Get('preview/:imgpath')
     productPreview(@Param('imgpath') image, @Res() res) {

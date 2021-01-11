@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType, Int } from '@nestjs/graphql';
 import { Types, Document } from 'mongoose';
 import { Product } from './product.schema';
 
@@ -32,6 +32,26 @@ export class ProductVariant {
     @Field(() => Int)
     @Prop({required: true})
     price: number
+
+    @Field(() => String)
+    @Prop({required: true, type: String})
+    type: string
+
+    @Field(() => String)
+    @Prop({type: String, required: false, default: null})
+    color: string
+
+    @Field(() => Float)
+    @Prop({type: Number, required: false, default: 0})
+    width: number
+
+    @Field(() => Float)
+    @Prop({type: Number, required: false, default: 0})
+    height: string
+
+    @Field(() => String)
+    @Prop({type: String, required: false, default: null})
+    preview: string
 
     @Field(() => Date)
     @Prop({default: Date.now()})
