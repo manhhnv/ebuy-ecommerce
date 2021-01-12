@@ -13,6 +13,9 @@ import { ShippingAddressModule } from 'src/libs/shipping-address';
 import { Upload } from 'src/utils/scalar/upload.scalar';
 import { SlideModule } from 'src/libs/slider';
 import { CouponModule } from 'src/libs/coupon';
+import { CaslModule } from 'src/libs/casl';
+import { APP_GUARD } from '@nestjs/core';
+import { PoliciesGuard } from './libs/policy/policies.guard';
 const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
@@ -45,8 +48,15 @@ const { GraphQLUpload } = require('graphql-upload');
     ShippingAddressModule,
     SlideModule,
     CouponModule,
+    CaslModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: PoliciesGuard
+    // }
+  ],
 })
 export class AppModule { }

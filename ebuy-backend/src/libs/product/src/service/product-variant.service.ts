@@ -13,9 +13,7 @@ export class ProductVariantService {
     {}
     async getVariant(_id: Types.ObjectId): Promise<ProductVariant | undefined> {
         try {
-            // console.log(_id)
             const variant = await this.variantModel.findById(_id).populate(`${Product.name}`);
-            // console.log(variant)
             return variant
         }
         catch(e) {

@@ -22,7 +22,6 @@ export class ProductController {
     }))
     async uploadProductImage(@UploadedFile() file, @Req() request: Request) {
         const {_id} = request.body
-        console.log(file)
         const previewURL = `${process.env.HOST}:${process.env.PORT}/product/preview/${file.filename}`
         const response = await this.variantService.uploadVariantImage(_id, previewURL)
         return response

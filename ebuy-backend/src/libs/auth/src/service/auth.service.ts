@@ -9,6 +9,7 @@ import * as mongoose from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { TokenDocument, Token } from '../schema/token.schema';
 import { Model } from 'mongoose';
+import { User as UserSchema } from 'src/libs/user/src/schema/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -19,13 +20,11 @@ export class AuthService {
         ) {}
     
 
-    private generateToken(user: User | any): string {
-        console.log(process.env)
-        const payload = { _id: user._id }
+    private generateToken(user: UserSchema): string {
+        const payload = { _id: user._id, isAdmin: user.isAdmin || false }
         return this.jwtService.sign(payload, {secret: process.env.JWT_PRIVATE_KEY})
     }
     async validateUser(input: LoginInput, user: any): Promise<NativeAuthenticationResult> {
-
         const passwordValidate = await this.useAuth.valiatePassword(input.password, user!.password)
         if (passwordValidate == false) {
             return {
@@ -59,11 +58,8 @@ export class AuthService {
         }
     }
     async findUserById(_id: string): Promise<any> {
-        console.log("running here")
         const test = await this.tokenModel.findOne()
-        // console.log(test)
         return test
-        // return user;
     }
     async checkExprideToken(userId: string, tokenId: string) {
         const instanceOfTokenModel = await this.tokenModel.findOne({

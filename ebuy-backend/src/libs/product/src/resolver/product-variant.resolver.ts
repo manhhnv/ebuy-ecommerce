@@ -13,7 +13,6 @@ export class ProductVariantResolver {
 
     @Query()
     productVariant(@Args('_id') _id: Types.ObjectId) {
-        console.log("ID", _id)
         return this.variantService.getVariant(_id)
     }
 
