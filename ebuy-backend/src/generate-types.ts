@@ -49,7 +49,7 @@ export type ListCoupon = {
 
 export type Query = {
   __typename?: 'Query';
-  allCoupon?: Maybe<ListCoupon>;
+  getAllCoupon?: Maybe<ListCoupon>;
   getCollections?: Maybe<ListCollection>;
   product?: Maybe<Product>;
   products: ListProducts;
@@ -123,6 +123,11 @@ export type MutationCreateCouponArgs = {
 
 export type MutationUpdateCouponArgs = {
   config: CouponConfig;
+};
+
+
+export type MutationRemoveCouponArgs = {
+  _id: Scalars['ID'];
 };
 
 

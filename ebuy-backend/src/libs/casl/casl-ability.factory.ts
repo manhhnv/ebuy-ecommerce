@@ -4,7 +4,7 @@ import { Coupon } from 'src/libs/coupon/src/schema/coupon.schema';
 import { Ability, AbilityBuilder, AbilityClass } from '@casl/ability';
 import { Action } from './action.enum';
 
-type Subjects = typeof Coupon | typeof User | Coupon | User | 'all';
+export type Subjects = typeof Coupon | typeof User | Coupon | User | 'all';
 export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()

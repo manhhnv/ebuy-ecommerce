@@ -25,10 +25,10 @@ type ListCoupon {
     totalItems: Int!
 }
 type Query {
-    allCoupon: ListCoupon
+    getAllCoupon: ListCoupon
 }
 type Mutation {
     createCoupon(config: CouponConfig!): ListCoupon
     updateCoupon(config: CouponConfig!): ListCoupon
-    removeCoupon: ListCoupon
+    removeCoupon(_id: ID!): ListCoupon
 }

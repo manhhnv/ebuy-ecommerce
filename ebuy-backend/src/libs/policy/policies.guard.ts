@@ -54,7 +54,7 @@ export class PoliciesGuard implements CanActivate {
             return res
         }
         catch(e) {
-            throw new HttpException('Invalid tokenasas', HttpStatus.UNAUTHORIZED)
+            throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
         }
     }
     private execPolicyHandler(handler: PolicyHandler, ability: AppAbility) {

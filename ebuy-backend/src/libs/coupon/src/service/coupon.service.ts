@@ -3,7 +3,7 @@ import {
     InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Coupon, CouponDocument } from '../schema/coupon.schema';
 import { CouponConfig } from 'src/generate-types';
 import { ListCoupon } from 'src/generate-types';
@@ -30,6 +30,15 @@ export class CouponService {
         try {
             const coupon = new this.couponModel(config)
             await coupon.save()
+            return this.getListCoupon()
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
+    async removeCoupon(couponId: string): Promise<ListCoupon> {
+        try {
+            await this.couponModel.findByIdAndDelete(Types.ObjectId(couponId))
             return this.getListCoupon()
         }
         catch(e) {

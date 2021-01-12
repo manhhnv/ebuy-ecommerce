@@ -42,7 +42,7 @@ export class TokenAuthGuard implements CanActivate {
             return res
         }
         catch(e) {
-            throw new HttpException('Invalid tokenasas', HttpStatus.UNAUTHORIZED)
+            throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
         }
     }
 }
