@@ -27,6 +27,13 @@ export class CouponResolver {
     removeCoupon(@Args('_id') _id: string) {
         return this.couponService.removeCoupon(_id)
     }
+    
+    @Mutation()
+    @UseGuards(TokenAuthGuard, PoliciesGuard)
+    @CheckPolicies(new CouponPolicy(Action.Manage))
+    updateCoupon(@Args('_id')_id, @Args('config') config: CouponConfig) {
+        return this.couponService.updateCoupon(_id, config)
+    }
 
     @Query()
     @UseGuards(TokenAuthGuard, PoliciesGuard)

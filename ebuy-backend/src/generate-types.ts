@@ -122,6 +122,7 @@ export type MutationCreateCouponArgs = {
 
 
 export type MutationUpdateCouponArgs = {
+  _id: Scalars['ID'];
   config: CouponConfig;
 };
 

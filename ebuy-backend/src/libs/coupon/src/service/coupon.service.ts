@@ -45,4 +45,16 @@ export class CouponService {
             throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
         }
     }
+    async updateCoupon(couponId: string, config: CouponConfig): Promise<ListCoupon> {
+        try {
+            await this.couponModel.findByIdAndUpdate(
+                Types.ObjectId(couponId),
+                config
+            )
+            return this.getListCoupon()
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
 }

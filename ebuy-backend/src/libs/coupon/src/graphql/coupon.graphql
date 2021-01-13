@@ -29,6 +29,6 @@ type Query {
 }
 type Mutation {
     createCoupon(config: CouponConfig!): ListCoupon
-    updateCoupon(config: CouponConfig!): ListCoupon
+    updateCoupon(_id: ID!, config: CouponConfig!): ListCoupon
     removeCoupon(_id: ID!): ListCoupon
 }
