@@ -10,6 +10,10 @@ import { Order } from '../schema/order.schema';
 import { OrderLine } from '../schema/orderLine.schema';
 import { ShippingAddress } from 'src/libs/shipping-address/src/schema/shipping-address.schema';
 import { ShippingAddressService } from 'src/libs/shipping-address/src/service/shipping-address.service';
+import { PoliciesGuard } from 'src/libs/policy/policies.guard';
+import { CheckPolicies } from 'src/libs/policy/policy.decorator';
+import { OrderPolicy } from 'src/libs/policy/permission/order.policy';
+import { Action } from 'src/libs/casl/action.enum';
 
 @Resolver(() => Order)
 export class OrderResolver {
@@ -18,7 +22,8 @@ export class OrderResolver {
         private shippingAddressService: ShippingAddressService
     ) {}
 
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(TokenAuthGuard, PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Create))
     @Mutation()
     async addItemToOrder(
         @Context('user') user: User,

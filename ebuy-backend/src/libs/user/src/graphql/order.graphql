@@ -45,4 +45,6 @@ type Mutation {
         "Shipping address ID"
         addressId: ID!
     ): Order
+    applyCouponToOrder(couponId: ID!): Order
+    removeCouponFromOrder: Order
 }
