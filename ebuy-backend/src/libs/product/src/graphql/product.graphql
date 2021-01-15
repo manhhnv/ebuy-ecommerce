@@ -46,6 +46,7 @@ type ProductVariant implements Node {
     color: String
     width: Float
     height: Float
+    weight: Float
     preview: String
     createdAt: Date
     updatedAt: Date
@@ -69,5 +70,4 @@ type Query {
 }
 type Mutation {
     createProduct(input: CreateProductInput!): Product
-    createProductVariant(input: CreateProductVariantInput): [ProductVariant!]
 }

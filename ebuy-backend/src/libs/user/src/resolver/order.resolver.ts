@@ -22,7 +22,7 @@ export class OrderResolver {
         private shippingAddressService: ShippingAddressService
     ) {}
 
-    @UseGuards(TokenAuthGuard, PoliciesGuard)
+    @UseGuards(PoliciesGuard)
     @CheckPolicies(new OrderPolicy(Action.Create))
     @Mutation()
     async addItemToOrder(
@@ -35,39 +35,52 @@ export class OrderResolver {
             return this.orderService.addItemToOrder(_id, variantId, quantity)
         }
     
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Read))
     @Query()
     activeOrder(@Context('user') user: User) {
         const {_id} = user
         return this.orderService.getActiveOrder(_id);
     }
     
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Update))
     @Mutation()
     async removeItemFromOrder(@Context('user') user: User, @Args('orderLineId') orderLineId: string) {
         const {_id} = user;
         return this.orderService.removeOrderLine(_id, orderLineId);
     }
 
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Update))
     @Mutation()
     incrementOrderItem(@Context('user')user: User ,@Args('orderLineId')orderLineId: string) {
         const {_id} = user;
         return this.orderService.incrementOrderItem(_id, orderLineId)
     }
 
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Update))
     @Mutation()
     decreaseOrderItem(@Context('user') user: User, @Args('orderLineId')orderLineId: string) {
         const {_id} = user;
         return this.orderService.decreaseOrderItem(_id, orderLineId)
     }
     
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Update))
     @Mutation()
     setShippingAddressForOrder(@Context('user') user: User, @Args('addressId') addressId: string) {
         const {_id} = user;
         return this.orderService.setShippingAddressForOrder(_id, addressId)
+    }
+
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new OrderPolicy(Action.Update))
+    @Mutation()
+    applyCouponToOrder(@Context('user') user: User, @Args('couponId') couponId: string) {
+        const {_id} = user;
+        return this.orderService.applyCouponToOrder(_id, couponId)
     }
 
     @ResolveField('lines', returns => [OrderLine])

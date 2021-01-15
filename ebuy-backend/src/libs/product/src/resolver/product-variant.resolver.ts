@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Query, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { Types } from 'mongoose';
 import { ProductVariantService } from '../service/product-variant.service';
-import { CreateProductVariantInput } from '../../../../generate-types';
 import { ProductVariant } from '../schema/product-variant.schema';
 import { ProductService } from '../service/product.service';
 @Resolver(() => ProductVariant)
@@ -22,8 +21,4 @@ export class ProductVariantResolver {
         return await this.productService.findProductById(productId)
     }
     
-    @Mutation()
-    createProductVariant(@Args('input') input: CreateProductVariantInput) {
-        return this.variantService.createVariant(input)
-    }
 }

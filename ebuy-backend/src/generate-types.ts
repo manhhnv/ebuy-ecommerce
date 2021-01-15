@@ -57,6 +57,8 @@ export type Query = {
   eligibleShippingAddress?: Maybe<ListAddress>;
   getShippingAddressDetail?: Maybe<ShippingAddress>;
   getDefaultShippingAddress?: Maybe<ShippingAddress>;
+  eligibleProvince?: Maybe<ListProvince>;
+  eligibleState?: Maybe<ListState>;
   getSliders?: Maybe<Array<Slider>>;
   activeOrder?: Maybe<Order>;
   me: User;
@@ -82,6 +84,11 @@ export type QueryGetShippingAddressDetailArgs = {
   id: Scalars['ID'];
 };
 
+
+export type QueryEligibleStateArgs = {
+  provinceId: Scalars['Int'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createCoupon?: Maybe<ListCoupon>;
@@ -94,7 +101,6 @@ export type Mutation = {
   removeSubCollection?: Maybe<ListCollection>;
   updateSubCollection?: Maybe<ListCollection>;
   createProduct?: Maybe<Product>;
-  createProductVariant?: Maybe<Array<ProductVariant>>;
   setProductPromotion: Product;
   removeProductPromotion: Product;
   updateProductPromotion: Product;
@@ -110,6 +116,8 @@ export type Mutation = {
   incrementOrderItem?: Maybe<Order>;
   decreaseOrderItem?: Maybe<Order>;
   setShippingAddressForOrder?: Maybe<Order>;
+  applyCouponToOrder?: Maybe<Order>;
+  removeCouponFromOrder?: Maybe<Order>;
   register: RegisterUserAccountResult;
   login: NativeAuthenticationResult;
   upload?: Maybe<Scalars['JSON']>;
@@ -172,11 +180,6 @@ export type MutationUpdateSubCollectionArgs = {
 
 export type MutationCreateProductArgs = {
   input: CreateProductInput;
-};
-
-
-export type MutationCreateProductVariantArgs = {
-  input?: Maybe<CreateProductVariantInput>;
 };
 
 
@@ -257,6 +260,11 @@ export type MutationDecreaseOrderItemArgs = {
 
 export type MutationSetShippingAddressForOrderArgs = {
   addressId: Scalars['ID'];
+};
+
+
+export type MutationApplyCouponToOrderArgs = {
+  couponId: Scalars['ID'];
 };
 
 
@@ -359,6 +367,7 @@ export type ProductVariant = Node & {
   color?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
   height?: Maybe<Scalars['Float']>;
+  weight?: Maybe<Scalars['Float']>;
   preview?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
@@ -446,6 +455,30 @@ export type ListAddress = {
   totalItems?: Maybe<Scalars['Int']>;
 };
 
+export type Province = {
+  __typename?: 'Province';
+  identify: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+export type State = {
+  __typename?: 'State';
+  provinceId: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+export type ListProvince = {
+  __typename?: 'ListProvince';
+  provinces?: Maybe<Array<Province>>;
+  totalItems: Scalars['Int'];
+};
+
+export type ListState = {
+  __typename?: 'ListState';
+  states?: Maybe<Array<State>>;
+  totalItems: Scalars['Int'];
+};
+
 export type Slider = Node & {
   __typename?: 'Slider';
   _id: Scalars['ID'];
@@ -502,6 +535,8 @@ export type Order = Node & {
   shippingAddress?: Maybe<ShippingAddress>;
   totalQuantity?: Maybe<Scalars['Int']>;
   subTotal?: Maybe<Scalars['Int']>;
+  coupon?: Maybe<Coupon>;
+  discount?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
   countryCode?: Maybe<Scalars['String']>;
   currency?: Maybe<Scalars['String']>;

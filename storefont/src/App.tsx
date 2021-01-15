@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import modules from './modules';
 const img = require('e176fccb13d06ad0f93c94f2959d68bf')
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        {modules}
         <a
           className="App-link"
           href="https://reactjs.org"

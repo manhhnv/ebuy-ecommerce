@@ -47,7 +47,11 @@ export class ProductVariant {
 
     @Field(() => Float)
     @Prop({type: Number, required: false, default: 0})
-    height: string
+    height: number
+
+    @Field(() => Float)
+    @Prop({type: Number, required: false, default: 0})
+    weight: number
 
     @Field(() => String)
     @Prop({type: String, required: false, default: null})

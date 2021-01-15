@@ -57,4 +57,19 @@ export class CouponService {
             throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
         }
     }
+    async expiredCoupon(couponId: string): Promise<Coupon> {
+        try {
+            console.log(new Date())
+            const coupon = await this.couponModel.findOne({
+                _id: Types.ObjectId(couponId),
+                maxNumber: {$gt: 0},
+                endDate: {$gte: new Date()}
+            })
+            console.log("COUPON", coupon)
+            return coupon;
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'Error')
+        }
+    }
 }

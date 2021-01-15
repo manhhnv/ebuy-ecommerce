@@ -10,6 +10,7 @@ import { ProductVariantService } from 'src/libs/product/src/service/product-vari
 import { Types } from 'mongoose';
 import { ShippingAddressService } from 'src/libs/shipping-address/src/service/shipping-address.service';
 import { ADDING_ITEM } from '../../constants';
+import { CouponService } from 'src/libs/coupon/src/service/coupon.service';
 @Injectable()
 export class OrderService {
     constructor(
@@ -18,6 +19,7 @@ export class OrderService {
         @InjectModel(User.name) private userModel: Model<UserDocument>,
         private variantService: ProductVariantService,
         private shippingAddressService: ShippingAddressService,
+        private couponService: CouponService,
     ) { }
     
     async adjustItem(orderId: string, orderLineId: string, variantId: string, adjustQuantity: number) {
@@ -241,6 +243,19 @@ export class OrderService {
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
+    async applyCouponToOrder(userId: string, couponId: string): Promise<Order | undefined> {
+        try {
+            const coupon = await this.couponService.expiredCoupon(couponId)
+            const order = await this.getActiveOrder(userId)
+            if (coupon && order) {
+                console.log(order)
+            }
+            return
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
         }
     }
 }

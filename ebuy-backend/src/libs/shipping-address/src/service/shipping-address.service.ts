@@ -8,12 +8,16 @@ import { Types, Model } from 'mongoose';
 import {
     ShippingAddressArgs, ListAddress,
     ShippingAddress as ShippingAddressGraphQL,
-    UpdateShippingAddressInput
+    UpdateShippingAddressInput, ListProvince, ListState
 } from 'src/generate-types';
+import { Province, ProvinceDocument } from '../schema/province.schema';
+import { State, StateDocument } from '../schema/state.schema';
 @Injectable()
 export class ShippingAddressService {
     constructor(
-        @InjectModel(ShippingAddress.name) private shippingAddressModel: Model<ShippingAddressDocument>
+        @InjectModel(ShippingAddress.name) private shippingAddressModel: Model<ShippingAddressDocument>,
+        @InjectModel(Province.name) private provinceModel: Model<ProvinceDocument>,
+        @InjectModel(State.name) private stateModel: Model<StateDocument>,
     ){}
     
     async listAShippingAddress(userId: string): Promise<ListAddress | undefined> {
@@ -119,6 +123,33 @@ export class ShippingAddressService {
         }
         catch(e) {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
+        }
+    }
+    async eligibleProvince(): Promise<ListProvince> {
+        try {
+            const provinces = await this.provinceModel.find();
+            console.log(provinces)
+            return {
+                provinces: provinces,
+                totalItems: provinces.length
+            }
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'Error')
+        }
+    }
+    async eligibleState(provinceId: number): Promise<ListState> {
+        try {
+            const states = await this.stateModel.find({
+                provinceId: provinceId
+            })
+            return {
+                states: states,
+                totalItems: states.length
+            }
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'Error')
         }
     }
 }

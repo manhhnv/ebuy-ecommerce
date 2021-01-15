@@ -16,14 +16,14 @@ export class PoliciesGuard implements CanActivate {
     constructor(
         private reflector: Reflector,
         private caslAbilityFactory: CaslAbilityFactory
-    ) {}
+    ) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const policyHandlers = 
-        this.reflector.get<PolicyHandler[]>(
-            CHECK_POLICIES_KEY,
-            context.getHandler()
-        )
+        const policyHandlers =
+            this.reflector.get<PolicyHandler[]>(
+                CHECK_POLICIES_KEY,
+                context.getHandler()
+            )
         const graphQlContext = GqlExecutionContext.create(context as ExecutionContext)
         const info = graphQlContext.getInfo();
         let req: Request
@@ -33,16 +33,21 @@ export class PoliciesGuard implements CanActivate {
             ctx = graphQlContext.getContext()
             req = ctx.req
             res = ctx.res
+            ctx.user = await this.validateToken(ctx.headers.authorization)
+            const ability = this.caslAbilityFactory.createForUser(ctx.user);
+            return policyHandlers.every((handler) =>
+                this.execPolicyHandler(handler, ability),
+            );
         }
         else {
             req = context.switchToHttp().getRequest()
             res = context.switchToHttp().getResponse()
-        }
-        ctx.user = await this.validateToken(ctx.headers.authorization)
-        const ability = this.caslAbilityFactory.createForUser(ctx.user);
-        return policyHandlers.every((handler) =>
-            this.execPolicyHandler(handler, ability),
+            const user = await this.validateToken(req.headers.authorization)
+            const ability = this.caslAbilityFactory.createForUser(user);
+            return policyHandlers.every((handler) =>
+                this.execPolicyHandler(handler, ability),
             );
+        }
     }
     async validateToken(auth: string) {
         if (auth.split(' ')[0] !== 'Bearer') {
@@ -53,13 +58,13 @@ export class PoliciesGuard implements CanActivate {
             const res: any = await jwt.verify(token, process.env.JWT_PRIVATE_KEY)
             return res
         }
-        catch(e) {
+        catch (e) {
             throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
         }
     }
     private execPolicyHandler(handler: PolicyHandler, ability: AppAbility) {
         if (typeof handler === 'function') {
-          return handler(ability);
+            return handler(ability);
         }
         return handler.handle(ability);
     }

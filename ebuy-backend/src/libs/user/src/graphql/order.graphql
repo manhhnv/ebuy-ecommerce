@@ -25,6 +25,8 @@ type Order implements Node {
     # discounts: Int
     # payment: String
     # shipping: String
+    coupon: Coupon
+    discount: Int
     total: Int
     countryCode: String
     currency: String

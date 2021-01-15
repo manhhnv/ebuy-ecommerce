@@ -57,6 +57,27 @@ type ListAddress {
     items: [ShippingAddress]
     totalItems: Int
 }
+
+type Province {
+    identify: Int!
+    name: String!
+}
+
+type State {
+    provinceId: Int!
+    name: String!
+}
+
+type ListProvince {
+    provinces: [Province!]
+    totalItems: Int!
+}
+
+type ListState {
+    states: [State!]
+    totalItems: Int!
+}
+
 type Mutation {
     addShippingAddress(input: ShippingAddressArgs!): ListAddress
     removeShippingAddress(
@@ -77,4 +98,9 @@ type Query {
         id: ID!
     ): ShippingAddress
     getDefaultShippingAddress: ShippingAddress
+    eligibleProvince: ListProvince
+    eligibleState(
+        "Province ID, province has many states"
+        provinceId: Int!
+    ): ListState
 }

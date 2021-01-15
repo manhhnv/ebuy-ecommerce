@@ -64,4 +64,14 @@ export class ShippingAddressResolver {
         const { _id } = user;
         return this.shippingAddressService.updateShippingAddress(_id, id, input)
     }
+
+    @Query()
+    eligibleProvince() {
+        return this.shippingAddressService.eligibleProvince()
+    }
+
+    @Query()
+    eligibleState(@Args('provinceId') provinceId: number) {
+        return this.shippingAddressService.eligibleState(provinceId)
+    }
 }

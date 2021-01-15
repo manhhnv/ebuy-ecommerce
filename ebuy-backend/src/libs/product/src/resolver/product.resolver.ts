@@ -7,6 +7,11 @@ import { ProductPromotionService } from '../service/product-promotion.service';
 import { ProductSaleConfig } from 'src/generate-types';
 import { ProductVariant } from '../schema/product-variant.schema';
 import { ProductPromotion } from '../schema/product-promotion.schema';
+import { UseGuards } from '@nestjs/common';
+import { PoliciesGuard } from 'src/libs/policy/policies.guard';
+import { CheckPolicies } from 'src/libs/policy/policy.decorator';
+import { ProductPolicy } from 'src/libs/policy/permission/Product.policy';
+import { Action } from 'src/libs/casl/action.enum';
 @Resolver(() => Product)
 export class ProductResolver {
     constructor(
@@ -39,17 +44,19 @@ export class ProductResolver {
         return await this.promotionService.promotionDetail(product._id)
     }
 
-    @ResolveField('variants', returns => [ProductVariant])
-    async variants(@Parent() product: Product) {
-        const { _id } = product;
-        return await this.variantService.variantsByProductId(_id)
-    }
     @Query()
     products(@Args('slug') slug: string) {
         return this.productService.getAllProductBySlug(slug)
     }
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new ProductPolicy(Action.Manage))
     @Mutation()
     createProduct (@Args('input') input: CreateProductInput) {
         return this.productService.createProduct(input)
+    }
+    @ResolveField('variants')
+    async variants(@Parent() product: Product) {
+        const { _id } = product;
+        return await this.variantService.variantsByProductId(_id)
     }
 }

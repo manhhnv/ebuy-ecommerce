@@ -7,6 +7,7 @@ import { OrderService } from './service/order.service';
 import { User, UserSchema } from './schema/user.schema';
 import { ShippingAddress, ShippingAddressSchema } from 'src/libs/shipping-address/src/schema/shipping-address.schema';
 import { ShippingAddressModule } from 'src/libs/shipping-address';
+import { CouponModule } from 'src/libs/coupon';
 @Module({
     imports: [
         MongooseModule.forFeature([
@@ -15,7 +16,8 @@ import { ShippingAddressModule } from 'src/libs/shipping-address';
             {name: User.name, schema: UserSchema},
             {name: ShippingAddress.name, schema: ShippingAddressSchema}
         ]),
-        ShippingAddressModule
+        ShippingAddressModule,
+        CouponModule
     ],
     providers: [OrderResolver, OrderService],
     exports: [OrderResolver]
