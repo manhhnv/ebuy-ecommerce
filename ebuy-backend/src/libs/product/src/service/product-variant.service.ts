@@ -60,6 +60,20 @@ export class ProductVariantService {
             )
         }
     }
+    async listProductVariants(productId: string): Promise<any> {
+        try {
+            const variants = await this.variantModel.find({
+                productId: Types.ObjectId(productId)
+            })
+            return {
+                variants: variants,
+                totalItems: variants.length
+            }
+        }
+        catch(e) {
+            throw new InternalServerErrorException(e.message || 'Error')
+        }
+    }
     async addProductVariant(
         productId: string, inStock: number,
         sku: string, name: string, price: number,
@@ -81,7 +95,7 @@ export class ProductVariantService {
                 variant.weight = weight;
                 variant.preview = preview;
                 await variant.save()
-                return await this.variantModel.findById(variant._id)
+                return await this.listProductVariants(productId)
             }
             catch(e) {
                 throw new InternalServerErrorException(e.message || 'An error occurred while processing request')

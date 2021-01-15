@@ -6,12 +6,14 @@ import { Ability, AbilityBuilder, AbilityClass } from '@casl/ability';
 import { Action } from './action.enum';
 import { Order } from 'src/libs/user/src/schema/order.schema';
 import { Product } from 'src/libs/product/src/schema/product.schema';
+import { Slider } from 'src/libs/slider/src/schema/slider.schema';
 
 export type Subjects =
     typeof Coupon | 
     typeof User | Coupon | User | 
     typeof Order | 
     typeof Product |
+    typeof Slider |
     'all';
 export type AppAbility = Ability<[Action, Subjects]>;
 

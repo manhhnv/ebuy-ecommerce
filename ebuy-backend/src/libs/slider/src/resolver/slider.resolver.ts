@@ -8,11 +8,6 @@ export class SliderResolver {
     {}
 
     @Mutation()
-    createSlider(@Args('input') input: SliderInput) {
-        return this.sliderService.createSlider(input)
-    }
-
-    @Mutation()
     updateSlider(@Args('_id')_id: string, @Args('update') update: SliderUpdate) {
         return this.sliderService.updateSlider(_id, update)
     }

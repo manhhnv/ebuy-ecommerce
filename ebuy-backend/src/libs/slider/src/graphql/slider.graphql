@@ -23,7 +23,6 @@ input SliderUpdate {
     height: Int
 }
 type Mutation {
-    createSlider(input: SliderInput!): [Slider!]
     updateSlider(_id: ID!, update: SliderUpdate): [Slider!]
 }
 type Query {

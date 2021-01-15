@@ -24,15 +24,26 @@ export class SliderService {
         }
     }
 
-    async createSlider(sliderInput: SliderInput): Promise<Slider[] | undefined> {
-        try {
-            const slider = new this.sliderModel(sliderInput)
-            await slider.save()
-            return this.getSliders()
-        }
-        catch(e) {
-            throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
-        }
+    async createSlider(
+        title: string, subTitle: string,
+        url: string, typeAsset: string,
+        width?: number, height?: number
+        ): Promise<Slider[] | undefined> {
+            try {
+                const slider = new this.sliderModel({
+                    title: title,
+                    subTitle: subTitle,
+                    url: url,
+                    typeAsset: typeAsset,
+                    width: width,
+                    height: height
+                });
+                await slider.save();
+                return this.getSliders()
+            }
+            catch(e) {
+                throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+            }
     }
 
     async addSliderImage(_id: string, imageURL: string) {
