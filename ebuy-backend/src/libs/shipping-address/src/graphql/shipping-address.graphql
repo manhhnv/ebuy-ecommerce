@@ -59,11 +59,13 @@ type ListAddress {
 }
 
 type Province {
+    _id: ID!
     identify: Int!
     name: String!
 }
 
 type State {
+    _id: ID!
     provinceId: Int!
     name: String!
 }

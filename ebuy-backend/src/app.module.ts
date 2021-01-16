@@ -14,6 +14,7 @@ import { Upload } from 'src/utils/scalar/upload.scalar';
 import { SlideModule } from 'src/libs/slider';
 import { CouponModule } from 'src/libs/coupon';
 import { CaslModule } from 'src/shared/casl';
+import { ShopModule } from './libs/shop';
 const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
@@ -48,6 +49,7 @@ const { GraphQLUpload } = require('graphql-upload');
     SlideModule,
     CouponModule,
     CaslModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [

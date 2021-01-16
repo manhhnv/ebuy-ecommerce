@@ -21,7 +21,7 @@ export class User {
 
     @Field(() => String)
     @Matches('/^([a-zA-Z]+\s)*[a-zA-Z]+$/')
-    @Prop({type: String, required: true})
+    @Prop({type: String, required: false, default: ''})
     lastName: string
 
     @Field(() => String)

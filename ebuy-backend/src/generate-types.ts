@@ -59,6 +59,7 @@ export type Query = {
   getDefaultShippingAddress?: Maybe<ShippingAddress>;
   eligibleProvince?: Maybe<ListProvince>;
   eligibleState?: Maybe<ListState>;
+  getShopInfo: ShopInfo;
   getSliders?: Maybe<Array<Slider>>;
   activeOrder?: Maybe<Order>;
   me: User;
@@ -87,6 +88,11 @@ export type QueryGetShippingAddressDetailArgs = {
 
 export type QueryEligibleStateArgs = {
   provinceId: Scalars['Int'];
+};
+
+
+export type QueryGetShopInfoArgs = {
+  _id?: Maybe<Scalars['ID']>;
 };
 
 export type Mutation = {
@@ -444,12 +450,14 @@ export type ListAddress = {
 
 export type Province = {
   __typename?: 'Province';
+  _id: Scalars['ID'];
   identify: Scalars['Int'];
   name: Scalars['String'];
 };
 
 export type State = {
   __typename?: 'State';
+  _id: Scalars['ID'];
   provinceId: Scalars['Int'];
   name: Scalars['String'];
 };
@@ -464,6 +472,23 @@ export type ListState = {
   __typename?: 'ListState';
   states?: Maybe<Array<State>>;
   totalItems: Scalars['Int'];
+};
+
+export type ShopInfo = Node & {
+  __typename?: 'ShopInfo';
+  _id: Scalars['ID'];
+  brandName: Scalars['String'];
+  phoneNumbers: Array<Scalars['String']>;
+  shopEmails: Array<Scalars['String']>;
+  province: Province;
+  state: State;
+  streetLine1: Scalars['String'];
+  streetLine2: Scalars['String'];
+  owner: User;
+  avatar?: Maybe<Scalars['String']>;
+  banner?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
 };
 
 export type Slider = Node & {

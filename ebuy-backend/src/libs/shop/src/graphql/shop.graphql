@@ -1,0 +1,19 @@
+type ShopInfo implements Node {
+    _id: ID!
+    brandName: String!
+    phoneNumbers: [String!]!
+    shopEmails: [String!]!
+    province: Province!
+    state: State!
+    streetLine1: String!
+    streetLine2: String!
+    owner: User!
+    avatar: String
+    banner: String
+    createdAt: Date
+    updatedAt: Date
+}
+
+type Query {
+    getShopInfo(_id: ID): ShopInfo!
+}
