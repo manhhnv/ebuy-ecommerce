@@ -108,8 +108,6 @@ export type Mutation = {
   removeShippingAddress?: Maybe<ListAddress>;
   updateShippingAddress?: Maybe<ListAddress>;
   setAsDefaultAddress?: Maybe<ListAddress>;
-  createSlider?: Maybe<Array<Slider>>;
-  updateSlider?: Maybe<Array<Slider>>;
   uploadFile?: Maybe<Scalars['Boolean']>;
   addItemToOrder?: Maybe<Order>;
   removeItemFromOrder?: Maybe<Order>;
@@ -218,17 +216,6 @@ export type MutationUpdateShippingAddressArgs = {
 
 export type MutationSetAsDefaultAddressArgs = {
   id: Scalars['ID'];
-};
-
-
-export type MutationCreateSliderArgs = {
-  input: SliderInput;
-};
-
-
-export type MutationUpdateSliderArgs = {
-  _id: Scalars['ID'];
-  update?: Maybe<SliderUpdate>;
 };
 
 

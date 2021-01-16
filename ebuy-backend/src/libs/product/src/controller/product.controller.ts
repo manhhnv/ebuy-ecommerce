@@ -9,10 +9,10 @@ import { imageFileFilter } from 'src/utils/validation';
 import { editFileName } from 'src/utils/validation';
 import { Request } from 'express';
 import { ProductVariantService } from '../service/product-variant.service';
-import { PoliciesGuard } from 'src/libs/policy/policies.guard';
-import { CheckPolicies } from 'src/libs/policy/policy.decorator';
-import { ProductPolicy } from 'src/libs/policy/permission/Product.policy';
-import { Action } from 'src/libs/casl/action.enum';
+import { PoliciesGuard } from 'src/shared/policy/policies.guard';
+import { CheckPolicies } from 'src/shared/policy/policy.decorator';
+import { ProductPolicy } from 'src/shared/policy/permission/product.policy';
+import { Action } from 'src/shared/casl/action.enum';
 import { ProductVariantInput, ProductVariantUpdate } from '../doc/product-variant.doc';
 import {
     ApiBearerAuth, ApiConsumes, ApiBody,

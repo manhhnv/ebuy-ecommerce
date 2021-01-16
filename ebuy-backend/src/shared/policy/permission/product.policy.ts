@@ -1,5 +1,5 @@
-import { Action } from "src/libs/casl/action.enum";
-import { AppAbility } from "src/libs/casl/casl-ability.factory";
+import { Action } from "src/shared/casl/action.enum";
+import { AppAbility } from "src/shared/casl/casl-ability.factory";
 import { Product } from "src/libs/product/src/schema/product.schema";
 import { IPolicyHandler } from "../policy.config";
 

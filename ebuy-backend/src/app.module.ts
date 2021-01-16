@@ -13,7 +13,7 @@ import { ShippingAddressModule } from 'src/libs/shipping-address';
 import { Upload } from 'src/utils/scalar/upload.scalar';
 import { SlideModule } from 'src/libs/slider';
 import { CouponModule } from 'src/libs/coupon';
-import { CaslModule } from 'src/libs/casl';
+import { CaslModule } from 'src/shared/casl';
 const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
@@ -24,7 +24,7 @@ const { GraphQLUpload } = require('graphql-upload');
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
       debug: true,
-      typePaths: ['src/libs/**/src/graphql/*.graphql'],
+      typePaths: ['src/libs/**/src/graphql/*.graphql', 'src/shared/**/src/graphql/*.graphql'],
       uploads: {
         maxFieldSize: 10000000,
         maxFiles: 5

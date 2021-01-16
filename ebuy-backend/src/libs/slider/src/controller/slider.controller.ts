@@ -9,10 +9,10 @@ import { imageFileFilter } from 'src/utils/validation';
 import { editFileName } from 'src/utils/validation';
 import { SliderService } from '../service/slider.service';
 import { SliderConfig, SliderUpdate } from '../doc/slider.doc';
-import { PoliciesGuard } from 'src/libs/policy/policies.guard';
-import { CheckPolicies } from 'src/libs/policy/policy.decorator';
-import { SliderPolicy } from 'src/libs/policy';
-import { Action } from 'src/libs/casl/action.enum';
+import { PoliciesGuard } from 'src/shared/policy/policies.guard';
+import { CheckPolicies } from 'src/shared/policy/policy.decorator';
+import { SliderPolicy } from 'src/shared/policy';
+import { Action } from 'src/shared/casl/action.enum';
 import { ApiTags, ApiBearerAuth, ApiConsumes, ApiBody } from '@nestjs/swagger';
 @ApiTags('Slider')
 @Controller('slider')

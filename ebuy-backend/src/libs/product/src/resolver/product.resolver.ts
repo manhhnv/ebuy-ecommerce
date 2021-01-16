@@ -8,10 +8,10 @@ import { ProductSaleConfig } from 'src/generate-types';
 import { ProductVariant } from '../schema/product-variant.schema';
 import { ProductPromotion } from '../schema/product-promotion.schema';
 import { UseGuards } from '@nestjs/common';
-import { PoliciesGuard } from 'src/libs/policy/policies.guard';
-import { CheckPolicies } from 'src/libs/policy/policy.decorator';
-import { ProductPolicy } from 'src/libs/policy/permission/Product.policy';
-import { Action } from 'src/libs/casl/action.enum';
+import { PoliciesGuard } from 'src/shared/policy/policies.guard';
+import { CheckPolicies } from 'src/shared/policy/policy.decorator';
+import { ProductPolicy } from 'src/shared/policy/permission/product.policy';
+import { Action } from 'src/shared/casl/action.enum';
 @Resolver(() => Product)
 export class ProductResolver {
     constructor(

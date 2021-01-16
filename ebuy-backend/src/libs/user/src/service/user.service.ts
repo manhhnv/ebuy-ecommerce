@@ -12,7 +12,7 @@ import {
     LoginInput,
     NativeAuthenticationResult
 } from 'src/generate-types';
-import { AuthService } from 'src/libs/auth/src/service/auth.service';
+import { AuthService } from 'src/shared/auth/src/service/auth.service';
 import { CONTEXT } from '@nestjs/graphql';
 import { User as UserGraphQL } from 'src/generate-types';
 @Injectable({scope: Scope.REQUEST})
