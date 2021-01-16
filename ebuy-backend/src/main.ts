@@ -52,7 +52,8 @@ async function bootstrap() {
   //   maxFiles: 5
   // }))
   await app.listen(process.env.PORT);
-  console.log( '\n' + 'Success: 🚀 GraphQL running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/graphql` + '\u001b[0m')
-  console.log( '\n' + '🚀 Swagger UI running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/api-extensions` + '\u001b[0m')
+  console.log("\nCOMPILE SUCCESS!")
+  console.log( '\n' + '🚀 GraphQL running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/${process.env.GRAPHQL_PATH}` + '\u001b[0m')
+  console.log( '\n' + '🚀 Swagger UI running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/${process.env.SWAGGER_UI}` + '\u001b[0m\n')
 }
 bootstrap();

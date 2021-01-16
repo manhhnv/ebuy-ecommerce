@@ -18,6 +18,9 @@ const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
     Upload,
+    ConfigModule.forRoot({
+      envFilePath: '.env'
+    }),
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
       debug: true,
@@ -26,6 +29,7 @@ const { GraphQLUpload } = require('graphql-upload');
         maxFieldSize: 10000000,
         maxFiles: 5
       },
+      path: process.env.GRAPHQL_PATH,
       resolvers: [{ JSON: GraphQLJSON }, {Upload: GraphQLUpload}],
       context: ({ req, res }) => {
         return {
@@ -35,9 +39,6 @@ const { GraphQLUpload } = require('graphql-upload');
           res: res
         }
       }
-    }),
-    ConfigModule.forRoot({
-      envFilePath: '.env'
     }),
     ProductModule,
     UserModule,

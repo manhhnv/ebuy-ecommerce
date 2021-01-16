@@ -9,23 +9,22 @@ import { CreateProductVariantInput } from '../../../../generate-types';
 export class ProductVariantService {
     constructor(
         @InjectModel(ProductVariant.name) private variantModel: Model<ProductVariantDocument>
-    )
-    {}
+    ) { }
     async getVariant(_id: Types.ObjectId): Promise<ProductVariant | undefined> {
         try {
             const variant = await this.variantModel.findById(_id).populate(`${Product.name}`);
             return variant
         }
-        catch(e) {
+        catch (e) {
             throw new InternalServerErrorException(e?.message || 'Error')
         }
     }
     async variantsByProductId(productId: Types.ObjectId | string) {
         try {
-            const variants = await this.variantModel.find({productId: productId})
+            const variants = await this.variantModel.find({ productId: productId })
             return variants;
         }
-        catch(e) {
+        catch (e) {
             throw new InternalServerErrorException(e?.message || 'Error')
         }
     }
@@ -37,7 +36,7 @@ export class ProductVariantService {
             const variants = await this.variantsByProductId(productId)
             return variants;
         }
-        catch(e) {
+        catch (e) {
             throw new InternalServerErrorException(e?.message || 'Error')
         }
     }
@@ -60,45 +59,76 @@ export class ProductVariantService {
             )
         }
     }
-    async listProductVariants(productId: string): Promise<any> {
+    async listProductVariants(productId: Types.ObjectId): Promise<any> {
         try {
             const variants = await this.variantModel.find({
-                productId: Types.ObjectId(productId)
+                productId: productId
             })
             return {
                 variants: variants,
                 totalItems: variants.length
             }
         }
-        catch(e) {
+        catch (e) {
             throw new InternalServerErrorException(e.message || 'Error')
         }
     }
     async addProductVariant(
         productId: string, inStock: number,
         sku: string, name: string, price: number,
-        active?: boolean ,color?: string,
+        active?: boolean, color?: string,
         width?: number, height?: number, weight?: number, preview?: string
-        ): Promise<ProductVariant> {
-            try {
-                const variant = new this.variantModel();
-                variant.productId = Types.ObjectId(productId);
-                variant.inStock = inStock;
-                variant.active = active;
-                variant.sku = sku;
-                variant.name = name;
-                variant.price = price;
-                variant.type = "IMAGE";
-                variant.color = color;
-                variant.width = width;
-                variant.height = height;
-                variant.weight = weight;
-                variant.preview = preview;
-                await variant.save()
-                return await this.listProductVariants(productId)
-            }
-            catch(e) {
-                throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
-            }
+    ): Promise<ProductVariant> {
+        try {
+            const variant = new this.variantModel();
+            variant.productId = Types.ObjectId(productId);
+            variant.inStock = inStock;
+            variant.active = active;
+            variant.sku = sku;
+            variant.name = name;
+            variant.price = price;
+            variant.type = "IMAGE";
+            variant.color = color;
+            variant.width = width;
+            variant.height = height;
+            variant.weight = weight;
+            variant.preview = preview;
+            await variant.save()
+            return await this.listProductVariants(Types.ObjectId(productId))
         }
+        catch (e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
+    async updateProductVariant(
+        variantId: string, inStock: number,
+        sku: string, name: string, price: number,
+        active?: boolean, color?: string,
+        width?: number, height?: number, weight?: number, preview?: string
+    ): Promise<ProductVariant> {
+
+        try {
+            const olderDocument = await this.variantModel.findById(variantId)
+            const variant = await this.variantModel.findByIdAndUpdate(variantId, {
+                $set: {
+                    inStock: inStock,
+                    sku: sku,
+                    name: name,
+                    price: price,
+                    active: active,
+                    color: color,
+                    width: width,
+                    height: height,
+                    weight: weight,
+                    preview: preview || olderDocument.preview
+                },
+            }, {
+                new: true
+            })
+            return await this.listProductVariants(variant.productId)
+        }
+        catch (e) {
+            throw new InternalServerErrorException(e.message || 'An error occurred while processing request')
+        }
+    }
 }

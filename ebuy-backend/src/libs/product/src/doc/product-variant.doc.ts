@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-
-export class ProductVariantInput {
+import { VariantBase } from './variant-base.doc';
+export class ProductVariantInput extends VariantBase{
 
     @ApiProperty({
         type: String,
@@ -10,69 +10,25 @@ export class ProductVariantInput {
     productId: string
 
     @ApiProperty({
-        type: Number,
-        description: "Product variant's quantity in stock",
-        required: true,
-        default: 0
-    })
-    inStock: number
-
-    @ApiProperty({
-        type: String,
-        description: "Product variant's SKU",
-        required: true,
-    })
-    sku: string
-
-    @ApiProperty({
-        type: String,
-        description: "Product variant's name",
-        required: true,
-    })
-    name: string
-
-    @ApiProperty({
-        type: Number,
-        description: "Product variant's price",
-        required: true
-    })
-    price: number
-
-    @ApiProperty({
-        type: Boolean,
-        required: false,
-    })
-    active: boolean
-
-    @ApiProperty({
-        type: String,
-        required: false,
-    })
-    color: string
-
-    @ApiProperty({
-        type: Number,
-        required: false,
-    })
-    width: number
-
-    @ApiProperty({
-        type: Number,
-        required: false,
-    })
-    height: number
-
-    @ApiProperty({
-        type: Number,
-        required: false,
-    })
-    weight: number
-
-    @ApiProperty({
         type: 'file',
         required: true,
         description: "Product variant's preview image"
     })
     preview: any
     
+}
+export class ProductVariantUpdate extends VariantBase {
+    @ApiProperty({
+        type: String,
+        description: "Product variant's ID",
+        required: true,
+    })
+    variantId: string
+
+    @ApiProperty({
+        type: 'file',
+        required: false,
+        description: "Product variant's preview image"
+    })
+    preview: any
 }
