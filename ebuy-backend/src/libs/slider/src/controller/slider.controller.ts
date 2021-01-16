@@ -8,7 +8,7 @@ import { diskStorage } from 'multer';
 import { imageFileFilter } from 'src/utils/validation';
 import { editFileName } from 'src/utils/validation';
 import { SliderService } from '../service/slider.service';
-import { SliderConfig } from '../doc/slider.doc';
+import { SliderConfig, SliderUpdate } from '../doc/slider.doc';
 import { PoliciesGuard } from 'src/libs/policy/policies.guard';
 import { CheckPolicies } from 'src/libs/policy/policy.decorator';
 import { SliderPolicy } from 'src/libs/policy';
@@ -41,8 +41,37 @@ export class SliderController {
         )
     }
 
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new SliderPolicy(Action.Manage))
+    @Post('update')
+    @ApiConsumes('multipart/form-data', 'application/json')
+    @ApiBearerAuth()
+    @ApiBody({ type: SliderUpdate })
+    @UseInterceptors(FileInterceptor('image', {
+        storage: diskStorage({
+            destination: './uploads/asset/home/slider',
+            filename: editFileName,
+        }),
+        fileFilter: imageFileFilter
+    }))
+    async updateSlider(@UploadedFile() image, @Body() body: SliderUpdate) {
+        const { sliderId, title, subTitle, width, height, typeAsset } = body;
+
+        if (image) {
+            const url = `${process.env.HOST}:${process.env.PORT}/slider/image/${image.filename}`;
+            return this.sliderService.updateSlider(
+                sliderId, title, subTitle, url,
+                typeAsset, width, height
+            )
+        }
+        return this.sliderService.updateSlider(
+            sliderId, title, subTitle, null,
+            typeAsset, width, height
+        )
+    }
+
     @Get('image/:path')
     viewSliderImage(@Param('path') image, @Res() res) {
-        return res.sendFile(image, {root: './uploads/asset/home/slider'})
+        return res.sendFile(image, { root: './uploads/asset/home/slider' })
     }
 }
