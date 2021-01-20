@@ -1,27 +1,13 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useQuery } from '@apollo/client';
-import { GET_SHOP_INFO } from '../service/shop/shop.graphql';
+import useShop from '../hooks/shop/useShop';
 
 export default function Home() {
-  const { data, error, loading } = useQuery(GET_SHOP_INFO, {
-    variables: {
-      id: "60032d697baff543476fb632"
-    }
-  })
-  if (data) {
-    console.log(data)
-  }
-  else if (error) {
-    console.log(error)
-  }
-  else if (loading) {
-    console.log("loading...")
-  }
+  const { data, error, loading } = useShop({id: "60032d697baff543476fb632"})
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Ebuy, E-commerce | Popular, Modern Fashion and Accessories in Viet Nam</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
