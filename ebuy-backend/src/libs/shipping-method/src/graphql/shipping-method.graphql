@@ -1,0 +1,19 @@
+enum ShippingType {
+    FAST_EXPRESS
+    STANDARD_EXPRESS
+}
+
+type ShippingMethod implements Node {
+    _id: ID!
+    name: String!
+    shippingType: ShippingType!
+    company: String!
+    licenseNumber: String!
+    active: Boolean!
+    createdAt: Date
+    updatedAt: Date
+}
+
+type Query {
+    eligibleShippingMethod: [ShippingMethod!]
+}

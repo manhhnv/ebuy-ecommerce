@@ -59,6 +59,7 @@ export type Query = {
   getDefaultShippingAddress?: Maybe<ShippingAddress>;
   eligibleProvince?: Maybe<ListProvince>;
   eligibleState?: Maybe<ListState>;
+  eligibleShippingMethod?: Maybe<Array<ShippingMethod>>;
   getShopInfo: ShopInfo;
   getSliders?: Maybe<Array<Slider>>;
   activeOrder?: Maybe<Order>;
@@ -472,6 +473,22 @@ export type ListState = {
   __typename?: 'ListState';
   states?: Maybe<Array<State>>;
   totalItems: Scalars['Int'];
+};
+
+export enum ShippingType {
+  FastExpress = 'FAST_EXPRESS',
+  StandardExpress = 'STANDARD_EXPRESS'
+}
+
+export type ShippingMethod = Node & {
+  __typename?: 'ShippingMethod';
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  shippingType: ShippingType;
+  company: Scalars['String'];
+  licenseNumber: Scalars['String'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
 };
 
 export type ShopInfo = Node & {

@@ -15,6 +15,11 @@ import { SlideModule } from 'src/libs/slider';
 import { CouponModule } from 'src/libs/coupon';
 import { CaslModule } from 'src/shared/casl';
 import { ShopModule } from './libs/shop';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import path from 'path';
+import { ShippingMethodModule } from 'src/libs/shipping-method';
+
 const { GraphQLUpload } = require('graphql-upload');
 @Module({
   imports: [
@@ -22,6 +27,27 @@ const { GraphQLUpload } = require('graphql-upload');
     ConfigModule.forRoot({
       envFilePath: '.env'
     }),
+    // MailerModule.forRoot({
+    //   transport: 'smtps://user@domain.com:pass@smtp.domain.com',
+    //   defaults: {
+    //     from:'"nest-modules" <modules@nestjs.com>',
+    //   },
+    //   template: {
+    //     dir: __dirname + '/templates',
+    //     adapter: new PugAdapter(),
+    //     options: {
+    //       strict: true
+    //     }
+    //   },
+    //   options: {
+    //     partials: {
+    //       dir: path.join(process.env.PWD, 'templates/partials'),
+    //       options: {
+    //         strict: true,
+    //       },
+    //     }
+    //   }
+    // }),
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/ebuy'),
     GraphQLModule.forRoot({
       debug: true,
@@ -50,6 +76,7 @@ const { GraphQLUpload } = require('graphql-upload');
     CouponModule,
     CaslModule,
     ShopModule,
+    ShippingMethodModule,
   ],
   controllers: [AppController],
   providers: [

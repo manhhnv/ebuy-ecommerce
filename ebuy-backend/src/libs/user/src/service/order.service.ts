@@ -223,7 +223,7 @@ export class OrderService {
     }
     async setShippingAddressForOrder(userId: string, addressId: string): Promise<Order | undefined> {
         try {
-            const checkAddress = await this.shippingAddressService.getShippingAddressDetail(userId, addressId)
+            const checkAddress = await this.shippingAddressService.getShippingAddressDetail(userId, Types.ObjectId(addressId))
             if (!checkAddress) {
                 throw new HttpException('Can not find address', HttpStatus.BAD_REQUEST)
             }

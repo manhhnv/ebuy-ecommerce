@@ -87,11 +87,11 @@ export class ShippingAddressService {
             throw new InternalServerErrorException(e?.message || 'An error occurred while processing request')
         }
     }
-    async getShippingAddressDetail(userId: string, id: string): Promise<ShippingAddressGraphQL | undefined> {
+    async getShippingAddressDetail(userId: string, id: Types.ObjectId): Promise<ShippingAddressGraphQL | undefined> {
         try {
             return this.shippingAddressModel.findOne({
                 user: Types.ObjectId(userId),
-                _id: Types.ObjectId(id)
+                _id: id
             })
         }
         catch(e) {

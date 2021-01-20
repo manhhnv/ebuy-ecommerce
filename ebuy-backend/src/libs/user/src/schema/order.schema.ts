@@ -45,7 +45,9 @@ export class Order {
     //     updatedAt: {type: Date}
     // }))
     @Prop({type: Types.ObjectId, ref: 'ShippingAddress', default: null})
-    shippingAddress: string
+    shippingAddress: Types.ObjectId
+
+    // @Prop({ type: Types.ObjectId, ref: '' })
     
     @Prop({type: Date, required: true, default: Date.now()})
     createdAt: Date

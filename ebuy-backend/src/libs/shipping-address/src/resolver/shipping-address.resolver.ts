@@ -7,6 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { TokenAuthGuard } from 'src/shared/auth/src/guard/token-auth.guard';
 import { User, ShippingAddressArgs, UpdateShippingAddressInput } from 'src/generate-types';
 import { ShippingAddressService } from '../service/shipping-address.service';
+import { Types } from 'mongoose';
 @Resolver(() => ShippingAddress)
 export class ShippingAddressResolver {
 
@@ -44,7 +45,7 @@ export class ShippingAddressResolver {
     @Query()
     getShippingAddressDetail(@Context('user') user: User, @Args('id')id: string) {
         const { _id } = user;
-        return this.shippingAddressService.getShippingAddressDetail(_id, id)
+        return this.shippingAddressService.getShippingAddressDetail(_id, Types.ObjectId(id))
     }
 
     @UseGuards(TokenAuthGuard)
