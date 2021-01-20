@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import useShop from '../../hooks/shop/useShop';
 import { client } from '../../service/config';
 import { GET_SHOP_INFO } from '../../service/shop/shop.graphql';
 
