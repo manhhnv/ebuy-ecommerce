@@ -1,7 +1,23 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { useQuery } from '@apollo/client';
+import { GET_SHOP_INFO } from '../service/shop/shop.graphql';
 
 export default function Home() {
+  const { data, error, loading } = useQuery(GET_SHOP_INFO, {
+    variables: {
+      id: "60032d697baff543476fb632"
+    }
+  })
+  if (data) {
+    console.log(data)
+  }
+  else if (error) {
+    console.log(error)
+  }
+  else if (loading) {
+    console.log("loading...")
+  }
   return (
     <div className={styles.container}>
       <Head>

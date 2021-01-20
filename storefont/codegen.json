@@ -1,0 +1,20 @@
+{
+    "overwrite": true,
+    "config": {
+        "strict": true
+    },
+    "generates": {
+        "generated/generate-types.ts": {
+            "schema": "http://0.0.0.0:3000/ebuy-graphql",
+            "plugins": [
+                {
+                    "add": {
+                        "content": "/* eslint-disable */"
+                    }
+                },
+                "typescript",
+                "typescript-compatibility"
+            ]
+        }
+    }
+}

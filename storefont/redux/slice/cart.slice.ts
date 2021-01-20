@@ -13,7 +13,10 @@ const cartSlice = createSlice({
             state.items = action.payload;
             state.totalItems = action.payload.length;
         }
-    } 
+    },
+    extraReducers: (builder) => {
+        
+    }
 })
 
 export const { addItemToCart, removeItemFromCart } = cartSlice.actions;

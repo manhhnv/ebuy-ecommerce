@@ -5,11 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "generate-types": "graphql-codegen --config ./codegen.json"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.7",
     "@reduxjs/toolkit": "^1.5.0",
     "antd": "^4.10.2",
+    "graphql": "^15.4.0",
+    "graphql-tag": "^2.11.0",
     "next": "10.0.5",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -20,6 +24,10 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^2.0.2",
+    "@graphql-codegen/cli": "^1.20.0",
+    "@graphql-codegen/typescript": "^1.20.0",
+    "@graphql-codegen/typescript-compatibility": "^2.0.1",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@types/react-redux": "^7.1.15",
