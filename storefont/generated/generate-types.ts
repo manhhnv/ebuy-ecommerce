@@ -505,6 +505,8 @@ export type ShopInfo = Node & {
   owner: User;
   avatar?: Maybe<Scalars['String']>;
   banner?: Maybe<Scalars['String']>;
+  metaKeyword?: Maybe<Scalars['String']>;
+  metaDescription?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
@@ -667,8 +669,35 @@ export type NativeAuthenticationResult = UserWithToken | InvalidCredentialsError
 
 export type RegisterUserAccountResult = Success | RegexNotMatchError;
 
-// export namespace GetShopInfo {
-//   export type Variables = GetShopInfoQueryVariables;
-//   export type Query = GetShopInfoQuery;
-//   export type GetShopInfo = (NonNullable<GetShopInfoQuery['getShopInfo']>);
-// }
+export namespace OwnerFragment {
+  export type Fragment = OwnerFragmentFragment;
+}
+
+export namespace GetShopInfo {
+  export type Variables = GetShopInfoQueryVariables;
+  export type Query = GetShopInfoQuery;
+  export type GetShopInfo = (NonNullable<GetShopInfoQuery['getShopInfo']>);
+  export type Owner = (NonNullable<(NonNullable<GetShopInfoQuery['getShopInfo']>)['owner']>);
+}
+
+export type OwnerFragmentFragment = (
+  { __typename?: 'User' }
+  & Pick<User, '_id' | 'firstName' | 'lastName' | 'email' | 'avatarURL' | 'countryCode' | 'currency'>
+);
+
+export type GetShopInfoQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetShopInfoQuery = (
+  { __typename?: 'Query' }
+  & { getShopInfo: (
+    { __typename?: 'ShopInfo' }
+    & Pick<ShopInfo, 'brandName' | 'metaDescription' | 'metaKeyword'>
+    & { owner: (
+      { __typename?: 'User' }
+      & OwnerFragmentFragment
+    ) }
+  ) }
+);

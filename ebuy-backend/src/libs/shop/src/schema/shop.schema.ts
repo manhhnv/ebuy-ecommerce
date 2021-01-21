@@ -40,6 +40,12 @@ export class Shop extends DocumentNode {
     @Prop({ type: String, required: true, default: "http://0.0.0.0:3000/shop/image/default-shop-banner.jpg" })
     banner: string
 
+    @Prop({ type: String, required: true})
+    metaDescription: string
+
+    @Prop({ type: String, required: true})
+    metaKeyword: string
+
 }
 export type ShopDocument = Document & Shop;
 export const ShopSchema = SchemaFactory.createForClass(Shop);

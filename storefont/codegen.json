@@ -6,6 +6,7 @@
     "generates": {
         "generated/generate-types.ts": {
             "schema": "http://0.0.0.0:3000/ebuy-graphql",
+            "documents": ["./service/**/*.graphql.ts", "./service/*.graphql.ts"],
             "plugins": [
                 {
                     "add": {
@@ -13,7 +14,8 @@
                     }
                 },
                 "typescript",
-                "typescript-compatibility"
+                "typescript-compatibility",
+                "typescript-operations"
             ]
         }
     }

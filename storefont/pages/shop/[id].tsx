@@ -1,12 +1,13 @@
 import React from 'react';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { GetStaticProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import useShop from '../../hooks/shop/useShop';
+import SeoTitle from '../../components/SEO/title';
+import SeoMeta from '../../components/SEO/meta';
 
-const ShopInfo: InferGetStaticPropsType<typeof getServerSideProps> = (props) => {
+const ShopInfo: InferGetServerSidePropsType<typeof getServerSideProps> = (props) => {
     const router = useRouter();
     const { shopId } = props
-    console.log(shopId)
     const {
         data,
         loading,
@@ -24,6 +25,10 @@ const ShopInfo: InferGetStaticPropsType<typeof getServerSideProps> = (props) => 
     }
     return (
         <React.Fragment>
+            <SeoTitle title={data?.getShopInfo?.brandName + ', Ebuy Online Shop | Ebuy, E-commerce'}/>
+            <SeoMeta name="description" content={data?.getShopInfo?.metaDescription} />
+            <SeoMeta name="keywords" content={data?.getShopInfo?.metaKeyword} />
+
             {data?.getShopInfo?.brandName}
         </React.Fragment>
     )

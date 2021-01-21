@@ -487,6 +487,7 @@ export type ShippingMethod = Node & {
   shippingType: ShippingType;
   company: Scalars['String'];
   licenseNumber: Scalars['String'];
+  active: Scalars['Boolean'];
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
@@ -506,6 +507,8 @@ export type ShopInfo = Node & {
   banner?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
+  metaKeyword?: Maybe<Scalars['String']>;
+  metaDescription?: Maybe<Scalars['String']>;
 };
 
 export type Slider = Node & {

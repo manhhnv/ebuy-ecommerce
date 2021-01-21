@@ -59,11 +59,13 @@ export class ShopController {
         console.log("BODY", body)
         const {
             brandName, phoneNumbers, shopEmails,
-            province, state, streetLine1, streetLine2
+            province, state, streetLine1, streetLine2,
+            metaDescription, metaKeyword
         } = body;
         return this.shopService.createShop(
             brandName, phoneNumbers, shopEmails, streetLine1,
-            province, state, avatar, banner, authorization, streetLine2
+            province, state, avatar, banner, authorization, streetLine2,
+            metaDescription, metaKeyword
         )
     }
 }

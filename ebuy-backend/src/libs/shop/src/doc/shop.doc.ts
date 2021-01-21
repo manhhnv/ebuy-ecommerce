@@ -66,4 +66,20 @@ export class ShopCreate {
         required: false
     })
     banner: any
+
+    @ApiProperty({
+        type: String,
+        name: 'metaDescription',
+        description: "Shop Description for SEO",
+        required: true
+    })
+    metaDescription: string
+
+    @ApiProperty({
+        type: String,
+        name: 'metaKeyword',
+        description: "Search key words for SEO",
+        required: true
+    })
+    metaKeyword: string
 }

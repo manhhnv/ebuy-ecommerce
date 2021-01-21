@@ -31,6 +31,7 @@ export class ShopService {
         shopEmails: string[], streetLine1: string,
         province: string, state: string,
         avatar: string, banner: string, authorization: string,
+        metaDescription: string, metaKeyword: string,
         streetLine2?: string,
     ) {
         const user: User = await this.verifyToken(authorization)
@@ -44,7 +45,9 @@ export class ShopService {
             streetLine1: streetLine1,
             streetLine2: streetLine2,
             province: Types.ObjectId(province),
-            state: Types.ObjectId(state)
+            state: Types.ObjectId(state),
+            metaDescription: metaDescription,
+            metaKeyword: metaKeyword,
         })
         await shop.save();
         console.log("SHOP", shop)

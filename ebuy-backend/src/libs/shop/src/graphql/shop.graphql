@@ -10,6 +10,8 @@ type ShopInfo implements Node {
     owner: User!
     avatar: String
     banner: String
+    metaKeyword: String
+    metaDescription: String
     createdAt: Date
     updatedAt: Date
 }
