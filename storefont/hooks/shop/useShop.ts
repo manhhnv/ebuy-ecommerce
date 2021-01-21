@@ -10,7 +10,7 @@ const useShop = (props: UseShopPropsType) => {
         variables: {
             id: id
         },
-        fetchPolicy: "cache-first"
+        fetchPolicy: "cache-and-network"
     });
     return {
         data,
