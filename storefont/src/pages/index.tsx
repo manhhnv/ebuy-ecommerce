@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css'
 import "antd/dist/antd.css";
 import useShop from '../hooks/shop/useShop';
 import Link from 'next/link';
+import Header from '../components/Header';
 
 export default function Home() {
   const { data, error, loading } = useShop({id: "60032d697baff543476fb632"})
@@ -12,7 +13,7 @@ export default function Home() {
         <title>Ebuy, E-commerce | Popular, Modern Fashion and Accessories in Viet Nam</title>
         <link rel="icon" href="/ebuy.svg" />
       </Head>
-
+      <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
