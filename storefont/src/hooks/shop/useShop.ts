@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_SHOP_INFO } from '../../service/shop/shop.graphql';
-import { UseShopPropsType } from '../../types';
+import { UseShopPropsType } from '../../../types';
 import { GetShopInfo } from '../../generated/generate-types';
 
 const useShop = (props: UseShopPropsType) => {
