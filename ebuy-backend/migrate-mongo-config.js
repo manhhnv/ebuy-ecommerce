@@ -3,7 +3,7 @@ const env = require('./server.config');
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: env.mongo.url || "mongodb://localhost:27017",
+    url: env.mongo.url || "mongodb+srv://manh123:manhuetvnuk63j@cluster0.ntafe.mongodb.net",
 
     // TODO Change this to your database name:
     databaseName: env.mongo.dbname || "ebuy",

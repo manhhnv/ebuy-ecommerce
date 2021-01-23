@@ -4,7 +4,7 @@ import {
 } from '@nestjs/graphql';
 import { ShippingAddress } from '../schema/shipping-address.schema';
 import { UseGuards } from '@nestjs/common';
-import { TokenAuthGuard } from 'src/shared/auth/src/guard/token-auth.guard';
+import { TokenAuthGuard } from '../../../../shared/auth/src/guard/token-auth.guard';
 import { User, ShippingAddressArgs, UpdateShippingAddressInput } from 'src/generate-types';
 import { ShippingAddressService } from '../service/shipping-address.service';
 import { Types } from 'mongoose';

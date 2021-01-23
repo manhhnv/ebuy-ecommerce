@@ -4,7 +4,7 @@ import {
 } from '@nestjs/graphql';
 import { CollectionService } from '../service/collection.service';
 import { SubCollection } from '../schema/sub-collection.schema';
-import { ListCollection } from 'src/generate-types';
+import { ListCollection } from '../../../../generate-types';
 import { Collection } from '../schema/collection.schema';
 
 @Resolver('Collection')

@@ -9,7 +9,7 @@ import {
     ShippingAddressArgs, ListAddress,
     ShippingAddress as ShippingAddressGraphQL,
     UpdateShippingAddressInput, ListProvince, ListState
-} from 'src/generate-types';
+} from '../../../../generate-types';
 import { Province, ProvinceDocument } from '../schema/province.schema';
 import { State, StateDocument } from '../schema/state.schema';
 @Injectable()

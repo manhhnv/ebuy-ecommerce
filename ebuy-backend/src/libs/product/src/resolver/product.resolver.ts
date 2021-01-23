@@ -4,14 +4,14 @@ import { CreateProductInput } from '../../../../generate-types';
 import { Product } from '../schema/product.schema';
 import { ProductVariantService } from '../service/product-variant.service';
 import { ProductPromotionService } from '../service/product-promotion.service';
-import { ProductSaleConfig } from 'src/generate-types';
+import { ProductSaleConfig } from '../../../../generate-types';
 import { ProductVariant } from '../schema/product-variant.schema';
 import { ProductPromotion } from '../schema/product-promotion.schema';
 import { UseGuards } from '@nestjs/common';
-import { PoliciesGuard } from 'src/shared/policy/policies.guard';
-import { CheckPolicies } from 'src/shared/policy/policy.decorator';
-import { ProductPolicy } from 'src/shared/policy/permission/product.policy';
-import { Action } from 'src/shared/casl/action.enum';
+import { PoliciesGuard } from '../../../../shared/policy/policies.guard';
+import { CheckPolicies } from '../../../../shared/policy/policy.decorator';
+import { ProductPolicy } from '../../../../shared/policy/permission/product.policy';
+import { Action } from '../../../../shared/casl/action.enum';
 @Resolver(() => Product)
 export class ProductResolver {
     constructor(

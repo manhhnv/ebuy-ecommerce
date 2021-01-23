@@ -1,7 +1,7 @@
 import { Prop, Schema,SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { DocumentNode } from 'src/utils/document-node.schema';
-import { ShippingType } from 'src/generate-types';
+import { DocumentNode } from '../../../../utils/document-node.schema';
+import { ShippingType } from '../../../../generate-types';
 
 @Schema()
 export class ShippingMethod extends DocumentNode {

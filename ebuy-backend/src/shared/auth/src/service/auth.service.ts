@@ -2,14 +2,14 @@ import { HttpStatus, Injectable, InternalServerErrorException, HttpException } f
 import {
     LoginInput, NativeAuthenticationResult, ErrorCode,
     CreateUserInput, RegisterUserAccountResult, User
-} from 'src/generate-types';
+} from '../../../../generate-types';
 import { UserAuth } from '../hook/useAuth';
 import { JwtService } from '@nestjs/jwt';
 import * as mongoose from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { TokenDocument, Token } from '../schema/token.schema';
 import { Model } from 'mongoose';
-import { User as UserSchema } from 'src/libs/user/src/schema/user.schema';
+import { User as UserSchema } from '../../../../libs/user/src/schema/user.schema';
 
 @Injectable()
 export class AuthService {

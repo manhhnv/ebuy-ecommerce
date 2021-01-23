@@ -1,6 +1,6 @@
-import { Action } from 'src/shared/casl/action.enum';
-import { AppAbility } from 'src/shared/casl/casl-ability.factory';
-import { Coupon } from 'src/libs/coupon/src/schema/coupon.schema';
+import { Action } from '../../../shared/casl/action.enum';
+import { AppAbility } from '../../../shared/casl/casl-ability.factory';
+import { Coupon } from '../../../libs/coupon/src/schema/coupon.schema';
 import { IPolicyHandler } from '../policy.config';
 export class CouponPolicy implements IPolicyHandler{
     

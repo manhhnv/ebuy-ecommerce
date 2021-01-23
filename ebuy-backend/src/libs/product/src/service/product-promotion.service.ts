@@ -5,7 +5,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ProductPromotion, ProductPromotionDocument } from '../schema/product-promotion.schema';
-import { ProductSaleConfig } from 'src/generate-types';
+import { ProductSaleConfig } from '../../../../generate-types';
 import { ProductService } from './product.service';
 import { Product } from '../schema/product.schema';
 

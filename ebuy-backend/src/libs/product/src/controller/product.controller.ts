@@ -5,14 +5,14 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { imageFileFilter } from 'src/utils/validation';
-import { editFileName } from 'src/utils/validation';
+import { imageFileFilter } from '../../../../utils/validation';
+import { editFileName } from '../../../../utils/validation';
 import { Request } from 'express';
 import { ProductVariantService } from '../service/product-variant.service';
-import { PoliciesGuard } from 'src/shared/policy/policies.guard';
-import { CheckPolicies } from 'src/shared/policy/policy.decorator';
-import { ProductPolicy } from 'src/shared/policy/permission/product.policy';
-import { Action } from 'src/shared/casl/action.enum';
+import { PoliciesGuard } from '../../../../shared/policy/policies.guard';
+import { CheckPolicies } from '../../../../shared/policy/policy.decorator';
+import { ProductPolicy } from '../../../../shared/policy/permission/product.policy';
+import { Action } from '../../../../shared/casl/action.enum';
 import { ProductVariantInput, ProductVariantUpdate } from '../doc/product-variant.doc';
 import {
     ApiBearerAuth, ApiConsumes, ApiBody,

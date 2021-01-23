@@ -7,15 +7,14 @@ import {
     ApiBearerAuth, ApiConsumes, ApiTags,
 } from '@nestjs/swagger';
 import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
-import {  } from 'src/shared/policy';
 import { ApiParam } from '@nestjs/swagger';
-import { CheckPolicies } from 'src/shared/policy/policy.decorator';
-import { ShopPolicy } from 'src/shared/policy';
-import { Action } from 'src/shared/casl/action.enum';
+import { CheckPolicies } from '../../../../shared/policy/policy.decorator';
+import { ShopPolicy } from '../../../../shared/policy';
+import { Action } from '../../../../shared/casl/action.enum';
 import { diskStorage } from 'multer';
-import { editFileName, imageFileFilter } from 'src/utils/validation';
+import { editFileName, imageFileFilter } from '../../../../utils/validation';
 import { Request } from 'express';
-import { PoliciesGuard } from 'src/shared/policy/policies.guard';
+import { PoliciesGuard } from '../../../../shared/policy/policies.guard';
 import { ShopCreate } from '../doc/shop.doc';
 import { ShopService } from '../service/shop.service';
 @ApiTags('Shop')

@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
-import { User } from "src/generate-types";
+import { User } from "../../../../generate-types";
 import { Shop, ShopDocument } from "../schema/shop.schema";
 import * as jwt from 'jsonwebtoken';
 

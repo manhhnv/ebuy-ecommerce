@@ -1,12 +1,12 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
-import { TokenAuthGuard } from 'src/shared/auth/src/guard/token-auth.guard';
-import { PoliciesGuard } from 'src/shared/policy/policies.guard';
-import { CheckPolicies } from 'src/shared/policy/policy.decorator';
+import { TokenAuthGuard } from '../../../../shared/auth/src/guard/token-auth.guard';
+import { PoliciesGuard } from '../../../../shared/policy/policies.guard';
+import { CheckPolicies } from '../../../../shared/policy/policy.decorator';
 import { CouponService } from '../service/coupon.service';
-import { CouponPolicy } from 'src/shared/policy/permission/coupon.policy';
-import { CouponConfig } from 'src/generate-types';
-import { Action } from 'src/shared/casl/action.enum';
+import { CouponPolicy } from '../../../../shared/policy/permission/coupon.policy';
+import { CouponConfig } from '../../../../generate-types';
+import { Action } from '../../../../shared/casl/action.enum';
 @Resolver()
 export class CouponResolver {
     constructor(

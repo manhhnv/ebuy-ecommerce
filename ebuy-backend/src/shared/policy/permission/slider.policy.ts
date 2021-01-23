@@ -1,7 +1,7 @@
-import { AppAbility } from 'src/shared/casl/casl-ability.factory';
+import { AppAbility } from '../../../shared/casl/casl-ability.factory';
 import { IPolicyHandler } from '../policy.config';
-import { Slider } from 'src/libs/slider/src/schema/slider.schema';
-import { Action } from 'src/shared/casl/action.enum';
+import { Slider } from '../../../libs/slider/src/schema/slider.schema';
+import { Action } from '../../../shared/casl/action.enum';
 
 export class SliderPolicy implements IPolicyHandler {
 

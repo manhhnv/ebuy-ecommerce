@@ -505,10 +505,10 @@ export type ShopInfo = Node & {
   owner: User;
   avatar?: Maybe<Scalars['String']>;
   banner?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
   metaKeyword?: Maybe<Scalars['String']>;
   metaDescription?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
 };
 
 export type Slider = Node & {

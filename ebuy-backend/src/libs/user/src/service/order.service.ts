@@ -6,11 +6,11 @@ import { Order, OrderDocument } from '../schema/order.schema';
 import { OrderLine, OrderLineDocument } from '../schema/orderLine.schema';
 import { User, UserDocument } from '../schema/user.schema';
 import { Model } from 'mongoose';
-import { ProductVariantService } from 'src/libs/product/src/service/product-variant.service';
+import { ProductVariantService } from '../../../product/src/service/product-variant.service';
 import { Types } from 'mongoose';
-import { ShippingAddressService } from 'src/libs/shipping-address/src/service/shipping-address.service';
+import { ShippingAddressService } from '../../../shipping-address/src/service/shipping-address.service';
 import { ADDING_ITEM } from '../../constants';
-import { CouponService } from 'src/libs/coupon/src/service/coupon.service';
+import { CouponService } from '../../../coupon/src/service/coupon.service';
 @Injectable()
 export class OrderService {
     constructor(

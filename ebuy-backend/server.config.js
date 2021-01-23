@@ -1,6 +1,6 @@
 const env = {
     mongo: {
-        url: "mongodb://localhost:27017",
+        url: "mongodb+srv://manh123:manhuetvnuk63j@cluster0.ntafe.mongodb.net",
         dbname: "ebuy"
     }
 }

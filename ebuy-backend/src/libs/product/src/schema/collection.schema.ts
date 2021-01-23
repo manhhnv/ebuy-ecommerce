@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { DocumentNode } from 'src/utils/document-node.schema';
+import { DocumentNode } from '../../../../utils/document-node.schema';
 
 @Schema()
 export class Collection extends DocumentNode{

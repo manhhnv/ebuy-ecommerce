@@ -11,10 +11,10 @@ import {
     ErrorCode,
     LoginInput,
     NativeAuthenticationResult
-} from 'src/generate-types';
-import { AuthService } from 'src/shared/auth/src/service/auth.service';
+} from '../../../../generate-types';
+import { AuthService } from '../../../../shared/auth/src/service/auth.service';
 import { CONTEXT } from '@nestjs/graphql';
-import { User as UserGraphQL } from 'src/generate-types';
+import { User as UserGraphQL } from '../../../../generate-types';
 @Injectable({scope: Scope.REQUEST})
 export class UserService {
     constructor(

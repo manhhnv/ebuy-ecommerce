@@ -1,13 +1,13 @@
 import { Types } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/libs/user/src/schema/user.schema';
-import { Coupon } from 'src/libs/coupon/src/schema/coupon.schema';
+import { User } from '../../libs/user/src/schema/user.schema';
+import { Coupon } from '../../libs/coupon/src/schema/coupon.schema';
 import { Ability, AbilityBuilder, AbilityClass } from '@casl/ability';
 import { Action } from './action.enum';
-import { Order } from 'src/libs/user/src/schema/order.schema';
-import { Product } from 'src/libs/product/src/schema/product.schema';
-import { Slider } from 'src/libs/slider/src/schema/slider.schema';
-import { Shop } from 'src/libs/shop/src/schema/shop.schema';
+import { Order } from '../../libs/user/src/schema/order.schema';
+import { Product } from '../../libs/product/src/schema/product.schema';
+import { Slider } from '../../libs/slider/src/schema/slider.schema';
+import { Shop } from '../../libs/shop/src/schema/shop.schema';
 
 export type Subjects =
     typeof Coupon | 

@@ -5,14 +5,14 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { imageFileFilter } from 'src/utils/validation';
-import { editFileName } from 'src/utils/validation';
+import { imageFileFilter } from '../../../../utils/validation';
+import { editFileName } from '../../../../utils/validation';
 import { SliderService } from '../service/slider.service';
 import { SliderConfig, SliderUpdate } from '../doc/slider.doc';
-import { PoliciesGuard } from 'src/shared/policy/policies.guard';
-import { CheckPolicies } from 'src/shared/policy/policy.decorator';
-import { SliderPolicy } from 'src/shared/policy';
-import { Action } from 'src/shared/casl/action.enum';
+import { PoliciesGuard } from '../../../../shared/policy/policies.guard';
+import { CheckPolicies } from '../../../../shared/policy/policy.decorator';
+import { SliderPolicy } from '../../../../shared/policy';
+import { Action } from '../../../../shared/casl/action.enum';
 import { ApiTags, ApiBearerAuth, ApiConsumes, ApiBody } from '@nestjs/swagger';
 @ApiTags('Slider')
 @Controller('slider')

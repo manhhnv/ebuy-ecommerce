@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TypeAsset } from 'src/generate-types';
+import { TypeAsset } from '../../../../generate-types';
 import { SliderBase } from './slider-base.doc';
 export class SliderConfig extends SliderBase {
 

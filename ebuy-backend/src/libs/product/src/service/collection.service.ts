@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Collection, CollectionDocument } from '../schema/collection.schema';
 import { SubCollection, SubCollectionDocument } from '../schema/sub-collection.schema';
 import { Model } from 'mongoose';
-import { ListCollection } from 'src/generate-types';
+import { ListCollection } from '../../../../generate-types';
 import { Types } from 'mongoose';
 
 @Injectable()

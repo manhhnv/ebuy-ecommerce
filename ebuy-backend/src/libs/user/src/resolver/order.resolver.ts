@@ -4,16 +4,16 @@ import {
 } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { OrderService } from '../service/order.service';
-import { TokenAuthGuard } from 'src/shared/auth/src/guard/token-auth.guard';
-import { User } from 'src/generate-types';
+import { TokenAuthGuard } from '../../../../shared/auth/src/guard/token-auth.guard';
+import { User } from '../../../../generate-types';
 import { Order } from '../schema/order.schema';
 import { OrderLine } from '../schema/orderLine.schema';
-import { ShippingAddress } from 'src/libs/shipping-address/src/schema/shipping-address.schema';
-import { ShippingAddressService } from 'src/libs/shipping-address/src/service/shipping-address.service';
-import { PoliciesGuard } from 'src/shared/policy/policies.guard';
-import { CheckPolicies } from 'src/shared/policy/policy.decorator';
-import { OrderPolicy } from 'src/shared/policy/permission/order.policy';
-import { Action } from 'src/shared/casl/action.enum';
+import { ShippingAddress } from '../../../shipping-address/src/schema/shipping-address.schema';
+import { ShippingAddressService } from '../../../shipping-address/src/service/shipping-address.service';
+import { PoliciesGuard } from '../../../../shared/policy/policies.guard';
+import { CheckPolicies } from '../../../../shared/policy/policy.decorator';
+import { OrderPolicy } from '../../../../shared/policy/permission/order.policy';
+import { Action } from '../../../../shared/casl/action.enum';
 
 @Resolver(() => Order)
 export class OrderResolver {

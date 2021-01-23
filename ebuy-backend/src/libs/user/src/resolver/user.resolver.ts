@@ -3,11 +3,11 @@ import {
     ResolveField, Context,
 } from '@nestjs/graphql';
 import { UserService } from '../service/user.service';
-import { CreateUserInput, LoginInput, User } from 'src/generate-types';
+import { CreateUserInput, LoginInput, User } from '../../../../generate-types';
 import { UseGuards, Request, Req, Session, UseInterceptors, UploadedFile} from '@nestjs/common';
-import { JwtAuthGuard } from 'src/shared/auth/src/service/jwt-auth.guard';
-import { TokenAuthGuard } from 'src/shared/auth/src/guard/token-auth.guard';
-import { CtxUser } from 'src/utils/user.decorator';
+import { JwtAuthGuard } from '../../../../shared/auth/src/service/jwt-auth.guard';
+import { TokenAuthGuard } from '../../../../shared/auth/src/guard/token-auth.guard';
+import { CtxUser } from '../../../../utils/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Resolver('NativeAuthenticationResult')

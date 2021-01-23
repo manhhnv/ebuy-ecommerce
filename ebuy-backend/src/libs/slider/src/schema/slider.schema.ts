@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { DocumentNode } from 'src/utils/document-node.schema';
-import { TypeAsset } from 'src/generate-types';
+import { DocumentNode } from '../../../../utils/document-node.schema';
+import { TypeAsset } from '../../../../generate-types';
 
 @Schema()
 export class Slider extends DocumentNode{

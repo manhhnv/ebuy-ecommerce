@@ -5,7 +5,7 @@
     },
     "generates": {
         "src/generate-types.ts": {
-            "schema": "http://0.0.0.0:3000/ebuy-graphql",
+            "schema": "http://0.0.0.0:8080/graphql",
             "plugins": [
                 {
                     "add": {

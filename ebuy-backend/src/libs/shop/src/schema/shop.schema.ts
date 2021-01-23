@@ -1,6 +1,6 @@
 import { IsEmail, ValidateNested, IsPhoneNumber } from 'class-validator';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { DocumentNode } from 'src/utils/document-node.schema';
+import { DocumentNode } from '../../../../utils/document-node.schema';
 import { Document, Types } from 'mongoose';
 
 @Schema()

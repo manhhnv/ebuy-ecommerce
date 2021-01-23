@@ -9,10 +9,17 @@ import * as passport from 'passport';
 import * as bodyParser from 'body-parser';
 // import { graphqlUploadExpress } from 'graphql-upload';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import 'dotenv';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import * as Express from 'express';
 
 const MongoStore = require('connect-mongo')(session);
+const uri = process.env.DB_URL
+const server = Express();
+server.get('/', (req, res) => res.send('OK'))
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
   const config = new DocumentBuilder()
     .addBearerAuth({
@@ -41,7 +48,7 @@ async function bootstrap() {
         maxAge: 60000,
       },
       store: new MongoStore({
-        url: 'mongodb://127.0.0.1:27017/ebuy'
+        url: uri || "mongodb://127.0.0.1:27017/ebuy"
       }),
     })
   )
@@ -51,9 +58,9 @@ async function bootstrap() {
   //   maxFieldSize: 100000,
   //   maxFiles: 5
   // }))
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT || 8080);
   console.log("\nCOMPILE SUCCESS!")
-  console.log( '\n' + '🚀 GraphQL running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/${process.env.GRAPHQL_PATH}` + '\u001b[0m')
-  console.log( '\n' + '🚀 Swagger UI running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT}/${process.env.SWAGGER_UI}` + '\u001b[0m\n')
+  console.log( '\n' + '🚀 GraphQL running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT || 8080}/graphql` + '\u001b[0m')
+  console.log( '\n' + '🚀 Swagger UI running at ' + '\u001b[' + 32 + 'm' + `http://0.0.0.0:${process.env.PORT || 8080}/api-extensions` + '\u001b[0m\n')
 }
 bootstrap();

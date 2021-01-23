@@ -5,7 +5,7 @@ import {
 import { Slider, SliderDocument } from '../schema/slider.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { SliderInput, SliderUpdate, TypeAsset } from 'src/generate-types';
+import { SliderInput, SliderUpdate, TypeAsset } from '../../../../generate-types';
 
 @Injectable()
 export class SliderService {

@@ -1,7 +1,7 @@
 import { Action } from '../../casl/action.enum';
 import { AppAbility } from '../../casl/casl-ability.factory';
 import { IPolicyHandler } from '../policy.config';
-import { Order } from 'src/libs/user/src/schema/order.schema';
+import { Order } from '../../../libs/user/src/schema/order.schema';
 
 export class OrderPolicy implements IPolicyHandler {
 

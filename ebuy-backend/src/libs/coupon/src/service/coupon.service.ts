@@ -5,8 +5,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Coupon, CouponDocument } from '../schema/coupon.schema';
-import { CouponConfig } from 'src/generate-types';
-import { ListCoupon } from 'src/generate-types';
+import { CouponConfig, ListCoupon } from '../../../../generate-types';
 @Injectable()
 export class CouponService {
     constructor(
