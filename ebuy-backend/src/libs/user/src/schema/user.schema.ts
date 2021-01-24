@@ -55,7 +55,7 @@ export class User {
     @Prop({type: Boolean, default: true})
     active: boolean
 
-    @Prop({type: Boolean})
+    @Prop({type: Boolean, required: true, default: false})
     isAdmin: boolean
 
     @Field(() => Date)

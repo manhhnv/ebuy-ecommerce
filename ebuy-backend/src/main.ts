@@ -12,6 +12,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import 'dotenv';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import * as Express from 'express';
+import * as helmet from 'helmet';
 
 const MongoStore = require('connect-mongo')(session);
 const uri = process.env.DB_URL
@@ -48,12 +49,14 @@ async function bootstrap() {
         maxAge: 60000,
       },
       store: new MongoStore({
-        url: uri || "mongodb://127.0.0.1:27017/ebuy"
+        url: process.env.DB_URL || "mongodb+srv://manh123:manhuetvnuk63j@cluster0.ntafe.mongodb.net/ebuy?retryWrites=true&w=majority"
       }),
     })
   )
   app.use(passport.initialize())
   app.use(passport.session())
+  // app.use(helmet())
+  app.enableCors()
   // app.use(graphqlUploadExpress({
   //   maxFieldSize: 100000,
   //   maxFiles: 5

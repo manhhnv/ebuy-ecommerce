@@ -63,7 +63,7 @@ export type Query = {
   getShopInfo: ShopInfo;
   getSliders?: Maybe<Array<Slider>>;
   activeOrder?: Maybe<Order>;
-  me: User;
+  me?: Maybe<User>;
 };
 
 
